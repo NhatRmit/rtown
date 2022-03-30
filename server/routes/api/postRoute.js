@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, createPost, upvotePost, downvotePost, deletePost, createComment, deleteComment} = require('../../controllers/postController')
+const {getPosts, createPost, editPost, upvotePost, downvotePost, deletePost, createComment, deleteComment} = require('../../controllers/postController')
 
 router.get('/', getPosts)
 
 router.post('/', createPost)
+
+router.put('/:id', editPost)
 
 router.put('/upvote/:id', upvotePost)
 

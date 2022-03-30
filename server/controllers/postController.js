@@ -9,6 +9,10 @@ const createPost = asyncHandler(async(req, res) => {
     res.status(200).json("create post")
 })
 
+const editPost = asyncHandler(async(req, res) => {
+    res.status(200).json("create post")
+})
+
 const upvotePost = asyncHandler(async(req, res) => {
     res.status(200).json("upvote post")
 })
@@ -30,6 +34,6 @@ const deleteComment = asyncHandler(async(req, res) => {
 })
 
 module.exports = {
-    getPosts, createPost, upvotePost, downvotePost, deletePost,
+    getPosts, createPost, editPost, upvotePost, downvotePost, deletePost,
     createComment, deleteComment,
 }
