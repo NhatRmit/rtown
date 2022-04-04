@@ -5,6 +5,17 @@ const initialState = {
     error: {}
   };
 
-  function postReducer(state = initialState, action) {}
+  function postReducer(state = initialState, action) {
+    const {type, payload} = action
+
+    switch (type) {
+      case "value":
+        
+        break;
+    
+      default:
+        return state;
+    }
+  }
 
   export default postReducer

@@ -5,6 +5,17 @@ const initialState = {
     user: null
   };
 
-function authReducer(state = initialState, action) {}
+function authReducer(state = initialState, action) {
+  const {type, payload} = action
+
+  switch (type) {
+    case "value":
+      
+      break;
+  
+    default:
+      return state;
+  }
+}
 
 export default authReducer
