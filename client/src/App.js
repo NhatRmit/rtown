@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 //components
 
-
-const App = () => {
+function App() {
   return (
-    <>
-        <Router>
-          <Routes>
-            {/* <Route path='/' element={<Newsfeed />} /> */}
+      // <Router>
+      //   <Routes>
+      //     <Route />
 
-          </Routes>
-        </Router>
-    </>
+      //   </Routes>
+      // </Router>
+      <h1>asd </h1>
   );
 }
 
