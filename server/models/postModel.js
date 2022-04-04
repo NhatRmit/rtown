@@ -2,7 +2,12 @@ const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
     user: {
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    title: {
+        type: String,
+        required: true
     },
     text: {
         type: String,
@@ -14,24 +19,23 @@ const postSchema = mongoose.Schema({
     avatar: {
         type: String
     },
-    upvotes: [
-        {
-            user: {
-                type: Schema.Types.ObjectId
-            }
-        }
-    ],
+    upvotes: {
+        type: Number
+    },
     downvotes: [
         {
             user: {
-                type: Schema.Types.ObjectId
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
             }
         }
     ],
     comments: [
         {
             user: {
-                type: Schema.Types.ObjectId
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+
             },
             text: {
                 type: String,
@@ -49,10 +53,17 @@ const postSchema = mongoose.Schema({
             }
         }
     ],
+    commentsCount:{
+        type: Number
+    },
     date: {
         type: Date,
         default: Date.now
     }
 })
+
+// postSchema.virtual('commentCount').get(function () {
+//     return this.comments.length;
+// })
 
 module.exports = mongoose.model('Post', postSchema)
