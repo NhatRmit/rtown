@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import { getPosts } from '../../actions/post'
 import { post } from 'request'
 import PostItem from '../Posts/CommentForm'
+import CommentForm from './CommentForm'
+import CommentItem from './CommentItem'
 
 const Posts = ({getPosts, post: { posts, loading}, match }) => {
     useEffect(
@@ -35,6 +37,11 @@ const Posts = ({getPosts, post: { posts, loading}, match }) => {
         </Link>
         <PostItem post={post} showActions={false}/>
         <CommentForm postID = {post._id} />
+        <div className='comments'>
+            {post.comments.map(comments => (
+                <CommentItem key ={comment.id} comment = {comment} postID ={post._id} />
+            ))}
+        </div>
 
     </Fragment>
   );
