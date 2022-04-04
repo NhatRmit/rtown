@@ -22,6 +22,9 @@
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.9",
+    "react-icon": "^1.0.0",
+    "react-moment": "^1.1.2",
+    "react-private-route": "^1.1.2",
     "request": "^2.88.2"
   },
   "devDependencies": {
