@@ -1,4 +1,6 @@
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const { validationResult } = require('express-validator');
+const { Auth } = require('request/lib/auth');
 const Post = require('../models/postModel')
 
 const getPosts = asyncHandler(async (req, res) => {
@@ -63,6 +65,43 @@ const deletePost = asyncHandler(async (req, res) => {
 
 const createComment = asyncHandler(async (req, res) => {
     res.status(200).json("create comment")
+
+    '/comment/:id'
+    [
+        auth, 
+        [
+            check('text', 'text is required')
+               .not()
+               .isEmty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array() })
+        }
+
+        try {
+            const user = await User.findById(req.user.id).select('-password');
+            const post = await Post.findById(req.params.id);
+
+            const newComment = {
+                test: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: req.user.id
+            };
+
+            post.comments.unshift(newComment);
+
+            await post.save();
+
+            res.json(post.comments);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
 })
 
 const deleteComment = asyncHandler(async (req, res) => {
