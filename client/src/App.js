@@ -1,22 +1,19 @@
-import React, {useEffect} from 'react'
-import {BrowseRouter as Router, Routes, Route} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-//redux
-import {Provider} from 'react-redux'
-import store from './app/store'
+//components
+import Newsfeed from './pages/Newsfeed'
 
-
-function App() {
+const App = () => {
   return (
-    <Provider store={store}>
-      <Router>
-        
-        <Routes>
-          <Route />
+    <>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Newsfeed />} />
 
-        </Routes>
-      </Router>
-    </Provider> 
+          </Routes>
+        </Router>
+    </>
   );
 }
 
