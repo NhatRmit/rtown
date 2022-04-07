@@ -1,4 +1,8 @@
-import { GET_POSTS, POST_ERROR} from '../actions/types';
+import { 
+  GET_POSTS, 
+  POST_ERROR,
+  ADD_COMMENT,
+  REMOVE_COMMENT } from '../actions/types';
 const initialState = {
     posts: [],
     post: null,
@@ -22,6 +26,20 @@ const initialState = {
           error: payload,
           loading: false
         };
+      case ADD_COMMENT:
+        return {
+          ...state,
+          post: { ...state.post, comments: payload},
+          loading: false
+        }
+      case REMOVE_COMMENT:
+        return {
+          ...state,
+          post: {
+            ...state.post,
+            comments: state.post.comments.filter(comment => comment._id !== payload)
+          }
+        }
     
       default:
         return state;
