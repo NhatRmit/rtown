@@ -1,0 +1,46 @@
+:root {
+    /* Fonts */
+    --heading-font: "Helvetica";
+    --body-font: "Arial";
+
+    /* RTown color palette */
+    --navy: #000054;
+    --red: #E4052A;
+    --light-grey: #F8F9FA;
+    --grey: #C2C2C2;
+    --dark-grey: #DDE2E5;
+    --darker-grey: #545454;
+    --white: #ffffff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: var(--heading-font);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0 1rem 3rem;
+}
+
+.logo-container a {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    font-size: 25px;
+    padding-right: 1rem;
+}
+
+.logo {
+    width: 3rem;
+}

@@ -1,0 +1,56 @@
+.container-filter {
+    width: 100%;
+    height: 5.5rem;
+    margin: 0 auto;
+    padding: 0 1.2rem;
+    text-align: center;
+    background-color: white;
+}
+
+.a { 
+    font-size: 2rem;
+    position: absolute;
+    margin: 0.30rem;
+}
+
+.header-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 60px;
+}
+
+.header-filter ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-filter ul li{
+    margin-left: 1.25rem;
+}
+
+.btn-filter {
+    padding: 10px 20px;
+    border: 1px solid #E4052A;
+    border-radius: 5px;
+    background: #E4052A;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    appearance: button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-filter:hover {
+    transform: scale(0.98);
+}
+
+.btn-filter:active {
+    background-color: blue;
+}

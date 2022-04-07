@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Posts from './components/Posts/Posts'
-import {PrivateRoute} from 'react-private-route'
 //components
-
+import Newsfeed from './pages/Newsfeed'
+import Login from './pages/Login'
 
 const App = () => {
   return (
     <>
         <Router>
           <Routes>
-            {/* <Route path='/' element={<Newsfeed />} /> */}
-            <Route path='/posts' element={<Posts />} />
+            <Route path='/' element={<Newsfeed />} />
+            <Route path='/login' element={<Login />} />            
           </Routes>
         </Router>
     </>
