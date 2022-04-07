@@ -3,6 +3,7 @@ import { TiStarburstOutline } from 'react-icons/ti'
 import { HiTrendingUp } from 'react-icons/hi'
 import { IoIosPodium } from 'react-icons/io'
 import { IconContext } from 'react-icons/lib'
+
 import './Filter.css'
 
 const Filter = () => {
@@ -45,10 +46,7 @@ const Filter = () => {
           </li>
         </ul>
       </header>
-
     </div>
-
-
   )
 }
 

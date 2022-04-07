@@ -32,52 +32,58 @@ const Navbar = () => {
     }
 
     return (
-        <div className="container">
-            <header className='header'>
-                <div className="logo">
-                    <img src={logo} alt="" />
-                    <Link to='/'> RTown </Link>
-                </div>
-                <section className="form">
-                    <form onSubmit={onSubmit}>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                name='text'
-                                id='text'
-                                placeholder='Search something...'
-                                value={text}
-                                onChange={onChange}
-                            />
-                            <label>
-                                <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
-                                    <BsSearch />
-                                </IconContext.Provider>
-                            </label>
-                        </div>
-                    </form>
-                </section>
-                <ul>
-                    <li className='icon-chat' onClick={onProfile}>
-                        <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
-                            <BsFillChatDotsFill />
-                        </IconContext.Provider>
-                    </li>
-                    <li className='icon-user' onClick={onProfile}>
-                        <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
-                            <FaUserCircle />
-                        </IconContext.Provider>
-                    </li>
-                    <li>
-                        <button className='btn' onClick={onLogout}>
-                            <IconContext.Provider value={{ size: '0.75rem' }}>
-                                <FaSignOutAlt /> Logout
+        <>
+            <div className='blank-navbar'></div>
+            <div className="container-navbar">
+                <header className='header'>
+                    <div className="logo">
+                        <img src={logo} alt="" />
+                        <Link to='/'> RTown </Link>
+                    </div>
+                    <section className="form">
+                        <form onSubmit={onSubmit}>
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    name='text'
+                                    id='text'
+                                    placeholder='Search something...'
+                                    value={text}
+                                    onChange={onChange}
+                                />
+                                <label>
+                                    <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
+                                        <BsSearch />
+                                    </IconContext.Provider>
+                                </label>
+                            </div>
+                        </form>
+                    </section>
+                    <ul>
+                        <li className='icon-chat' onClick={onProfile}>
+                            <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
+                                <BsFillChatDotsFill />
                             </IconContext.Provider>
-                        </button>
-                    </li>
-                </ul>
-            </header>
-        </div>
+                        </li>
+                        <li className='icon-user' onClick={onProfile}>
+                            <IconContext.Provider value={{ color: '#DDE2E5', size: '2.25rem' }}>
+                                <FaUserCircle />
+                            </IconContext.Provider>
+                        </li>
+                        <li>
+                            <button className='btn' onClick={onLogout}>
+                                <IconContext.Provider value={{ size: '0.75rem' }}>
+                                    <FaSignOutAlt /> Logout
+                                </IconContext.Provider>
+                            </button>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <div className='blank-navbar'></div>
+
+        </>
+
     )
 }
 

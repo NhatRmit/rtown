@@ -50,3 +50,7 @@ a {
 .btn-filter:hover {
     transform: scale(0.98);
 }
+
+.btn-filter:active {
+    background-color: blue;
+}
