@@ -2,15 +2,13 @@ import React from 'react'
 import Filter from '../components/Filter/Filter'
 import Navbar from '../components/Navbar/Navbar'
 import Sidebar from '../components/Sidebar/Sidebar'
+import Layout from '../components/Layout'
 import './Newsfeed.css'
 
 const Newsfeed = () => {
   return (
     <>
-      <>
-        <Navbar />
-      </>
-
+      <Layout header footer>
       <section>
         <div className='blank-newsfeed'></div>
 
@@ -23,6 +21,7 @@ const Newsfeed = () => {
         
         <div className='blank-newsfeed'></div>
       </section>
+      </Layout>
     </>
   )
 }

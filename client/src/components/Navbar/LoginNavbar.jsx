@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from './logo.png';
 import style from './LoginNavbar.module.css';
 
-const Navbar = () => {
+const LoginNavbar = () => {
     return (
         <header className={style["header"]}>
             <div className={style["logo-container"]}>
@@ -14,4 +14,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default LoginNavbar
