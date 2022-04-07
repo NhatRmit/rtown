@@ -1,35 +1,13 @@
-:root {
-    /* Fonts */
-    --body-font: "Arial";
-
-    /* RTown color palette */
-    --navy: #000054;
-    --red: #E4052A;
-    --light-grey: #F8F9FA;
-    --grey: #C2C2C2;
-    --dark-grey: #DDE2E5;
-    --darkes-grey: #545454;
-    --white: #ffffff;
-}
-
-.loginform-container {
+.container {
     width: 100%;
+    height: 5.5rem;
     margin: 0 auto;
     padding: 0 1.2rem;
     text-align: center;
-    font-family: "Helvetica";
+    background-color: #000054;
 }
 
-.loginform-wrapper {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 1.2rem;
-    text-align: center;
-    background-color: var(--light-grey);
-    font-family: "Helvetica";
-}
-
-.a {
+a {
     font-size: 2rem;
     position: absolute;
     margin: 0.30rem;

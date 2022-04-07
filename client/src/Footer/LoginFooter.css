@@ -1,0 +1,59 @@
+:root {
+    /* Fonts */
+    --heading-font: "Helvetica";
+    --body-font: "Arial";
+
+    /* RTown color palette */
+    --navy: #000054;
+    --red: #E4052A;
+    --light-grey: #F8F9FA;
+    --grey: #C2C2C2;
+    --dark-grey: #DDE2E5;
+    --darker-grey: #545454;
+    --white: #ffffff;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: var(--heading-font);
+}
+
+.copyright {
+    color: var(--dark-grey);
+    text-align: center;
+    padding: 1em 0;
+}
+
+.footer-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1em;
+}
+
+.footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12em;
+}
+
+.footer-wrapper a {
+    all: unset;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.footer-wrapper a:hover {
+    text-decoration: underline;
+}
