@@ -64,9 +64,6 @@ const deletePost = asyncHandler(async (req, res) => {
 })
 
 const createComment = asyncHandler(async (req, res) => {
-    res.status(200).json("create comment")
-
-    '/comment/:id'
     [
         auth, 
         [
