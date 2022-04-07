@@ -1,0 +1,13 @@
+:root {
+    /* Fonts */
+    --body-font: "Arial";
+
+    /* RTown color palette */
+    --navy: #000054;
+    --red: #E4052A;
+    --light-grey: #F8F9FA;
+    --grey: #C2C2C2;
+    --dark-grey: #DDE2E5;
+    --darkes-grey: #545454;
+    --white: #ffffff;
+}
