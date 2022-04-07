@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Posts from './components/Posts/Posts'
 import {PrivateRoute} from 'react-private-route'
 //components
+import Newsfeed from './pages/Newsfeed'
 
-function App() {
+const App = () => {
   return (
     <>
         <Router>

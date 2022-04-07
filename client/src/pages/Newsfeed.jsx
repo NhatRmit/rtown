@@ -1,10 +1,18 @@
 import React from 'react'
+import Filter from '../components/Filter/Filter'
+import Navbar from '../components/Navbar/Navbar'
 
 const Newsfeed = () => {
   return (
-    <div>Newsfeed</div>
+    <>
+      <Navbar />
+
+      <Filter />
+
+
+    </>
+
   )
 }
 
 export default Newsfeed
-
