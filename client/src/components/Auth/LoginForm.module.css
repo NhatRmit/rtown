@@ -1,99 +1,88 @@
-.register-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin: 60px 0 0;
-    padding: 0;
-}
-
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    width: 100%;
+    height: 5.5rem;
+    margin: 0 auto;
+    padding: 0 1.2rem;
+    text-align: center;
+    background-color: #000054;
 }
 
-.h1 {
+a {
     font-size: 2rem;
-    margin: auto;
+    position: absolute;
+    margin: 0.30rem;
 }
 
-.logo{
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    padding: 20px;
-}
-
-.p{
-    font-size: 1rem;
-    margin: auto;
-    padding-bottom: 20px;
-    color: #111113;
-    opacity: 60%;
-}
-
-.a {
-    color: var(--orange);
-}
-
-.form{
+.header {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    padding: 0 150px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 60px;
 }
 
-.label {
-    font-size: 1rem;
-    font-weight: 500;
-}
-.input{
-    width: 100%;
-    padding: 15px 30px;
-    margin: 10px 0 30px;
-    border-radius: 15px;
-    border: 1px solid gray;
+.header ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.button-wrapper{
-    margin: 30px 0;
+.header ul li {
+    margin-left: 1.25rem;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: 1px solid #E4052A;
+    border-radius: 5px;
+    background: #E4052A;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    appearance: button;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.register-btn{
-    width: 150px;
-    padding: 10px;
-    color: #FFFAF8;
-    font-weight: 600;
-    background-color: #FF7D19;
-    border-radius: 5px;
-    border-color: transparent;
-    margin: 5px 20px;
+.btn:hover {
+    transform: scale(0.98);
+}
+
+img {
+    width: 3rem;
+}
+
+.icon-search,
+.icon-chat,
+.icon-user {
     cursor: pointer;
 }
 
-.register-btn:hover {
-    background: var(--darker-orange);
+.icon-search:hover,
+.icon-chat:hover,
+.icon-user:hover {
+    transform: scale(0.98);
 }
 
-.clear-btn{
-    width: 150px;
-    padding: 10px;
-    color: #FFFAF8;
-    font-weight: 600;
-    background-color: #C4C4C4;
+.form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 30%;
+    padding: 0.5rem;
+    border: 1px solid #e6e6e6;
     border-radius: 5px;
-    border-color: transparent;
-    margin: 5px 20px;
-    cursor: pointer;
+    outline: none;
 }
 
-.clear-btn:hover {
-    background: #858585;
+.form label {
+    position: absolute;
+    margin: 0.25rem 1rem;
 }
