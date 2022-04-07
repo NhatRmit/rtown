@@ -1,19 +1,4 @@
-:root {
-    /* Fonts */
-    --heading-font: "Helvetica";
-    --body-font: "Arial";
-
-    /* RTown color palette */
-    --navy: #000054;
-    --red: #E4052A;
-    --light-grey: #F8F9FA;
-    --grey: #C2C2C2;
-    --dark-grey: #DDE2E5;
-    --darker-grey: #545454;
-    --white: #ffffff;
-}
-
-.footer {
+.login-footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,6 +37,7 @@
     all: unset;
     cursor: pointer;
     padding: 5px;
+    letter-spacing: 2rem;
 }
 
 .footer-wrapper a:hover {

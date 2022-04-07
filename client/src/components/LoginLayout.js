@@ -1,5 +1,5 @@
 import LoginNavbar from "./Navbar/LoginNavbar";
-import LoginFooter from "../Footer/LoginFooter";
+import LoginFooter from "./Footer/LoginFooter";
 
 const LoginLayout = ({children, header, footer, className}) => {
     return (

@@ -36,7 +36,7 @@ const Navbar = () => {
             <header className='header'>
                 <div className="logo">
                     <img src={logo} alt="" />
-                    <Link to='/'> RTown </Link>
+                    <Link to='/' className='a'> RTown </Link>
                 </div>
                 <section className="form">
                     <form onSubmit={onSubmit}>

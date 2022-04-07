@@ -1,5 +1,7 @@
+import LoginLayout from "../LoginLayout";
 import style from "./LoginForm.module.css";
 import {useState} from "react";
+
 
 const LoginForm = () => {
     const [idOrEmail, setIdOrEmail] = useState("");
@@ -11,6 +13,7 @@ const LoginForm = () => {
     }
 
     return (
+        <LoginLayout className={style["register-container"]} header footer>
        <div className={style["loginform-container"]}>
            <div className={style["loginform-wrapper"]}>
                 <form className={style["form"]} onSubmit={handleSubmit}>
@@ -37,6 +40,7 @@ const LoginForm = () => {
                 </div>
             </div>
         </div> 
+        </LoginLayout>
     );
 };
 

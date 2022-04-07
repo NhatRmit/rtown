@@ -7,7 +7,7 @@
     background-color: #000054;
 }
 
-a { 
+.a {
     font-size: 2rem;
     position: absolute;
     margin: 0.30rem;
@@ -55,15 +55,15 @@ img {
     width: 3rem;
 }
 
-.icon-search, 
-.icon-chat, 
+.icon-search,
+.icon-chat,
 .icon-user {
     cursor: pointer;
 }
 
-.icon-search:hover, 
-.icon-chat:hover, 
-.icon-user:hover  {
+.icon-search:hover,
+.icon-chat:hover,
+.icon-user:hover {
     transform: scale(0.98);
 }
 
@@ -72,7 +72,9 @@ img {
     margin: 0 auto;
 }
 
-.form-group input, .form-group textarea, .form-group select {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 30%;
     padding: 0.5rem;
     border: 1px solid #e6e6e6;
