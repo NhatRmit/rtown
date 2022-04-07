@@ -14,45 +14,42 @@
 
 .loginform-footer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    height: 5.5rem;
-    position: fixed;
+    height: fit-content;
+    margin-top: 50px;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: var(--navy);
     color: var(--white);
     font-family: var(--heading-font);
+    padding: 1em 0 2em 0;
 }
 
-/* .copyright {
+.copyright {
     color: var(--dark-grey);
     text-align: center;
-    padding: 1em 0;
+    padding: 1em 0 1.5em 0;
 }
 
 .footer-nav {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 1em;
+    justify-content: space-evenly;
+    padding: 0 40em;
 }
 
-.footer-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 12em;
-}
-
-.footer-wrapper a {
+.footer-nav a {
     all: unset;
     cursor: pointer;
-    padding: 5px;
-    letter-spacing: 2rem;
 }
 
-.footer-wrapper a:hover {
+.footer-nav a:hover {
     text-decoration: underline;
-} */
+}
+
+.vl {
+    border-left: 2px solid var(--white);
+    height: 20px;
+}
