@@ -1,8 +1,21 @@
-.login-footer {
+:root {
+    /* Fonts */
+    --body-font: "Arial";
+
+    /* RTown color palette */
+    --navy: #000054;
+    --red: #E4052A;
+    --light-grey: #F8F9FA;
+    --grey: #C2C2C2;
+    --dark-grey: #DDE2E5;
+    --darkes-grey: #545454;
+    --white: #ffffff;
+}
+
+.loginform-footer {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    height: fit-content;
+    height: 5.5rem;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -12,7 +25,7 @@
     font-family: var(--heading-font);
 }
 
-.copyright {
+/* .copyright {
     color: var(--dark-grey);
     text-align: center;
     padding: 1em 0;
@@ -42,4 +55,4 @@
 
 .footer-wrapper a:hover {
     text-decoration: underline;
-}
+} */
