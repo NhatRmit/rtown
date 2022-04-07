@@ -1,3 +1,4 @@
+import Layout from "../../components/Layout";
 import style from "./LoginForm.module.css";
 import {useState} from "react";
 
@@ -11,7 +12,8 @@ const LoginForm = () => {
     }
 
     return (
-        <div className={style["container"]} Navbar>
+        <Layout className={style["loginform-container"]} header footer>
+        <div className={style[""]}>
             <form className={style["form"]} onSubmit={handleSubmit}>
                 <h1 className={style["h1"]}>Welcome to RMIT Town!</h1>
                 <p className={style["p"]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin dictum nulla eu hendrerit. Donec commodo fringilla sollicitudin. Duis sit amet ligula quis tellus scelerisque pulvinar ut vitae ligula. Phasellus lectus felis, convallis sit amet consequat quis, interdum eu lectus. Suspendisse potenti.</p>
@@ -35,6 +37,7 @@ const LoginForm = () => {
                 <button className={style["register-btn"]}>SIGN IN</button>
             </div>
             </div>
+            </Layout>
     
     );
 };
