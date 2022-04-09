@@ -23,5 +23,4 @@ router.post('/comment/:id', createComment)
 router.delete('/comment/:id/:comment_id', deleteComment)
 
 
-
 module.exports = router
