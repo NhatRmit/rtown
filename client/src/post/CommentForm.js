@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect} from 'react-redux'
 import { addComment } from '../actions/post'
+import './CommentForm.css'
 
 
 const CommentForm = ({ addComment}) => {
@@ -10,7 +11,7 @@ const CommentForm = ({ addComment}) => {
   return (
     <div className='comment-background'>
         <div className='comment-form'>
-            <h3 className='comment-title'>Leave a Comment</h3>
+            <h3 className='comment-title'>Comment</h3>
         </div>
         <form
           onSubmit={ e=> {
@@ -22,13 +23,13 @@ const CommentForm = ({ addComment}) => {
             <textarea
             className='comment-textarea' 
             name="comment textarea"  
-            cols="30" 
+            cols="120" 
             rows="5"
-            placeholder='Create a comment'
+            placeholder='  Create a comment'
             value={ text}
             onChange = {e => setText(e.target.value)} 
             />
-            <input type='submit' value='Submit' className='comment-btn'/>
+            <input type='submit' value='Send' className='comment-btn'/>
         </form>
     </div>
   )
