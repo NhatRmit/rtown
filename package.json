@@ -4,7 +4,7 @@
   "description": "a web application for rmit student enjoy",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server server.js",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -13,9 +13,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.7",
-    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
     "express-validator": "^6.14.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
+    "dotenv": "^16.0.0",
     "nodemon": "^2.0.15"
   }
 }

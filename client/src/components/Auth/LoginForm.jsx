@@ -16,12 +16,13 @@ const LoginForm = () => {
        <div className={style["loginform-container"]}>
             <h1 className={style["h1"]}>Welcome to RMIT Town!</h1>
             <p className={style["intro"]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin dictum nulla eu hendrerit. Donec commodo fringilla sollicitudin. Duis sit amet ligula quis tellus scelerisque pulvinar ut vitae ligula. Phasellus lectus felis, convallis sit amet consequat quis, interdum eu lectus. Suspendisse potenti.</p>
-            <form className={style["form"]} onSubmit={handleSubmit}>
+            <form className={style["form"]} onSubmit={handleSubmit} action ="/login" method="POST">
                 <label className={style["label"]}>RMIT ID or Email address</label>
                 <input
                     type="text"
                     placeholder="Enter your RMIT ID or Email address"
                     value={idOrEmail}
+                    required
                     onChange={(e) => setIdOrEmail(e.target.value)}
                     className={style["input"]} 
                 />
@@ -31,6 +32,7 @@ const LoginForm = () => {
                         type="password"
                         placeholder="Enter your password"
                         value={password}
+                        required
                         onChange={(e) => setPassword(e.target.value)}
                         className={style["input"]} 
                     /> 
