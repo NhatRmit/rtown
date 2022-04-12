@@ -12,7 +12,7 @@ export const getPosts = () => async dispatch => {
     } catch (error) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error.response, status: error.response }
         })
     }
 }
@@ -29,7 +29,7 @@ export const addPost = formData => async dispatch => {
     } catch (error) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error.response, status: error.response }
         })
     }
 }
@@ -45,7 +45,7 @@ export const deletePost = id => async dispatch => {
     } catch (error) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error.response, status: error.response }
         })
     }
 }
@@ -61,7 +61,7 @@ export const addLike = id => async dispatch => {
     } catch (error) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error.response, status: error.response }
         })
     }
 }
@@ -76,7 +76,7 @@ export const removeLike = id => async dispatch => {
     } catch (error) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error.response, status: error.response }
         })
     }
 }

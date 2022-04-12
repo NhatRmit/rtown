@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 import { connect } from 'react-redux'
 import { addLike, removeLike, deletePost } from '../../actions/post'
-const PostItem = ({ addLike, removeLike, post: {text, name, avatar, user, likes, comments, date } }) => {
+const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, user, likes, comments, date } }) => {
   return (
     <div>
       <div>
