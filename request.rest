@@ -5,16 +5,16 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-    "name": "RTown",
-    "password": "helloworld"
+    "usernameOrEmail": "RTown",
+    "password": "hellowod"
 }
 
 ###
 
-POST http://localhost:8000/login
+POST http://localhost:8000/signin
 Content-Type: application/json
 
 {
-    "name": "RTown",
+    "usernameOrEmail": "RTown",
     "password": "helloworld"
 }
