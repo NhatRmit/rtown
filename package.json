@@ -12,6 +12,7 @@
   "author": "Nhat Hoang Anh Thu",
   "license": "MIT",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

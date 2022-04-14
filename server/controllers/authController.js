@@ -1,55 +1,34 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
-//import user context
 const User = require("../models/userModel")
+const {loginValidation} = require('../../validation');
 
-// jsonwebtoken functions use algorithm that needs a secret key to encode and decode token.
-const secret = 'test'; 
 
-exports.signin = async (req, res) => {
-    try {
-        // get user input
-        const {usernameOrEmail, password} = req.body;
+exports.login = async (req, res) => {
+    try{
+        // validate the login inputs
+        const {error} = loginValidation(req.body);
+        if(error) return res.status(400).send(error.details[0].message);
 
-        // validate user input
-        if(!(usernameOrEmail && password)) {
-            res.status(400).send("All inputs are required");
-        }
+        // check if the user exists
+        const existedUser = await User.findOne({usernameOrEmail: req.body.usernameOrEmail});
+        if(!existedUser) return res.status(400).send({message: "RMIT ID or email address is incorrect!"});
 
-        // check if user already exist
-        if (!await User.findOne({usernameOrEmail})) {
-            return res.status(404).send({message: "User Not found."});
-        }
-
-        const passwordIsValid = bcrypt.compareSync(req.body.password, User.password);
-
+        //RECHECK WHY COMPARE() RETURN FALSE
         // check if password is valid
-        if (!passwordIsValid) {
-            return res.status(401).send({
-                accessToken: null,
-                message: "Invalid Password!"
-            });
-        }
-        
-        // create token
-        const token = jwt.sign({id: User._id}, secret, { expiresIn: "1h" });
-            
-        // encrypt user password
-        const salt = await bcrypt.genSalt(10);
-        const encryptedPassword = await bcrypt.hash(req.body.password, salt);
+        const passwordIsValid = await bcrypt.compare(req.body.password, existedUser.password);
+        if(!passwordIsValid) return res.status(400).send({accessToken: null, message: "Password is incorrect!"});
 
-        // save user token
-        User.token = token;
-
+        // create and assign a token
+        const token = jwt.sign({id: existedUser._id}, process.env.JWT_SECRET, {expiresIn: "1h"});
+        // res.header('auth-token', token).send(token);
         res.status(200).send({
-            id: user._id,
-            usernameOrEmail: User.usernameOrEmail,
+            id: existedUser._id,
+            usernameOrEmail: existedUser.usernameOrEmail,
             accessToken: token
-          });
+        });
 
-        }
-    catch (err) {
-        console.log(err)
+    }catch (err){
+        console.log(err);
     }
-};
+}  
