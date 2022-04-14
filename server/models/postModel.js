@@ -19,9 +19,14 @@ const postSchema = mongoose.Schema({
     avatar: {
         type: String
     },
-    upvotes: {
-        type: Number
-    },
+    upvotes: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        }
+    ],
     downvotes: [
         {
             user: {
