@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
 
         // check if password is valid
         if(req.body.password === existedUser.password){
-            return res.send("Logged in") // direct to newsfeed page
+            return res.send({token: generateToken(existedUser.id)}) // direct to newsfeed page
         }
 
         else{
@@ -35,3 +35,7 @@ exports.login = async (req, res) => {
         console.log(err);
     }
 }  
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
+}

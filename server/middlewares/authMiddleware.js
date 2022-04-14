@@ -14,6 +14,7 @@ const auth = asyncHandler(async(req, res, next) => {
             //get user from token
             req.user = await User.findById(decoded.id).select('-password')
 
+            next()
         } catch (error) {
             res.status(404).json({message: error.message})
             throw new Error('No authorization')

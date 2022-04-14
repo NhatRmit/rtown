@@ -42,16 +42,11 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
 })
 
 const createPost = asyncHandler(async (req, res) => { 
-    if(!req.isEmpty()){
-        return res.status(400).json("Created Error")
-    }
-    
     try {
-        const user = await User.findById(req.params.id).select('-password')
+        const user = await User.findById(req.user.id).select('-password')
         const newPost = new Post({
             text: req.body.text,
-            name: user.name,
-            avatar: user.avatar,
+            name: user.usernameOrEmail,
             user: req.user.id
         })
 
