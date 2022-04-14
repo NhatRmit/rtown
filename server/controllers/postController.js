@@ -76,9 +76,30 @@ const downvotePost = asyncHandler(async (req, res) => {
     res.status(200).json("downvote post")
 })
 
+
+
 const deletePost = asyncHandler(async (req, res) => {
+    try {
+    const post = await Post.findById(req.params.id)
+    if (!post){
+        return res.status(404).json({msg: 'Post not found'})
+    }
+
+    //check user
+    if (post.user.toString() !== req.user.id){
+        return res.status(401).json({msg: 'User not authorized'})
+    }
+
+    await post.remove()
+    res.json({msg: 'Posdt removed'})
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
     res.status(200).json("delete post")
 })
+
+
 
 const createComment = asyncHandler(async (req, res) => {
     res.status(200).json("create comment")

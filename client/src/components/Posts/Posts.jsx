@@ -46,7 +46,8 @@ import { connect } from 'react-redux';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 import { getPosts } from '../../actions/post';
-
+import Footer from '../Footer/Footer';
+import Navbar from '../Navbar/Navbar';
 const Posts = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
     getPosts();
@@ -54,16 +55,14 @@ const Posts = ({ getPosts, post: { posts } }) => {
 
   return (
     <section className="container">
-      <h1 className="large text-primary">Posts</h1>
-      <p className="lead">
-        <i className="fa fa-user" /> Welcome to the community
-      </p>
+      <Navbar />
       <PostForm />
       <div className="posts">
         {posts.map(post => (
           <PostItem key={post._id} post={post} />
         ))}
       </div>
+      <Footer />
     </section>
   );
 };
