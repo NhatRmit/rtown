@@ -52,16 +52,74 @@ const editPost = asyncHandler(async (req, res) => {
 })
 
 const upvotePost = asyncHandler(async (req, res) => {
-    res.status(200).json("upvote post")
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length === 0) {
+            return res.json(400).json({ msg: 'Post has not yet been upvoted'});
+        }
+
+        // get remove index
+        const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
+
+        post.upvotes.splice(removeIndex, 1);
+
+
+        await post.save();
+        
+        req.json(post.upvotes)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
 })
 
 const downvotePost = asyncHandler(async (req, res) => {
-    res.status(200).json("downvote post")
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if(post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length === 0) {
+            return res.json(400).json({ msg: 'Post has not yet been downvoted'});
+        }
+
+        // get remove index
+        const removeIndex = post.downvotes.map(downvote => downvote.user.toString()).indexOf(req.user.id);
+
+        post.downvotes.splice(removeIndex, 1);
+        
+
+        await post.save();
+        
+        req.json(post.downvotes)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
 })
 
 const deletePost = asyncHandler(async (req, res) => {
-    res.status(200).json("delete post")
-})
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found'})
+        }
+
+        if (post.user.toString() !== req.user.id) {
+            return res.status(404).json({ msg: 'User not authorized'})
+        }
+
+        await post.remove();
+
+        res.json({ msg: 'Post removed'})
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind == 'ObjectID') {
+            return res.status(404).json({msg: 'Post not found'});
+        }
+        res.status(500).send('Server Error');
+    }
+});
 
 const createComment = asyncHandler(async (req, res) => {
     [
