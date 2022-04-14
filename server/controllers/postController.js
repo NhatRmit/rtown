@@ -1,4 +1,6 @@
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const { validationResult } = require('express-validator');
+const { validate } = require('../models/postModel');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
 const getPosts = asyncHandler(async (req, res) => {
@@ -69,41 +71,116 @@ const editPost = asyncHandler(async (req, res) => {
 })
 
 const upvotePost = asyncHandler(async (req, res) => {
-    res.status(200).json("upvote post")
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length === 0) {
+            return res.json(400).json({ msg: 'Post has not yet been upvoted'});
+        }
+
+        // get remove index
+        const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
+
+        post.upvotes.splice(removeIndex, 1);
+
+
+        await post.save();
+        
+        req.json(post.upvotes)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
 })
 
 const downvotePost = asyncHandler(async (req, res) => {
-    res.status(200).json("downvote post")
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if(post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length === 0) {
+            return res.json(400).json({ msg: 'Post has not yet been downvoted'});
+        }
+
+        // get remove index
+        const removeIndex = post.downvotes.map(downvote => downvote.user.toString()).indexOf(req.user.id);
+
+        post.downvotes.splice(removeIndex, 1);
+        
+
+        await post.save();
+        
+        req.json(post.downvotes)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
 })
 
 
 
 const deletePost = asyncHandler(async (req, res) => {
     try {
-    const post = await Post.findById(req.params.id)
-    if (!post){
-        return res.status(404).json({msg: 'Post not found'})
-    }
+        const post = await Post.findById(req.params.id);
 
-    //check user
-    if (post.user.toString() !== req.user.id){
-        return res.status(401).json({msg: 'User not authorized'})
-    }
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found'})
+        }
 
-    await post.remove()
-    res.json({msg: 'Posdt removed'})
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send('Server Error')
+        if (post.user.toString() !== req.user.id) {
+            return res.status(404).json({ msg: 'User not authorized'})
+        }
+
+        await post.remove();
+
+        res.json({ msg: 'Post removed'})
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind == 'ObjectID') {
+            return res.status(404).json({msg: 'Post not found'});
+        }
+        res.status(500).send('Server Error');
     }
-    res.status(200).json("delete post")
-})
+});
 
 
 
 const createComment = asyncHandler(async (req, res) => {
-    res.status(200).json("create comment")
-})
+    [
+        auth,
+        [
+            check ('text', 'Text is required')
+            .not()
+            .isEmpty()
+        ]
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json( { errors: errors.array() });
+        }
+
+        try {
+            const user = await User.findById(req.user.id).select('-password');
+            const post = await Post.findById(req.params.id);
+
+            const newComment = {
+                text: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: req.user.id
+            };
+
+            post.comments.unshift(newComment);
+
+            await post.save();
+
+            res.json(post.comments);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+});
 
 const deleteComment = asyncHandler(async (req, res) => {
     try {
