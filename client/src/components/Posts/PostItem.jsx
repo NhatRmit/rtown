@@ -11,11 +11,11 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         <p className=''>{text}</p>
         <p className='post-date'> Posted on <Moment format='DD/MM/YYYY'>{date}</Moment></p>
         <button type='button' className='btn btn-light' onClick={e => addLike(_id)}>
-          <i className='fas fa-thumps-up'></i>
-          <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
+          <i className='fa fa-thumps-up'></i>
+          {/* <span>{likes.length > 0 && <span>{likes.length}</span>}</span> */}
         </button>
         <button type='button' className='btn btn-light' onClick={e => removeLike(_id)}>
-          <i className='fas fa-thumps-down'></i>
+          <i className='fa fa-thumps-down'></i>
         </button>
 
         <Link to={`/post/${_id}`} className="btn btn-primary">
@@ -23,7 +23,7 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         </Link>
         
         <button type='button' className='btn btn-danger' onClick={e => deletePost(_id)}>
-            <i className='fas fa-times' />
+            <i className='fa fa-times' />
         </button>
 
       </div>
@@ -41,4 +41,4 @@ PostItem.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-export default connect(mapStateToProps, { addLike, removeLike })(PostItem)
+export default connect(mapStateToProps, { addLike, removeLike, deletePost})(PostItem)

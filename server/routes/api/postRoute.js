@@ -8,7 +8,7 @@ router.get('/search', searchPost)
 
 router.get('/filter', filterTrendingPost)
 
-router.post('/', createPost)
+router.post('/:id', createPost)
 
 router.put('/:id', editPost)
 
