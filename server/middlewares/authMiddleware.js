@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
 const auth = asyncHandler(async(req, res, next) => {
-    let token;
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try {
             //get token from header
@@ -15,6 +14,7 @@ const auth = asyncHandler(async(req, res, next) => {
             //get user from token
             req.user = await User.findById(decoded.id).select('-password')
 
+            next()
         } catch (error) {
             res.status(404).json({message: error.message})
             throw new Error('No authorization')
@@ -22,8 +22,9 @@ const auth = asyncHandler(async(req, res, next) => {
     }
 
     if(!token){
-        throw new Error('No token')
+        throw new Error('Access Denied');
     }
 })
 
 module.exports = {auth}
+
