@@ -6,7 +6,6 @@ const User = require('../models/userModel')
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ _id: -1 });
-
         res.status(200).json( posts )
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -128,6 +127,8 @@ const downvotePost = asyncHandler(async (req, res) => {
     }
 })
 
+
+
 const deletePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -151,6 +152,8 @@ const deletePost = asyncHandler(async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+
 
 const createComment = asyncHandler(async (req, res) => {
     [
