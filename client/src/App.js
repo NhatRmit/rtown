@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
 import Newsfeed from './pages/Newsfeed'
 import Login from './pages/Login'
-import Posts from './components/Posts/Posts'
 import CommentForm from './pages/CommentForm'
+import Posts from './components/Posts/Posts'
 
 const App = () => {
   return (
@@ -13,8 +13,8 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Newsfeed />} />
             <Route path='/login' element={<Login />} />    
-            <Route path='/posts' element={<Posts />} />                    
             <Route path='/comment' element={<CommentForm />} />          
+            <Route path='/posts' element={<Posts />} />                    
           </Routes>
         </Router>
     </>

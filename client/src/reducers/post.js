@@ -100,22 +100,23 @@ function postReducer(state = initialState, action) {
         loading: false
       };
     case ADD_COMMENT:
-        return {
-          ...state,
-          post: { ...state.post, comments: payload},
-          loading: false
-        }
+      return {
+        ...state,
+        post: { ...state.post, comments: payload},
+        loading: false
+      };
     case REMOVE_COMMENT:
-        return {
-          ...state,
-          post: {
-            ...state.post,
-            comments: state.post.comments.filter(comment => comment._id !== payload)
-          }
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(comment => comment._id !== payload)
         }
+      };
+  
 
     default:
       return state;
-      }
+  }
 }
 export default postReducer;
