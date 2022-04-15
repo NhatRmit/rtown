@@ -18,7 +18,7 @@ router.put('/upvote/:id', auth, upvotePost)
 
 router.put('/removeupvote/:id', auth, removeupvotePost)
 
-router.put('/downvote/:id', downvotePost)
+router.put('/downvote/:id', auth, downvotePost)
 
 router.delete('/:id', deletePost)
 
