@@ -1,3 +1,4 @@
+const { text } = require('body-parser');
 const asyncHandler = require('express-async-handler');
 const { validationResult } = require('express-validator');
 const { validate } = require('../models/postModel');
@@ -61,7 +62,26 @@ const createPost = asyncHandler(async (req, res) => {
 })
 
 const editPost = asyncHandler(async (req, res) => {
-    res.status(200).json("create post")
+    const postFields = {}
+    const {text} = req.body
+    postFields.user = req.user.id
+    if (text) postFields.text = text
+
+    try {
+        let post = await Post.findOne({ user: req.user.id})
+        if (post){
+            //UPDATE
+            post = await Post.findOneAndUpdate(
+                { user: req.user.id},
+                { $set: postFields},
+                { new: true}
+            )
+            return res.json(post)
+        }
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
 })
 
 const upvotePost = asyncHandler(async (req, res) => {
