@@ -69,8 +69,8 @@ const upvotePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
-        if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length === 0) {
-            return res.json(400).json({ msg: 'Post has not yet been upvoted'});
+        if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post has not yet been upvoted'});
         }
 
         // get remove index
@@ -81,7 +81,7 @@ const upvotePost = asyncHandler(async (req, res) => {
 
         await post.save();
         
-        req.json(post.upvotes)
+        res.json(post.upvotes)
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error')
