@@ -5,10 +5,6 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    title: {
-        type: String,
-        required: true
-    },
     text: {
         type: String,
         required: true
@@ -19,9 +15,14 @@ const postSchema = mongoose.Schema({
     avatar: {
         type: String
     },
-    upvotes: {
-        type: Number
-    },
+    upvotes: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        }
+    ],
     downvotes: [
         {
             user: {
