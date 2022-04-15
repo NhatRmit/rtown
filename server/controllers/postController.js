@@ -65,23 +65,43 @@ const editPost = asyncHandler(async (req, res) => {
     res.status(200).json("create post")
 })
 
+// UPVOTE POST 
 const upvotePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
         if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length > 0) {
-            return res.status(400).json({ msg: 'Post has not yet been upvoted'});
+           return res.status(400).json({ msg: 'Post already upvoted' })
         }
 
-        // get remove index
-        const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
-
-        post.upvotes.splice(removeIndex, 1);
-
+        post.upvotes.unshift({ user: req.user.id });
 
         await post.save();
         
-        res.json(post.upvotes)
+        res.json(post.upvotes);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
+})
+
+// REMOVE UPVOTE POST
+const removeupvotePost = asyncHandler(async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if(post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length === 0) {
+            return res.status(400).json({ msg: 'Post have not yet been upvoted'})
+         }    
+
+        // Get remove index
+        const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
+        
+        post.upvotes.splice(removeIndex, 1);
+
+        await post.save();
+
+        res.json(post.upvotes);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error')
@@ -92,19 +112,16 @@ const downvotePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
-        if(post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length === 0) {
-            return res.json(400).json({ msg: 'Post has not yet been downvoted'});
+        if(post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already downvoted'})
         }
+ 
+         post.downvotes.unshift({ user: req.user.id });
+ 
+ 
+        await post.save();    
 
-        // get remove index
-        const removeIndex = post.downvotes.map(downvote => downvote.user.toString()).indexOf(req.user.id);
-
-        post.downvotes.splice(removeIndex, 1);
-        
-
-        await post.save();
-        
-        req.json(post.downvotes)
+        res.json(post.downvotes)
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error')
@@ -203,5 +220,5 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment,
+    createComment, deleteComment, removeupvotePost
 }
