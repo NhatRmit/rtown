@@ -6,7 +6,6 @@ const User = require('../models/userModel')
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ _id: -1 });
-
         res.status(200).json( posts )
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -82,7 +81,6 @@ const upvotePost = asyncHandler(async (req, res) => {
         const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
 
         post.upvotes.splice(removeIndex, 1);
-
 
         await post.save();
         
