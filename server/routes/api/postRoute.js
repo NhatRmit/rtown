@@ -20,7 +20,7 @@ router.put('/removeupvote/:id', auth, removeupvotePost)
 
 router.put('/downvote/:id', downvotePost)
 
-router.delete('/:id', deletePost)
+router.delete('/:id',auth ,deletePost)
 
 router.post('/comment/:id', createComment)
 
