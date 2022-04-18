@@ -21,7 +21,6 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         <Link to={`/post/${_id}`} className="btn btn-primary">
           Discussion{' '}{comments.length > 0 && (<span className='comment-count'>{comments.length}</span>)}
         </Link>
-        
         <button type='button' className='btn btn-danger' onClick={e => deletePost(_id)}>
             <i className='fa fa-times' />
         </button>
