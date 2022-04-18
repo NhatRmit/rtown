@@ -1,11 +1,13 @@
 :root {
     /* Fonts */
+    --heading-font: "Helvetica";
     --body-font: "Arial";
 
     /* RTown color palette */
     --navy: #000054;
     --red: #E4052A;
-    --light-grey: #F8F9FA;
+    --lighter-grey: #F8F9FA;
+    --light-grey: #ccc;
     --grey: #C2C2C2;
     --dark-grey: #DDE2E5;
     --darker-grey: #545454;
@@ -21,9 +23,9 @@
     height: fit-content;
     margin: 0 auto;
     padding: 2em;
-    font-family: "Helvetica";
+    font-family: var(--heading-font);
     margin-top: 8rem;
-    background-color: var(--light-grey);
+    background-color: var(--lighter-grey);
     font-family: "Helvetica";
     border: 2px solid var(--dark-grey);
     border-radius: 10px;
@@ -71,7 +73,7 @@
 }
 
 .register-btn {
-    background-color: var(--darker-grey);
+    background-color: var(--grey);
     padding: 10px 20px;
     color: var(--white);
     border: none;

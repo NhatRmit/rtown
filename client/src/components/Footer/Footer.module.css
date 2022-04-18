@@ -1,34 +1,20 @@
-:root {
-    /* Fonts */
-    --heading-font: "Helvetica";
-    --body-font: "Arial";
-
-    /* RTown color palette */
-    --navy: #000054;
-    --red: #E4052A;
-    --light-grey: #F8F9FA;
-    --grey: #C2C2C2;
-    --dark-grey: #DDE2E5;
-    --darker-grey: #545454;
-    --white: #ffffff;
-}
-
 .footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: fit-content;
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: var(--navy);
     color: var(--white);
     font-family: var(--heading-font);
+    padding: 0.5em 0;
 }
 
 .copyright {
-    color: var(--dark-grey);
+    color: var(--grey);
     text-align: center;
     padding: 1em 0;
 }
