@@ -1,12 +1,9 @@
-const { text } = require('body-parser');
 const asyncHandler = require('express-async-handler');
-const { validationResult } = require('express-validator');
-const { validate } = require('../models/postModel');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
 const getPosts = asyncHandler(async (req, res) => {
     try {
-        const posts = await Post.find().sort({ _id: -1 });
+        const posts = await Post.find().sort({ date: -1 });
         res.status(200).json( posts )
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -30,7 +27,10 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
     let posts;
     try {
         if (filter === 'top') {
-            posts = await Post.find().sort({ upvotes: -1 });
+            posts = await Post.aggregate([
+                    {"$addFields": { "upvotesCount": { $size: "$upvotes" } }},
+                    {"$sort" : { "upvotesCount": -1 }}
+                ])
         } else if (filter === 'trending') {
             posts = await Post.aggregate([
                 {"$addFields": { "commentsCount": { $size: "$comments" } }},
@@ -196,7 +196,7 @@ const createComment = asyncHandler(async (req, res) => {
 
             const newComment = {
                 text: req.body.text,
-                name: user.name,
+                name: user.usernameOrEmail,
                 avatar: user.avatar,
                 user: req.user.id
             };

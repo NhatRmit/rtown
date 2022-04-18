@@ -12,7 +12,7 @@ router.get('/filter', filterTrendingPost)
 
 router.post('/', auth, createPost)
 
-router.put('/:id', auth, editPost)
+router.put('/update/:id', auth, editPost)
 
 router.put('/upvote/:id', auth, upvotePost)
 
