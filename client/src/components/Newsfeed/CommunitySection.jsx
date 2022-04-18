@@ -2,13 +2,13 @@ import './CommunitySection.css'
 import {Link} from "react-router-dom";
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-import logo from './logo.png'
+import logo from './media/mobi-logo.png'
 
 const CommunitySection = () => {
     const community = [
         {
             id: 1,
-            img: "./logo.png"
+            img: "./media/badminton-club-logo.png"
         },
         {
             id: 2,
