@@ -11,13 +11,18 @@ import TosPage from "./pages/legal/TosPage";
 import ContentPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import RPointsPolicyPage from "./pages/legal/PrivacyPolicyPage";
-
+import CommunityRequestPage from "./pages/CommunityRequestPage";
 
 const pages = {
   newsfeed: {
     name: "Newsfeed",
     link: "/",
     component: <NewsfeedPage />,
+  },
+  communityRequest: {
+    name: "Community Request",
+    link: "/community-request",
+    component: <CommunityRequestPage />,
   },
   login: {
     name: "Login",

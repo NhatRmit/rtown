@@ -30,9 +30,7 @@
     font-family: var(--heading-font);
     font-size: 1em;
     font-weight: 500;
-    padding-top: 1em;
     color: var(--dark-grey);
-    
 }
 
 .joined-community {

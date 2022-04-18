@@ -25,9 +25,10 @@
 .post-section {
     display: flex;
     flex-direction: row;
-    background-color: var(--light-grey);
+    background-color: var(--lighter-grey);
     border-radius: 10px;
     margin-bottom: 2rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
 .vote-section {

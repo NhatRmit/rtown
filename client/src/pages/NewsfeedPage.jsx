@@ -12,25 +12,19 @@ const Newsfeed = () => {
     <>
       <Layout header footer >
         <div className='newsfeed-container'>
-        <div className='left-container'> 
-          <CommunitySection />
-        </div>
-        <div className='right-container'>
-          <div>
-            <CreatePost />
+          <div className='left-container'> 
+            <CommunitySection />
           </div>
-          <div>
-            <PostsSection />
+          <div className='right-container'>
+            <div>
+              <CreatePost />
+            </div>
+            <div>
+              <PostsSection />
+            </div>
           </div>
         </div>
-        </div>
-       
       </Layout>
-  
-     
-  
-
-
     </>
 
   )

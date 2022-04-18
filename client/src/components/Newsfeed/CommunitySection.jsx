@@ -32,13 +32,14 @@ const CommunitySection = () => {
        <div className="community-container">
            <h1 className="title">Community</h1>
            <div className="create-community">
-                <span className='create-icon'>
+                <Link to="/community-request"><span className='create-icon'>
                     {/*CHANGE ICON FOR ME*/}
-                    <IconContext.Provider value={{ color: '#C2C2C2', size: '2em' }}>
+                    <IconContext.Provider value={{ color: '#C0BFBF', size: '2em' }}>
                         <BsFillChatDotsFill />
                     </IconContext.Provider>
                 </span>
-                <p>Create community</p>
+                </Link>
+                <Link to="/community-request" className='link'><p>Create community</p></Link>
            </div>
            <div className='joined-community'>
             {/* {community.map(element => (
