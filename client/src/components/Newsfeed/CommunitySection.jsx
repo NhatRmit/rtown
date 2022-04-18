@@ -5,28 +5,28 @@ import { IconContext } from 'react-icons/lib'
 import logo from './media/mobi-logo.jpg'
 
 const CommunitySection = () => {
-    const community = [
-        {
-            id: 1,
-            img: "badminton-club-logo",
-            title: "Badminton Club"
-        },
-        {
-            id: 2,
-            img: "fintech-club-logo",
-            title: "Fintech Club"
-        },
-        {
-            id: 3,
-            img: "mass-media-club-logo",
-            title: "Mass Media Club"
-        },
-        {
-            id: 4,
-            img: 'mobi-logo',
-            title: "Global Experience"
-        }
-    ]
+    // const community = [
+    //     {
+    //         id: 1,
+    //         img: "badminton-club-logo",
+    //         title: "Badminton Club"
+    //     },
+    //     {
+    //         id: 2,
+    //         img: "fintech-club-logo",
+    //         title: "Fintech Club"
+    //     },
+    //     {
+    //         id: 3,
+    //         img: "mass-media-club-logo",
+    //         title: "Mass Media Club"
+    //     },
+    //     {
+    //         id: 4,
+    //         img: 'mobi-logo',
+    //         title: "Global Experience"
+    //     }
+    // ]
 
     return (
        <div className="community-container">
@@ -41,14 +41,15 @@ const CommunitySection = () => {
                 <p>Create community</p>
            </div>
            <div className='joined-community'>
-            {community.map(element => (
+            {/* {community.map(element => (
                 <span className='community' key={element.id}>
                     <Link to='/'> <img src={require('./media/' + community.img + '.jpg')} alt="Community logo" className={community.title}/></Link>
                 </span> 
-            ))}
-            
-
-            {/* <span className='community'>
+            ))} */}
+            <span className='community'>
+                <Link to='/'> <img src={logo} alt="Community logo" className="community-logo"/></Link>
+            </span>
+            <span className='community'>
                 <Link to='/'> <img src={logo} alt="Community logo" className="community-logo"/></Link>
             </span>
             <span className='community'>
@@ -56,7 +57,7 @@ const CommunitySection = () => {
             </span>
             <span className='community'>
                 <Link to='/'> <img src={logo} alt="Community logo" className="community-logo"/></Link>
-            </span> */}
+            </span>
 
            </div>
            
