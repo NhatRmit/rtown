@@ -11,6 +11,7 @@ import Community from './components/Communities/Community'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
+import EditPost from './components/Posts/EditPost'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -35,6 +36,10 @@ const App = () => {
           <Route 
             exact path='/posts' 
             element={<PrivateRoute element={Posts} />} 
+          />
+          <Route 
+            exact path='/edit-posts' 
+            element={<PrivateRoute element={EditPost} />} 
           />
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route

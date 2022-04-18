@@ -6,16 +6,18 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 
 
-const EditPost = ({ post: { post, loading }, addPost }) => {
+const EditPost = ({ post: { post, loading } }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        text: ''
+        text: post.text
     })
     const {
         text
     } = formData
-
+    const test = () => {
+        setFormData(useDispatch(editPost))
+    }
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
     // useEffect(() => {

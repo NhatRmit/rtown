@@ -22,6 +22,15 @@ const searchPost = asyncHandler(async (req, res) => {
     }
 })
 
+const getPostById = asyncHandler(async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.status(200).json( post )
+    } catch (error) {
+        res.status(404).json({ msg: error.message })
+    }
+})
+
 const filterTrendingPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
     let posts;
@@ -243,5 +252,5 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost
+    createComment, deleteComment, removeupvotePost, getPostById
 }

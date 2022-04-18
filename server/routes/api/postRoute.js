@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment} = require('../../controllers/postController')
+const {getPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById} = require('../../controllers/postController')
 
 const {auth} = require('../../middlewares/authMiddleware')
 
 router.get('/', getPosts)
+
+router.get('/:id', auth, getPostById)
 
 router.get('/search', searchPost)
 
