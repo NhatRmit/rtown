@@ -12,7 +12,8 @@ app.use(express.json());
 app.use('/api/users', require('./routes/api/userRoute'))
 app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/auth', require('./routes/api/authRoute'))
-app.use('/api/profile', require('./routes/api/profileRoute'))
+app.use('/api/profiles', require('./routes/api/profileRoute'))
+app.use('/api/communities', require('./routes/api/communityRoute'))
 
 // set port, listen for requests
 const port = process.env.PORT || 5000;

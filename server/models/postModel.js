@@ -23,6 +23,9 @@ const postSchema = mongoose.Schema({
             }
         }
     ],
+    upvotesCount: {
+        type: Number
+    },
     downvotes: [
         {
             user: {

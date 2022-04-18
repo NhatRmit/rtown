@@ -1,0 +1,17 @@
+.side-container-profile {
+    float: left;
+    width: 20%;
+    padding: 1rem;
+}
+
+.main-container-profile {
+    float: left;
+    width: 60%;
+    padding: 1rem;
+}
+
+.blank-profile {
+    float: left;
+    width: 10%;
+    padding: 1rem;
+}

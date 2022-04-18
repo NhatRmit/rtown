@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_POSTS, POST_ERROR, ADD_POST, UPDATE_LIKES, DELETE_POST, ADD_COMMENT, REMOVE_COMMENT, EDIT_POST } from "./types";
+import { GET_POSTS,
+         POST_ERROR,
+         ADD_POST,
+         UPDATE_LIKES,
+         DELETE_POST,
+         ADD_COMMENT,
+         REMOVE_COMMENT, EDIT_POST } from "./types";
 
 //Get post
 export const getPosts = () => async dispatch => {

@@ -9,7 +9,7 @@ const PostForm = ({addPost}) => {
         <div>
             <h1>Add Post</h1>
         </div>
-        <form className="form" onSubmit={e => {e.preventDefault
+        <form className="form" onSubmit={e => {e.preventDefault()
         addPost({text})
         setText('')
         }}>
@@ -22,7 +22,6 @@ const PostForm = ({addPost}) => {
             required
             ></textarea>
             <input type="submit" className="btn btn-dark my-1" value="Submit" />
-            
         </form>
     </div>
   )

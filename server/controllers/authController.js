@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require("../models/userModel")
 const {loginValidation} = require('../../validation');
+const asyncHandler = require('express-async-handler')
 
 
 exports.login = async (req, res) => {
@@ -16,7 +17,7 @@ exports.login = async (req, res) => {
 
         // check if password is valid
         if(req.body.password === existedUser.password){
-            return res.send({token: generateToken(existedUser.id)}) // direct to newsfeed page
+            return res.send({token: generateToken(existedUser._id)}) // direct to newsfeed page
         }
 
         else{
@@ -36,6 +37,17 @@ exports.login = async (req, res) => {
     }
 }  
 
+exports.getAuth = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
 }
+

@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import logo from './logo.png'
 import './Navbar.css'
+import { logoutUser } from '../../actions/auth'
 
 const Navbar = () => {
     const [text, setText] = useState('')
@@ -15,7 +16,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     const onLogout = (e) => {
-        dispatch()
+        dispatch(logoutUser())
         navigate('/login')
     }
 
