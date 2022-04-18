@@ -52,7 +52,7 @@ const LoginForm = () => {
             </form>
             <p className={style["p"]}>By signing in, you accept <Link to={'/'} className={style["a"]}>the rules of use of RMIT systems.</Link></p>
             <div className={style["button-wrapper"]}>
-                <button className={style["register-btn"]}>Sign in</button>
+                <button className={style["login-btn"]}>Sign in</button>
             </div>
             <Link to="/" className={style["link"]}>Forgot your password?</Link>
 
