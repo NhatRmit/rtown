@@ -6,9 +6,10 @@
     /* RTown color palette */
     --navy: #000054;
     --red: #E4052A;
-    --light-grey: #F8F9FA;
+    --lighter-grey: #F8F9FA; ;
+    --light-grey: #F4F5F6;
     --grey: #DDE2E5;
-    --dark-grey: #C2C2C2;
-    --darker-grey: #545454;
-    --white: #ffffff;
+    --dark-grey: #c0bfbf;
+    --darker-grey: #676767;
+    --white: #FFFFFF;
 }

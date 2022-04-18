@@ -1,0 +1,16 @@
+.newsfeed-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 8em;
+}
+
+.left-container {
+    width: 15%;
+    margin-left: 4rem;
+}
+
+.right-container {
+    width: 75%;
+    margin-right: 4rem;
+}

@@ -1,14 +1,30 @@
 import React from 'react'
 import Layout from '../components/Layout'
 // import Filter from '../components/Filter/Filter'
-import Community from '../components/Newsfeed/CommunitySection'
+import CommunitySection from '../components/Newsfeed/CommunitySection'
+import CreatePost from '../components/Newsfeed/CreatePost'
+import PostsSection from '../components/Newsfeed/PostsSection'
+import './NewsfeedPage.css'
 
 
 const Newsfeed = () => {
   return (
     <>
       <Layout header footer >
-        <Community/>
+        <div className='newsfeed-container'>
+        <div className='left-container'> 
+          <CommunitySection />
+        </div>
+        <div className='right-container'>
+          <div>
+            <CreatePost />
+          </div>
+          <div>
+            <PostsSection />
+          </div>
+        </div>
+        </div>
+       
       </Layout>
   
      
