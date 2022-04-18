@@ -27,6 +27,7 @@
     flex-direction: row;
     background-color: var(--light-grey);
     border-radius: 10px;
+    margin-bottom: 2rem;
 }
 
 .vote-section {
@@ -84,6 +85,11 @@
     font-family: var(--body-font);
     padding-top: 0.5em;
     text-align: justify;
+}
+
+.post-image {
+    width: 100%;
+    margin-top: 1em;
 }
 
 .content-section-footer {
