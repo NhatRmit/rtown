@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPosts } from '../../actions/post'
+import { getPosts, getMyPosts } from '../../actions/post'
 import Spinner from '../Layout/Spinner'
 import PostItem from '../Posts/PostItem'
 import Posts from '../Posts/Posts'
 
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(getMyPosts())
+    }, [dispatch])
 
     return (
         <div>
@@ -14,16 +20,11 @@ const ProfileMain = ({ profile, loading }) => {
                 <Spinner />
             ) : (
                 <div>
-                    <p>{profile.description}</p>
-                    {posts.map(post => post.user === profile.user ? (
-                        // <PostItem key={post._id} post={post}/>
-                        <h4>lalala</h4>
-                    ) : (
-                        <h4>You have not posted anything yet</h4>
-                    ))}
+                    {posts.map(post =>
+                        <PostItem post={post}/>
+                    )}
                 </div>
-            )
-            }
+            )}
         </div>
     )
 }
