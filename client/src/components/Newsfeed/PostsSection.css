@@ -65,15 +65,16 @@
     cursor: pointer;
 }
 
-.icon:hover {
-    text-decoration: underline;
-}
-
 .username  {
     padding: 0 1.5rem 0 0.5rem;
     color: var(--navy);
     font-weight: 600;
 }
+
+.username:hover {
+    text-decoration: underline;
+}
+
 
 .uploaded-time {
     color: var(--dark-grey);
