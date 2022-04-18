@@ -1,11 +1,14 @@
 import axios from "axios";
-import { GET_POSTS,
-         POST_ERROR,
-         ADD_POST,
-         UPDATE_LIKES,
-         DELETE_POST,
-         ADD_COMMENT,
-         REMOVE_COMMENT, EDIT_POST } from "./types";
+import {
+    GET_POSTS,
+    GET_POST,
+    POST_ERROR,
+    ADD_POST,
+    UPDATE_LIKES,
+    DELETE_POST,
+    ADD_COMMENT,
+    REMOVE_COMMENT, EDIT_POST
+} from "./types";
 
 //Get post
 export const getPosts = () => async dispatch => {
@@ -106,14 +109,14 @@ export const deletePost = id => async dispatch => {
 }
 
 // Edit post
-export const editPost = (formData, navigate) => async dispatch => {
+export const editPost = (postId, formData, navigate) => async dispatch => {
     try {
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.put('/api/posts/update', formData, config)
+        const res = await axios.put(`/api/posts/update/${postId}`, formData, config)
 
         dispatch({
             type: EDIT_POST,
@@ -159,6 +162,37 @@ export const removeLike = id => async dispatch => {
         dispatch({
             type: POST_ERROR,
             payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+export const getMyPosts = () => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/myPosts`)
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const getPostById = (postId) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/${postId}`)
+
+        dispatch({
+            type: GET_POST,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
         })
     }
 }

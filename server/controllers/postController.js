@@ -77,11 +77,11 @@ const editPost = asyncHandler(async (req, res) => {
     if (text) postFields.text = text
 
     try {
-        let post = await Post.findOne({ user: req.user.id })
+        let post = await Post.findOne({_id: req.params.post_id})
         if (post) {
             //UPDATE
             post = await Post.findOneAndUpdate(
-                { user: req.user.id },
+                {_id: req.params.post_id},
                 { $set: postFields },
                 { new: true }
             )
@@ -262,6 +262,6 @@ const getMyPosts = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
+    getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
     createComment, deleteComment, removeupvotePost, getPostById
 }

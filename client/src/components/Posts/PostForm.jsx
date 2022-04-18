@@ -9,11 +9,13 @@ const PostForm = ({ addPost }) => {
             <div>
                 <h1>Add Post</h1>
             </div>
-            <form className="form" onSubmit={e => {
-                e.preventDefault(),
-                addPost({ text }),
-                setText('')
-            }}>
+            <form className="form" onSubmit={e => (
+                e.preventDefault()
+
+                ,addPost({ text })
+
+                ,setText('')
+            )}>
                 <textarea
                     name='text'
                     cols="30"

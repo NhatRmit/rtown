@@ -6,7 +6,8 @@ import {
   ADD_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  EDIT_POST
+  EDIT_POST,
+  GET_POST
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +27,12 @@ function postReducer(state = initialState, action) {
         posts: payload,
         loading: false
       };
+    case GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false
+      }
     case ADD_POST:
       return {
         ...state,
@@ -35,7 +42,7 @@ function postReducer(state = initialState, action) {
       case EDIT_POST:
       return {
         ...state,
-        post: [payload.text, ...state.post],
+        post: payload,
         loading: false
       };
     case DELETE_POST:

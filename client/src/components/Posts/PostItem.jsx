@@ -25,6 +25,10 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
             <i className='fa fa-times' />
         </button>
 
+        <Link to={`/posts/${_id}`}>
+          <h1>EDIT</h1>
+        </Link>
+
       </div>
     </div>
   )
