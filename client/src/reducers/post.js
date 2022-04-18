@@ -6,7 +6,8 @@ import {
   ADD_POST,
   GET_POST,
   ADD_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
+  EDIT_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -66,8 +67,13 @@ function postReducer(state = initialState, action) {
           comments: state.post.comments.filter(comment => comment._id !== payload)
         }
       };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload},
+        loading: false
+      }
   
-
     default:
       return state;
   }

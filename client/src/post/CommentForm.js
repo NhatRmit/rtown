@@ -1,12 +1,17 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect} from 'react-redux'
+import { useParams } from 'react-router-dom' 
 import { addComment } from '../actions/post'
 import './CommentForm.css'
 
 
-const CommentForm = ({ addComment}) => {
+
+const CommentForm = ({ postId, addComment}) => {
   const [text, setText] = useState('');
+  const onChange = e => (
+    setText(e.target.value)
+  )
 
   return (
     <div className='comment-background'>
@@ -16,7 +21,7 @@ const CommentForm = ({ addComment}) => {
         <form
           onSubmit={ e=> {
               e.preventDefault();
-            //   addComment(postId, { text });
+              addComment(postId, { text });
               setText('');
           }} 
         >
@@ -27,7 +32,7 @@ const CommentForm = ({ addComment}) => {
             rows="5"
             placeholder='  Create a comment'
             value={ text}
-            onChange = {e => setText(e.target.value)} 
+            onChange ={ onChange }
             />
             <input type='submit' value='Send' className='comment-btn'/>
         </form>

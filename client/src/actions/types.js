@@ -5,3 +5,4 @@ export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
