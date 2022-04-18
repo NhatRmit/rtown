@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_POSTS, POST_ERROR, ADD_POST, UPDATE_LIKES, DELETE_POST, ADD_COMMENT,REMOVE_COMMENT} from "./types";
+import { GET_POSTS, POST_ERROR, ADD_POST, UPDATE_LIKES, DELETE_POST, ADD_COMMENT, REMOVE_COMMENT, EDIT_POST } from "./types";
 
 //Get post
 export const getPosts = () => async dispatch => {
@@ -37,7 +37,7 @@ export const addComment = (postId, FormData) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status}
+            payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
 };
@@ -62,7 +62,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status}
+            payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
 };
@@ -73,7 +73,7 @@ export const addPost = formData => async dispatch => {
         dispatch({
             type: ADD_POST,
             payload: res.data
-    
+
         })
     } catch (error) {
         dispatch({
@@ -89,7 +89,7 @@ export const deletePost = id => async dispatch => {
         dispatch({
             type: DELETE_POST,
             payload: id
-    
+
         })
     } catch (error) {
         dispatch({
@@ -99,13 +99,40 @@ export const deletePost = id => async dispatch => {
     }
 }
 
+// Edit post
+export const editPost = (formData, navigate) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.put('/api/posts/update', formData, config)
+
+        dispatch({
+            type: EDIT_POST,
+            payload: res.data
+        })
+
+        dispatch(setAlert('Post Updated', 'success'))
+
+        navigate('/posts')
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+
 // Add Like
 export const addLike = id => async dispatch => {
     try {
         const res = await axios.put(`/api/posts/like/${id}`)
         dispatch({
             type: UPDATE_LIKES,
-            payload: {id, likes: res.data}
+            payload: { id, likes: res.data }
         })
     } catch (error) {
         dispatch({
@@ -120,7 +147,7 @@ export const removeLike = id => async dispatch => {
         const res = await axios.put(`/api/posts/unlike/${id}`)
         dispatch({
             type: UPDATE_LIKES,
-            payload: {id, likes: res.data}
+            payload: { id, likes: res.data }
         })
     } catch (error) {
         dispatch({
