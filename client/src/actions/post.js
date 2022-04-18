@@ -168,7 +168,7 @@ export const removeLike = id => async dispatch => {
 
 export const getMyPosts = () => async dispatch => {
     try {
-        const res = await axios.put(`/api/posts/myPosts`)
+        const res = await axios.get(`/api/posts/myPosts`)
         dispatch({
             type: GET_POSTS,
             payload: res.data

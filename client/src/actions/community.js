@@ -104,3 +104,18 @@ export const deleteCommunity = (community_id) => async dispatch => {
         })
     }
 }
+
+export const getMyCommunities = () => async dispatch => {
+    try {
+        const res = await axios.get(`/api/communities/myCommunities`)
+        dispatch({
+            type: GET_COMMUNITIES,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}

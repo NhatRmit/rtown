@@ -7,10 +7,13 @@ const {
     createCommunity,
     updateCommunity,
     deleteCommunity,
+    getMyCommunities
 
 } = require('../../controllers/communityController')
 
 router.get('/', getAllCommunity)
+
+router.get('/myCommunities', auth, getMyCommunities)
 
 router.get('/:community_id', auth, getCommunityById)
 
