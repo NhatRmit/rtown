@@ -18,7 +18,7 @@ const PostsSection = () => {
                         {/*CHANGE ICONS FOR ME */}
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                                 <BsFillChatDotsFill />
-                        </IconContext.Provider>
+                        </IconContext.Provider> 
                     </span>
                     <p className='vote-total'>1000</p>
                     <span className='icon'>
