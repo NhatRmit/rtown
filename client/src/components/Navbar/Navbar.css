@@ -18,65 +18,103 @@
     text-align: center;
     background-color: #000054;
 }
+:root {
+    /* Fonts */
+    --heading-font: "Helvetica";
+    --body-font: "Arial";
 
-.a {
-    font-size: 2rem;
-    position: absolute;
-    margin: 0.30rem;
+    /* RTown color palette */
+    --navy: #000054;
+    --red: #E4052A;
+    --lighter-grey: #F8F9FA;
+    --light-grey: #ccc;
+    --grey: #DDE2E5;
+    --dark-grey: #afaeae;
+    --darker-grey: #545454;
+    --white: #FFFFFF;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-    margin-bottom: 60px;
+    height: fit-content;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: var(--heading-font);
 }
 
-.header ul {
+.logo-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-}
-
-.header ul li {
-    margin-left: 1.25rem;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: 1px solid #E4052A;
-    border-radius: 5px;
-    background: #E4052A;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    text-align: center;
-    appearance: button;
-    display: flex;
     align-items: center;
-    justify-content: center;
+    padding: 1rem 0 1rem 3rem;
 }
 
-.btn:hover {
-    transform: scale(0.98);
-}
-
-img {
+.logo-container .logo {
     width: 3rem;
 }
 
-.icon-search,
-.icon-chat,
-.icon-user {
+.logo-container a {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    font-size: 25px;
+    padding-right: 0.5rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.search-bar-section {
+    width: 70%;
+    margin-left: 1rem;
+}
+
+.search-bar  {
+    display: flex;
+    align-items: center;   
+}
+
+.search-bar input {
+    width: 35%;
+    padding: 0.5rem;
+    border: 1px solid var(--white);
+    border-radius: 5px;
+    outline: none;
+}
+
+.search-bar input::placeholder {
+    color: var(--dark-grey);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.search-icon {
+    margin-left: 1rem;
     cursor: pointer;
 }
 
-.icon-search:hover,
+.right-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 3rem;
+}
+
+.icon-chat,
+.icon-user {
+    cursor: pointer;
+    padding: 0 0.5em;
+}
+
+.search-icon:hover,
 .icon-chat:hover,
 .icon-user:hover {
-    transform: scale(0.98);
+    transform: scale(1);
 }
 
 .form {
@@ -92,7 +130,32 @@ img {
     outline: none;
 }
 
-.form label {
-    position: absolute;
-    margin: 0.25rem 1rem;
+.logout-btn {
+    all: unset;
+    border-radius: 5px;
+    padding: 0.8em 1.5em;
+    margin-left: 1em;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: center;
+    appearance: button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.logout-btn:hover {
+    transform: scale(1);
+}
+
+
+
+
+
+
+
+

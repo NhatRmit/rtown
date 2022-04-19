@@ -1,23 +1,9 @@
-:root {
-    /* Fonts */
-    --body-font: "Arial";
-
-    /* RTown color palette */
-    --navy: #000054;
-    --red: #E4052A;
-    --light-grey: #F8F9FA;
-    --grey: #C2C2C2;
-    --dark-grey: #DDE2E5;
-    --darkes-grey: #545454;
-    --white: #ffffff;
-}
-
 .loginform-footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: fit-content;
-    margin-top: 50px;
+    height:max-content;
+    margin-top: 5rem;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -25,10 +11,11 @@
     color: var(--white);
     font-family: var(--heading-font);
     padding: 1em 0 2em 0;
+    position: relative;
 }
 
 .copyright {
-    color: var(--dark-grey);
+    color: var(--light-grey);
     text-align: center;
     padding: 1em 0 1.5em 0;
 }

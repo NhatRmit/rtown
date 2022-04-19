@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
-import Newsfeed from './pages/Newsfeed'
-import Login from './pages/Login'
+import NewsfeedPage from './pages/NewsfeedPage'
+import LoginPage from './pages/auth/LoginPage'
 import Posts from './components/Posts/Posts'
 import CommentForm from './pages/CommentForm'
 import Profile from './components/Profile/Profile'
@@ -28,18 +28,18 @@ const App = () => {
     <>
       <Router>
         <Routes>
-          <Route exact path='/login' element={<Login />} />
-          <Route 
-            exact path='/newsfeed' 
-            element={<PrivateRoute element={Newsfeed} />} 
+          <Route exact path='/login' element={<LoginPage />} />
+          <Route
+            exact path='/newsfeed'
+            element={<PrivateRoute element={NewsfeedPage} />}
           />
-          <Route 
-            exact path='/posts' 
-            element={<PrivateRoute element={Posts} />} 
+          <Route
+            exact path='/posts'
+            element={<PrivateRoute element={Posts} />}
           />
-          <Route 
+          <Route
             exact path='posts/:postId'
-            element={<PrivateRoute element={EditPost} />} 
+            element={<PrivateRoute element={EditPost} />}
           />
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
@@ -53,7 +53,36 @@ const App = () => {
         </Routes>
       </Router>
     </>
-  );
+  )
 }
+// import {allPages} from "./Pages"
+
+// function App() {
+//   const pages = allPages.all;
+//   return (
+//       <Router>
+//         <Routes>
+//           {pages.map((page, key) => (
+//               <Route key={key} path={page.link} element={page.component} />
+//           ))}
+//         </Routes>
+//       </Router>
+//   );
+// }
 
 export default App;
+
+// const App = () => {
+//   return (
+//     <>
+//         <Router>
+//           <Routes>
+//             <Route path='/' element={<Newsfeed />} />
+//             <Route path='/login' element={<Login />} />            
+//           </Routes>
+//         </Router>
+//     </>
+//   );
+// }
+
+// export default App;

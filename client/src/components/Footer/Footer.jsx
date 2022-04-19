@@ -6,9 +6,7 @@ const Footer = () => {
 
     return (
         <footer className={style["footer"]}>
-            
             <div className={[style["copyright"]]}>Copyright &copy; {currentYear} RMIT Town. All Rights Reserved.</div>
-            
             <div className={style["footer-nav"]}>
                 <div className={style["footer-wrapper"]}>
                     <Link to="/">About Us</Link>
@@ -16,15 +14,15 @@ const Footer = () => {
                 </div>
 
                 <div className={style["footer-wrapper"]}>
-                    <Link to="/">Disclaimer</Link>
-                    <Link to="/">Terms</Link>
+                    <Link to="/disclaimer">Disclaimer</Link>
+                    <Link to="/tos">Terms</Link>
                     <Link to="/">Contact Us</Link>
                 </div>
 
                 <div className={style["footer-wrapper"]}>
-                    <Link to="/">Content Policy</Link>
-                    <Link to="/">Privacy Policy</Link>
-                    <Link to="/">R-Points Policy</Link>
+                    <Link to="/content-policy">Content Policy</Link>
+                    <Link to="/privacy-policy">Privacy Policy</Link>
+                    <Link to="/rpoints-policy">R-Points Policy</Link>
                 </div>
             </div>
       </footer>
