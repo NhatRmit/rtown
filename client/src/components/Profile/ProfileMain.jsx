@@ -19,9 +19,14 @@ const ProfileMain = ({ profile, loading }) => {
             {profile === null || loading ? (
                 <Spinner />
             ) : (
+
                 <div>
+                    <p>123</p>
+                    <p>123</p>
+                    <p>123</p>
+                    <p>List of Post</p>
                     {posts.map(post =>
-                        <PostItem post={post}/>
+                        <PostItem post={post} />
                     )}
                 </div>
             )}

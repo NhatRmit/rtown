@@ -16,7 +16,7 @@ const getProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -34,7 +34,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -47,7 +47,7 @@ const getAllProfiles = asyncHandler(async (req, res) => {
         res.status(200).json(profiles)
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -68,7 +68,8 @@ const createProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
+
     }
 })
 
@@ -94,7 +95,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.log(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -131,7 +132,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
         res.json(profile.community)
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -175,11 +176,9 @@ const leaveCommunity = asyncHandler(async (req, res) => {
         res.json(profile)
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
-
-
 
 module.exports = {
     getUserProfile,

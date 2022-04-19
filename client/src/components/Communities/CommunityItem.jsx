@@ -2,21 +2,20 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCommunityById } from '../../actions/community'
+import { getProfile } from '../../actions/profile'
 
 const CommunityItem = ({ community }) => {
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getCommunityById(community.communityId))
-    }, [dispatch, community.communityId])
-
-    const comm = useSelector(state => state.community.community)
-    console.log(comm.communityName)
+    console.log(community.communityId.communityName)
     return (
         <div>
-            <Link to={`/community/${comm._id}`}>
-                <img className="round-img" src={comm.avatar} alt="commAvatar" />
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p></p>
+            <Link to={`/community/${community.communityId._id}`}>
+                <img className="round-img" src={community.communityId.avatar} alt="commAvatar" />
             </Link>
-            <p>{comm.communityName}</p>
+            <h4>{community.communityId.communityName}</h4>
         </div>
     )
 }

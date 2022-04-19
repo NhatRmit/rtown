@@ -21,7 +21,7 @@ export const getProfile = () => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
 }
@@ -37,7 +37,7 @@ export const getProfileById = (userId) => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
 }
@@ -54,7 +54,7 @@ export const getAllProfiles = () => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.data.statusText, status: err.response.data.status }
         })
     }
 }
@@ -75,7 +75,7 @@ export const updateProfile = (formData, navigate) => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
 }
@@ -91,7 +91,7 @@ export const joinCommunity = (community_id, profile_id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
 }
@@ -107,7 +107,7 @@ export const leaveCommunity = (community_id, profile_id, navigate) => async disp
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
 }

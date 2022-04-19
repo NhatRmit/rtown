@@ -3,7 +3,6 @@ import Spinner from '../Layout/Spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import CommunityItem from '../Communities/CommunityItem'
 import { getMyCommunities } from '../../actions/community'
-
 const ProfileSidebar = ({ profile, loading }) => {
     const dispatch = useDispatch()
     const communities = useSelector(state => state.community.communities)
@@ -11,7 +10,6 @@ const ProfileSidebar = ({ profile, loading }) => {
     useEffect(() => {
         dispatch(getMyCommunities())
     }, [dispatch])
-    console.log(communities)
 
     return (
         <div>
@@ -32,8 +30,12 @@ const ProfileSidebar = ({ profile, loading }) => {
                         <Spinner />
                     ) : (
                         <div>
-                            {communities.map(community =>
-                                <CommunityItem community={community} />
+                            {communities.map(community => {
+                                return (
+                                    <CommunityItem community={community} />
+
+                                )
+                            }
                             )}
                         </div>
                     )}

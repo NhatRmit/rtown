@@ -14,7 +14,7 @@ const getAllCommunity = asyncHandler(async (req, res) => {
         res.status(200).json(communities)
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -29,7 +29,7 @@ const getCommunityById = asyncHandler(async (req, res) => {
         res.status(200).json(community)
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -49,7 +49,7 @@ const createCommunity = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.json(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -83,7 +83,7 @@ const updateCommunity = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
@@ -101,18 +101,18 @@ const deleteCommunity = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).send('Server Error')
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 
 const getMyCommunities = asyncHandler(async(req, res) => {
     try {
-        const profile = await Profile.findOne({user: req.user.id})
+        const profile = await Profile.findOne({user: req.user.id}).populate('community.communityId', ['communityName'])
         res.status(200).json(profile.community)
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).json({msg: 'Server Error'})
     }
 })
 

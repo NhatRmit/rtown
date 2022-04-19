@@ -16,7 +16,7 @@ const profileStudentSchema = mongoose.Schema({
         {
             communityId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'profile'            
+                ref: 'community'            
             },
         }
     ],
