@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById} = require('../../controllers/postController')
+const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById} = require('../../controllers/postController')
 
 const {auth} = require('../../middlewares/authMiddleware')
 
@@ -18,15 +18,17 @@ router.post('/', auth, createPost)
 
 router.put('/update/:post_id', auth, editPost)
 
+router.put('/editcomment/:id', auth, editComment)
+
 router.put('/upvote/:id', auth, upvotePost)
 
 router.put('/removeupvote/:id', auth, removeupvotePost)
 
-router.put('/downvote/:id', downvotePost)
+router.put('/downvote/:id', auth, downvotePost)
 
 router.delete('/:id',auth ,deletePost)
 
-router.post('/comment/:id', createComment)
+router.post('/comment/:id', auth, createComment)
 
 router.delete('/comment/:id/:comment_id', deleteComment)
 
