@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Community = require('../models/communityModel')
 const User = require('../models/userModel')
+const Profile = require('../models/profileModel')
 
 const getAllCommunity = asyncHandler(async (req, res) => {
     try {
@@ -104,6 +105,17 @@ const deleteCommunity = asyncHandler(async (req, res) => {
     }
 })
 
+const getMyCommunities = asyncHandler(async(req, res) => {
+    try {
+        const profile = await Profile.findOne({user: req.user.id})
+        res.status(200).json(profile.community)
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
 const deleteMemberCommunity = asyncHandler(async(req, res) => {
 
 })
@@ -114,5 +126,5 @@ module.exports = {
     createCommunity,
     updateCommunity,
     deleteCommunity,
-
+    getMyCommunities,
 }

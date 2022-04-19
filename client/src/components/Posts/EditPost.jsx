@@ -1,34 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { addPost, editPost } from "../../actions/post";
+import { addPost, editPost, getPostById } from "../../actions/post";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
+const initialState = {
+    text: ''
+}
 
 const EditPost = ({ post: { post, loading } }) => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [formData, setFormData] = useState({
-        text: post.text
-    })
+    const dispatch = useDispatch()
+    const { postId } = useParams()
+    const [formData, setFormData] = useState(initialState)
+
     const {
         text
     } = formData
-    const test = () => {
-        setFormData(useDispatch(editPost))
-    }
+
+
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
-    // useEffect(() => {
-    //     setFormData({
-    //         text: loading || !post.text ? '' : post.text
-    //     })
-    // }, [loading, dispatch, post])
+    useEffect(() => {
+        
+        if (!post) dispatch(getPostById(postId));
+
+        // if we finished loading and we do have a profile
+        // then build our profileData
+        if (!loading && post) {
+          const textData = { ...initialState };
+          for (const key in post) {
+            if (key in textData) textData[key] = post[key];
+          }
+
+          setFormData(textData);
+        }
+    }, [loading, post, dispatch, postId])
 
     const onUpdate = (e) => {
         e.preventDefault()
-        dispatch(editPost(formData, navigate))
+        dispatch(editPost(postId, formData, navigate))
     }
 
     return (
