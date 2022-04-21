@@ -57,12 +57,12 @@ import PropTypes from 'prop-types'
 import Moment from 'react-moment'
 import { connect, useDispatch } from 'react-redux'
 import { addLike, removeLike, deletePost } from '../../actions/post'
-const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, user, likes, comments, date } }) => {
+const PostItem = ({ addLike, removeLike, post: { auth, _id, text, name, avatar, user, likes, comments, date } }) => {
   const dispatch = useDispatch()
   const onDelete = (e) => {
     e.preventDefault()
     dispatch(deletePost(_id))
-}
+  }
   return (
     <div>
       <div>
@@ -74,12 +74,12 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         <button type='button' className='btn btn-light' onClick={e => removeLike(_id)}>
           <i className='fa fa-thumps-down'></i>
         </button>
-        
+
         <Link to={`/post/${_id}`} className="btn btn-primary">
           Discussion{' '}{comments.length > 0 && (<span className='comment-count'>{comments.length}</span>)}
         </Link>
         <button type='button' className='btn btn-danger' onClick={onDelete}>
-            <i className='fa fa-times' />Delete
+          <i className='fa fa-times' />Delete
         </button>
 
         <Link to={`/posts/${_id}`} className="btn btn-primary">

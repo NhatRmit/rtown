@@ -38,6 +38,7 @@ function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 profile: null,
+                profiles: null,
             }
 
         case PROFILE_JOIN_COMMUNITY:

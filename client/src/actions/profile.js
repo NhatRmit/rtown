@@ -26,7 +26,7 @@ export const getProfile = () => async dispatch => {
     }
 }
 
-export const getProfileById = (userId) => async dispatch => {
+export const getProfileById = (userId, navigate) => async dispatch => {
     try {
         const res = await axios.get(`/api/profiles/${userId}`)
 
@@ -34,6 +34,7 @@ export const getProfileById = (userId) => async dispatch => {
             type: GET_PROFILE,
             payload: res.data
         })
+        navigate(`profiles/${userId}`)
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
@@ -110,4 +111,8 @@ export const leaveCommunity = (community_id, profile_id, navigate) => async disp
             // payload: { msg: err.response.statusText, status: err.response.status }
         })
     }
+}
+
+export const clearProfile = () => async dispatch => {
+    dispatch({type: CLEAR_PROFILE})
 }

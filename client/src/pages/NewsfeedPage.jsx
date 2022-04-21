@@ -8,7 +8,7 @@ import CreatePost from '../components/Newsfeed/CreatePost'
 import PostsSection from '../components/Newsfeed/PostsSection'
 import './NewsfeedPage.css'
 import { getAllCommunities } from '../actions/community'
-import { BsFillChatDotsFill } from 'react-icons/bs'
+import { RiCommunityFill } from 'react-icons/ri'
 import { IconContext } from 'react-icons/lib'
 import { Link, useNavigate } from "react-router-dom";
 import { getPosts } from '../actions/post'
@@ -41,7 +41,7 @@ const NewsfeedPage = () => {
               {/*CHANGE ICON FOR ME*/}
               <span>
                 <IconContext.Provider value={{ color: '#C0BFBF', size: '2em' }}>
-                  <BsFillChatDotsFill />
+                  <RiCommunityFill />
                 </IconContext.Provider>
               </span>
               <p>Create community</p>

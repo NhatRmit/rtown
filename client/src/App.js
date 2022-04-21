@@ -7,6 +7,7 @@ import LoginPage from './pages/auth/LoginPage'
 import Posts from './components/Posts/Posts'
 import CommentForm from './pages/CommentForm'
 import Profile from './components/Profile/Profile'
+import UserProfile from './components/Profile/UserProfile'
 import Community from './components/Communities/Community'
 import CreateCommunity from './components/Communities/CreateCommunity'
 import PrivateRoute from './PrivateRoute'
@@ -48,6 +49,10 @@ const App = () => {
           <Route
             exact path='/profiles/myProfile'
             element={<PrivateRoute element={Profile} />}
+          />
+          <Route
+            exact path='newsfeed/profiles/:user_id'
+            element={<PrivateRoute element={UserProfile} />}
           />
           <Route
             exact path='/profiles/r-items'
