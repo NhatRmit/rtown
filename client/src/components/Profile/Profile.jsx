@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../../actions/profile'
-import { Link, useParams } from 'react-router-dom'
 import Layout from '../Layout'
 import ProfileMain from './ProfileMain'
 import ProfileSidebar from './ProfileSidebar'
@@ -18,19 +17,27 @@ const Profile = () => {
 
     return (
         <Layout header footer>
-            <section>
+            {/* <section>
                 <div className='blank-profile'></div>
 
                 <div className='main-container-profile'>
-                    <ProfileMain loading={loading} profile={profile}/>
+                    <ProfileMain loading={loading} profile={profile} />
                 </div>
 
                 <div className='side-container-profile'>
-                    <ProfileSidebar loading={loading} profile={profile}/>
+                    <ProfileSidebar loading={loading} profile={profile} />
                 </div>
 
                 <div className='blank-profile'></div>
-            </section>
+            </section> */}
+            <div className='profile-container'>
+                <div className='profile-left-container'>
+                    <ProfileMain loading={loading} profile={profile} />
+                </div>
+                <div className='profile-right-container'>
+                    <ProfileSidebar loading={loading} profile={profile} />
+                </div>
+            </div>
         </Layout>
     )
 }

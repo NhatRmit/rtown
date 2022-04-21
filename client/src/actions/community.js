@@ -46,7 +46,7 @@ export const getCommunityById = (community_id) => async dispatch => {
 export const addCommunity = (formData, navigate) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application'
+            'Content-Type': 'application/json'
         }
     }
     try {

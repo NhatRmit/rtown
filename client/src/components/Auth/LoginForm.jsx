@@ -17,24 +17,24 @@ const LoginForm = () => {
         dispatch(loginUser(usernameOrEmail, password))
     }
 
-    if(isAuthenticated) {
+    if (isAuthenticated) {
         return <Navigate replace to='/newsfeed' />
     }
 
-        // const data = {
-        //     usernameOrEmail: this.usernameOrEmail,
-        //     password: this.password
-        // }
+    // const data = {
+    //     usernameOrEmail: this.usernameOrEmail,
+    //     password: this.password
+    // }
 
-        // axios.post('localhost:3000/login', data)
-        //     .then(res => {
-        //         console.log(res)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-    
-    
+    // axios.post('localhost:3000/login', data)
+    //     .then(res => {
+    //         console.log(res)
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+
+
     return (
         <div className={style["loginform-container"]}>
             <h1 className={style["h1"]}>Welcome to RMIT Town!</h1>
@@ -48,7 +48,7 @@ const LoginForm = () => {
                     value={usernameOrEmail}
                     required
                     onChange={(e) => setUsernameOrEmail(e.target.value)}
-                    className={style["input"]} 
+                    className={style["input"]}
                 />
 
                 <label className={style["label"]}>Password</label>
@@ -60,13 +60,14 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className={style["input"]}
                 />
-                <input type='submit' />
+                {/* <input type='submit' /> */}
+                <p className={style["p"]}>By signing in, you accept <Link to={'/'} className={style["a"]}>the rules of use of RMIT systems.</Link></p>
+                <div className={style["button-wrapper"]}>
+                    {/* <button type='submit' className={style["register-btn"]}>Sign in</button> */}
+                    <button type='submit' className={style["login-btn"]}>Sign in</button>
+                </div>
             </form>
-            <p className={style["p"]}>By signing in, you accept <Link to={'/'} className={style["a"]}>the rules of use of RMIT systems.</Link></p>
-            <div className={style["button-wrapper"]}>
-                <button type='submit' className={style["register-btn"]}>Sign in</button>
-                <button className={style["login-btn"]}>Sign in</button>
-            </div>
+
             <Link to="/" className={style["link"]}>Forgot your password?</Link>
 
         </div>

@@ -16,7 +16,7 @@ const Navbar = () => {
 
     const onLogout = (e) => {
         dispatch(logoutUser())
-        navigate('/login')
+        navigate('/')
     }
 
     const onProfile = (e) => {

@@ -10,7 +10,7 @@ const PrivateRoute = ({ element: Element}) => {
     if (loading) return <Spinner />;
     if (isAuthenticated) return <Element />;
 
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
 };
 
 export default PrivateRoute;

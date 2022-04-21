@@ -8,10 +8,13 @@ import Posts from './components/Posts/Posts'
 import CommentForm from './pages/CommentForm'
 import Profile from './components/Profile/Profile'
 import Community from './components/Communities/Community'
+import CreateCommunity from './components/Communities/CreateCommunity'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
 import EditPost from './components/Posts/EditPost'
+import RItems from './components/Profile/RItems'
+import RShop from './components/Profile/RShop'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -28,7 +31,7 @@ const App = () => {
     <>
       <Router>
         <Routes>
-          <Route exact path='/login' element={<LoginPage />} />
+          <Route exact path='/' element={<LoginPage />} />
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
@@ -47,9 +50,22 @@ const App = () => {
             element={<PrivateRoute element={Profile} />}
           />
           <Route
+            exact path='/profiles/r-items'
+            element={<PrivateRoute element={RItems} />}
+          />
+          <Route
+            exact path='/profiles/r-shop'
+            element={<PrivateRoute element={RShop} />}
+          />
+          <Route
             exact path='/communities/:community_id'
             element={<PrivateRoute element={Community} />}
           />
+          <Route
+            exact path='/communities/community-request'
+            element={<PrivateRoute element={CreateCommunity} />}
+          />
+
         </Routes>
       </Router>
     </>

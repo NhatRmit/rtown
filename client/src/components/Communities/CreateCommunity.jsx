@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { addCommunity, updateCommunity } from '../../actions/community'
 
-const initialFormData = {
-    communityName: '',
-    description: ''
-}
-
 const CreateCommunity = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [formData, setFormData] = useState(initialFormData)
+    const [formData, setFormData] = useState({
+        communityName: '',
+        description: ''
+    })
 
     const {
         communityName,
@@ -29,10 +27,10 @@ const CreateCommunity = () => {
 
     return (
         <section className='container-community-form'>
-            <h1 className="large text-primary">
-                'Creating a Community'
-            </h1>
             <form className="form" onSubmit={onSubmit}>
+                <h1 className="large text-primary">
+                    Creating a Community
+                </h1>
                 <div className="form-group">
                     <input
                         type="text"
