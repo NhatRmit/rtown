@@ -5,14 +5,17 @@ import Layout from '../Layout'
 import ProfileMain from './ProfileMain'
 import ProfileSidebar from './ProfileSidebar'
 import './Profile.css'
+import { getMyCommunities } from '../../actions/community'
 
 const Profile = () => {
     const dispatch = useDispatch()
     const profile = useSelector(state => state.profile.profile)
     const loading = useSelector(state => state.profile.loading)
+    const communities = useSelector(state => state.community.communities)
 
     useEffect(() => {
         dispatch(getProfile())
+        dispatch(getMyCommunities())
     }, [dispatch])
 
     return (
@@ -32,10 +35,10 @@ const Profile = () => {
             </section> */}
             <div className='profile-container'>
                 <div className='profile-left-container'>
-                    <ProfileMain loading={loading} profile={profile} />
+                    <ProfileMain loading={loading} profile={profile} communities={communities}/>
                 </div>
                 <div className='profile-right-container'>
-                    <ProfileSidebar loading={loading} profile={profile} />
+                    <ProfileSidebar loading={loading} profile={profile} communities={communities}/>
                 </div>
             </div>
         </Layout>

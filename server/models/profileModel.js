@@ -20,7 +20,11 @@ const profileStudentSchema = mongoose.Schema({
             communityId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'community'            
-            },
+            }, 
+            communityName: {
+                type: mongoose.Schema.Types.String,
+                ref: 'community'
+            }
         }
     ],
 })

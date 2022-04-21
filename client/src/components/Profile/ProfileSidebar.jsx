@@ -4,20 +4,22 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CommunityItem from '../Communities/CommunityItem'
 import ProfileAvatar from './ProfileAvatar'
-import { getMyCommunities } from '../../actions/community'
+import { getCommunityById, getMyCommunities } from '../../actions/community'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-const ProfileSidebar = ({ profile, loading }) => {
+const ProfileSidebar = ({ profile, loading, communities }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const communities = useSelector(state => state.community.communities)
     const onCreate = e => {
         e.preventDefault()
         navigate('/communities/community-request')
     }
+
     useEffect(() => {
         dispatch(getMyCommunities())
     }, [dispatch])
+
+    console.log(communities)
 
     return (
         <>
@@ -37,6 +39,7 @@ const ProfileSidebar = ({ profile, loading }) => {
                         </div>
                     </div>
                     {communities.map(community => {
+                        console.log(community)
                         return (
                             <CommunityItem key={community._id} community={community} />
                         )

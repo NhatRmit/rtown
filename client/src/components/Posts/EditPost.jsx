@@ -1,3 +1,75 @@
+// import React, { useEffect, useState } from "react";
+// import { addPost, editPost, getPostById } from "../../actions/post";
+// import { connect } from "react-redux";
+// import PropTypes from "prop-types";
+// import { useDispatch } from 'react-redux'
+// import { useNavigate, useParams } from "react-router-dom";
+
+// const initialState = {
+//     text: ''
+// }
+
+// const EditPost = ({ post: { post, loading } }) => {
+//     const navigate = useNavigate()
+//     const dispatch = useDispatch()
+//     const { postId } = useParams()
+//     const [formData, setFormData] = useState(initialState)
+//     const {
+//         text
+//     } = formData
+
+//     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
+
+//     useEffect(() => {
+//         if (!post) {
+//             dispatch(getPostById(postId));
+//         }
+
+//         // if we finished loading and we do have a profile
+//         // then build our profileData
+//         if (!loading && post) {
+//             const textData = { ...initialState };
+//             for (const key in post) {
+//                 if (key in textData) textData[key] = post[key];
+//             }
+//             setFormData(textData);
+//         }
+//     }, [loading, post, dispatch, postId])
+
+//     const onUpdate = (e) => {
+//         e.preventDefault()
+//         dispatch(editPost(postId, formData, navigate))
+//     }
+
+//     return (
+//         <div>
+//             <form className="form" onSubmit={onUpdate}>
+//                 <div>
+//                     <input
+//                         type="text"
+//                         placeholder="Content"
+//                         name="text"
+//                         value={text}
+//                         onChange={onChange}
+//                     />
+//                     <input type="submit" className="btn btn-primary my-1" />
+//                 </div>
+//             </form>
+//         </div>
+//     )
+
+// }
+// EditPost.propTypes = {
+//     addPost: PropTypes.func.isRequired,
+//     post: PropTypes.object.isRequired
+// }
+// const mapStateToProps = state => ({
+//     post: state.post
+// })
+
+// export default connect(mapStateToProps, { addPost })(EditPost)
+
+
 import React, { useEffect, useState } from "react";
 import { addPost, editPost, getPostById } from "../../actions/post";
 import { connect } from "react-redux";
@@ -9,40 +81,37 @@ const initialState = {
     text: ''
 }
 
-const EditPost = ({ post: { post, loading } }) => {
+const EditPost = ({ singlePost }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { postId } = useParams()
     const [formData, setFormData] = useState(initialState)
-
     const {
         text
     } = formData
 
-
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
     useEffect(() => {
-        
-        if (!post) dispatch(getPostById(postId));
+        if (!singlePost) {
+            dispatch(getPostById(singlePost._id));
+        }
 
         // if we finished loading and we do have a profile
         // then build our profileData
-        if (!loading && post) {
-          const textData = { ...initialState };
-          for (const key in post) {
-            if (key in textData) textData[key] = post[key];
-          }
-
-          setFormData(textData);
+        if (singlePost) {
+            const textData = { ...initialState };
+            for (const key in singlePost) {
+                if (key in textData) textData[key] = singlePost[key];
+            }
+            setFormData(textData);
         }
-    }, [loading, post, dispatch, postId])
+    }, [singlePost, dispatch])
 
     const onUpdate = (e) => {
         e.preventDefault()
-        dispatch(editPost(postId, formData, navigate))
+        dispatch(editPost(singlePost._id, formData, navigate))
     }
-
+console.log(singlePost)
     return (
         <div>
             <form className="form" onSubmit={onUpdate}>

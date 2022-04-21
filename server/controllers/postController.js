@@ -1,3 +1,4 @@
+const any = require('@hapi/joi/lib/types/any');
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
@@ -271,6 +272,20 @@ const getMyPosts = asyncHandler(async (req, res) => {
         res.status(500).send('Server Error');
     }
 })
+
+// const getPostById = asyncHandler(async(req, res) => {
+//     try {
+//         const post = await Post.find({
+//             user: req.user.id,
+//             _id: req.params.id,
+//         })
+//         res.status(200).json(post)
+
+//     } catch (err) {
+//         console.error(err.message);
+//         res.status(500).send('Server Error');
+//     }
+// }) 
 
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,

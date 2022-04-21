@@ -6,7 +6,6 @@ const getProfile = asyncHandler(async (req, res) => {
     try {
         const profile = await Profile
             .findOne({ user: req.user.id })
-            .populate('user', ['usernameOrEmail'])
 
         if (!profile) {
             res.status(400).json({ mgs: 'Profile not Found' })
@@ -24,7 +23,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
     try {
         const profile = await Profile
             .findOne({ user: req.params.user_id })
-            .populate('user', ['usernameOrEmail'])
 
         if (!profile) {
             res.status(400).json({ msg: 'Profile Not Found' })
@@ -42,7 +40,6 @@ const getAllProfiles = asyncHandler(async (req, res) => {
     try {
         const profiles = await Profile
             .find()
-            .populate('user', ['usernameOrEmail'])
 
         res.status(200).json(profiles)
     } catch (err) {
@@ -123,7 +120,10 @@ const joinCommunity = asyncHandler(async (req, res) => {
     }
 
     try {
-        profile.community.unshift({ communityId: req.params.community_id })
+        profile.community.unshift({ 
+            communityId: req.params.community_id, 
+            communityName: community.communityName
+        })
         community.members.unshift({ memberId: req.user.id })
 
         await profile.save()

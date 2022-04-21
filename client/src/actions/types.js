@@ -27,3 +27,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const GET_POST = 'GET_POST'
 export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
+export const CLEAR_POST = 'CLEAR_POST';

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../Layout/Spinner'
-import CommunityItem from './CommunityItem'
 import { getAllCommunities } from '../../actions/community'
+import CommunitySection from '../Newsfeed/CommunitySection'
 
 const Communities = () => {
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ const Communities = () => {
         <h4>List of Communities</h4>
         <div>
           {communities.map(community => (
-            <CommunityItem key={community._id} community={community}/>
+            <CommunitySection key={community._id} community={community}/>
           )) }
         </div>
       </div>

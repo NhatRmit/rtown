@@ -20,7 +20,7 @@ const Navbar = () => {
     }
 
     const onProfile = (e) => {
-        navigate('/profile')
+        navigate('/profiles/myProfile')
     }
 
     const onSubmit = (e) => {

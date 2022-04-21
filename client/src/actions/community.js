@@ -6,6 +6,8 @@ import {
     DELETE_COMMUNITY,
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
+    GET_MY_COMMUNITIES,
+    GET_PROFILE
 } from './types'
 
 import axios from 'axios'
@@ -22,7 +24,7 @@ export const getAllCommunities = () => async dispatch => {
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         })
     }
 }
@@ -38,7 +40,7 @@ export const getCommunityById = (community_id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         })
     }
 }
@@ -61,7 +63,7 @@ export const addCommunity = (formData, navigate) => async dispatch => {
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         })
     }
 }
@@ -84,7 +86,7 @@ export const updateCommunity = (community_id, formData, navigate) => async dispa
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         })
     }
 }
@@ -100,16 +102,18 @@ export const deleteCommunity = (community_id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         })
     }
 }
 
+
 export const getMyCommunities = () => async dispatch => {
+    dispatch({ type: CLEAR_COMMUNITY })
     try {
         const res = await axios.get(`/api/communities/myCommunities`)
         dispatch({
-            type: GET_COMMUNITIES,
+            type: GET_MY_COMMUNITIES,
             payload: res.data
         })
     } catch (err) {

@@ -6,6 +6,7 @@ import {
     DELETE_COMMUNITY,
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
+    GET_MY_COMMUNITIES,
 } from '../actions/types'
 
 const initialState = {
@@ -24,7 +25,12 @@ function communityReducer(state = initialState, action) {
                 communities: payload,
                 loading: false,
             }
-
+        case GET_MY_COMMUNITIES: 
+            return {
+                ...state, 
+                communities: payload,
+                loading: false,
+            }
         case GET_COMMUNITY:
         case UPDATE_COMMUNITY:
             return {

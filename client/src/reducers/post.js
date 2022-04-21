@@ -8,7 +8,8 @@ import {
   REMOVE_COMMENT,
   EDIT_POST,
   GET_POST,
-  EDIT_COMMENT
+  EDIT_COMMENT,
+  CLEAR_POST
 } from '../actions/types';
 
 const initialState = {
@@ -86,6 +87,12 @@ function postReducer(state = initialState, action) {
         ...state,
         post: { ...state.post, comments: payload },
         loading: false
+      }
+    case CLEAR_POST:
+      return {
+        ...state, 
+        loading: false,
+        post: null,
       }
 
     default:

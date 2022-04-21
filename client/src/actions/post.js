@@ -7,7 +7,7 @@ import {
     UPDATE_LIKES,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST
 } from "./types";
 
 //Get post
@@ -147,7 +147,7 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
 
         // dispatch(setAlert('Post Updated', 'success'))
 
-        navigate('/posts')
+        navigate('/')
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -217,4 +217,10 @@ export const getPostById = (postId) => async dispatch => {
             payload: { msg: err.response, status: err.response }
         })
     }
+}
+
+export const clearPost = () => async dispatch => {
+    dispatch({
+        type: CLEAR_POST
+    })
 }

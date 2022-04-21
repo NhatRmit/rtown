@@ -17,7 +17,10 @@ exports.login = async (req, res) => {
 
         // check if password is valid
         if(req.body.password === existedUser.password){
-            return res.send({token: generateToken(existedUser._id)}) // direct to newsfeed page
+            return res.send({
+                token: generateToken(existedUser._id),
+                user: existedUser._id
+            })
         }
 
         else{

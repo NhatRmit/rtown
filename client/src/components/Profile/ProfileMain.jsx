@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyPosts } from '../../actions/post'
 import Spinner from '../Layout/Spinner'
-import PostItem from '../Posts/PostItem'
+import PostsSection from '../Newsfeed/PostsSection'
 import Header from './Header'
 
 
@@ -23,7 +23,7 @@ const ProfileMain = ({ profile, loading }) => {
                     <Header />
                     {
                         posts.map(post =>
-                            <PostItem key={post._id} post={post} />)
+                            <PostsSection key={post._id} post={post} />)
                     }
                 </>
             )

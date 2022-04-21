@@ -107,7 +107,7 @@ const deleteCommunity = asyncHandler(async (req, res) => {
 
 const getMyCommunities = asyncHandler(async(req, res) => {
     try {
-        const profile = await Profile.findOne({user: req.user.id}).populate('community.communityId', ['communityName'])
+        const profile = await Profile.findOne({user: req.user.id})
         res.status(200).json(profile.community)
 
     } catch (err) {
