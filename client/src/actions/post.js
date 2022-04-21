@@ -114,13 +114,12 @@ export const addPost = formData => async dispatch => {
     }
 }
 // Delete post
-export const deletePost = id => async dispatch => {
+export const deletePost = (id, navigate) => async dispatch => {
     try {
         const res = await axios.delete(`/api/posts/${id}`)
         dispatch({
             type: DELETE_POST,
             payload: id
-
         })
     } catch (error) {
         dispatch({

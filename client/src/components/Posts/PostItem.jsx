@@ -55,75 +55,36 @@ import { Link } from "react-router-dom"
 import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'react-moment'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { addLike, removeLike, deletePost } from '../../actions/post'
-const PostItem = ({
-  addLike,
-  removeLike,
-  post: { auth, _id, text, name, avatar, user, upvotes, comments, date
-  } }) => {
+const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, user, likes, comments, date } }) => {
+  const dispatch = useDispatch()
+  const onDelete = (e) => {
+    e.preventDefault()
+    dispatch(deletePost(_id))
+}
   return (
-    <div className='posts-item-container'>
-      <div className='post-item-section'>
-        <div className='vote-item-section'>
-          <span className='icon'>
-            {/*CHANGE ICONS FOR ME */}
-            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-              <BiUpvote />
-            </IconContext.Provider>
-          </span>
-          <p className='vote-item-total'>{upvotes.length}</p>
-          <span className='icon'>
-            {/*CHANGE ICONS FOR ME */}
-            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-              <BiDownvote />
-            </IconContext.Provider>
-          </span>
-        </div>
+    <div>
+      <div>
+        <p className=''>{text}</p>
+        <p className='post-date'> Posted on <Moment format='DD/MM/YYYY'>{date}</Moment></p>
+        <button type='button' className='btn btn-light' onClick={e => addLike(_id)}>
+          <i className='fa fa-thumps-up'></i>
+        </button>
+        <button type='button' className='btn btn-light' onClick={e => removeLike(_id)}>
+          <i className='fa fa-thumps-down'></i>
+        </button>
+        
+        <Link to={`/post/${_id}`} className="btn btn-primary">
+          Discussion{' '}{comments.length > 0 && (<span className='comment-count'>{comments.length}</span>)}
+        </Link>
+        <button type='button' className='btn btn-danger' onClick={onDelete}>
+            <i className='fa fa-times' />Delete
+        </button>
 
-        <div className='content-item-section'>
-          <div className='content-item-section-header'>
-            <span className='icon'>
-              {/*CHANGE ICONS FOR ME */}
-              <label htmlFor='username'>
-                <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                  <BsFillChatDotsFill />
-                </IconContext.Provider>
-                {/* {avatar} */}
-              </label>
-              <p id="username-item" className='username-item'>{name}</p>
-            </span>
-            <p className='uploaded-item-time'>
-              <Moment format='DD/MM/YYYY'>{date}</Moment>
-            </p>
-          </div>
-          <div className='post-item-content'>
-            <p>{text}</p>
-          </div>
-          <div className='content-item-section-footer'>
-            <span className='icon'>
-              <Link to="/">
-                <label htmlFor='comment'>
-                  <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                    <BsFillChatDotsFill />
-                  </IconContext.Provider>
-                </label>
-              </Link>
-              <p id="comment" className='icon-label'> Comments </p>
-            </span>
-
-            {/* <span className='icon'>
-              <Link to="/">
-                <label htmlFor='report'>
-                  <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                    <BsFillChatDotsFill />
-                  </IconContext.Provider>
-                </label>
-              </Link>
-              <p id="report" className='icon-label'> Report </p>
-            </span> */}
-          </div>
-        </div>
+        <Link to={`/posts/${_id}`} className="btn btn-primary">
+          <h1>Edit</h1>
+        </Link>
       </div>
     </div>
   )
