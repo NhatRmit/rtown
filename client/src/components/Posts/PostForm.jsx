@@ -10,11 +10,9 @@ const PostForm = ({ addPost }) => {
                 <h1>Add Post</h1>
             </div>
             <form className="form" onSubmit={e => (
-                e.preventDefault()
-
-                ,addPost({ text })
-
-                ,setText('')
+                e.preventDefault(),
+                addPost({ text }),
+                setText('')
             )}>
                 <textarea
                     name='text'

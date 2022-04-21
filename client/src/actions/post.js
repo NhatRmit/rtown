@@ -92,13 +92,12 @@ export const addPost = formData => async dispatch => {
     }
 }
 // Delete post
-export const deletePost = id => async dispatch => {
+export const deletePost = (id, navigate) => async dispatch => {
     try {
         const res = await axios.delete(`/api/posts/${id}`)
         dispatch({
             type: DELETE_POST,
             payload: id
-
         })
     } catch (error) {
         dispatch({
@@ -122,9 +121,7 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
             type: EDIT_POST,
             payload: res.data
         })
-
-        // dispatch(setAlert('Post Updated', 'success'))
-
+        
         navigate('/posts')
     } catch (error) {
         dispatch({

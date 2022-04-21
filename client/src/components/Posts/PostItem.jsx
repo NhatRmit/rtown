@@ -2,9 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { addLike, removeLike, deletePost } from '../../actions/post'
 const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, user, likes, comments, date } }) => {
+  const dispatch = useDispatch()
+  const onDelete = (e) => {
+    e.preventDefault()
+    dispatch(deletePost(_id))
+}
   return (
     <div>
       <div>
@@ -12,7 +17,6 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         <p className='post-date'> Posted on <Moment format='DD/MM/YYYY'>{date}</Moment></p>
         <button type='button' className='btn btn-light' onClick={e => addLike(_id)}>
           <i className='fa fa-thumps-up'></i>
-          {/* <span>{likes.length > 0 && <span>{likes.length}</span>}</span> */}
         </button>
         <button type='button' className='btn btn-light' onClick={e => removeLike(_id)}>
           <i className='fa fa-thumps-down'></i>
@@ -21,14 +25,13 @@ const PostItem = ({ addLike, removeLike, post: {auth, _id, text, name, avatar, u
         <Link to={`/post/${_id}`} className="btn btn-primary">
           Discussion{' '}{comments.length > 0 && (<span className='comment-count'>{comments.length}</span>)}
         </Link>
-        <button type='button' className='btn btn-danger' onClick={e => deletePost(_id)}>
-            <i className='fa fa-times' />
+        <button type='button' className='btn btn-danger' onClick={onDelete}>
+            <i className='fa fa-times' />Delete
         </button>
 
-        <Link to={`/posts/${_id}`}>
-          <h1>EDIT</h1>
+        <Link to={`/posts/${_id}`} className="btn btn-primary">
+          <h1>Edit</h1>
         </Link>
-
       </div>
     </div>
   )
