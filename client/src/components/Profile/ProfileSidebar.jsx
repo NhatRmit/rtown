@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Spinner from '../Layout/Spinner'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CommunityItem from '../Communities/CommunityItem'
 import ProfileAvatar from './ProfileAvatar'
-import { getCommunityById, getMyCommunities } from '../../actions/community'
+import { getAllCommunities, getCommunityById, getMyCommunities } from '../../actions/community'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 const ProfileSidebar = ({ profile, loading, communities }) => {
@@ -14,12 +14,11 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
         e.preventDefault()
         navigate('/communities/community-request')
     }
+    const { userId } = useParams()
 
     useEffect(() => {
-        dispatch(getMyCommunities())
-    }, [dispatch])
-
-    console.log(communities)
+        dispatch(getMyCommunities(userId))
+    }, [dispatch, userId])
 
     return (
         <>
@@ -40,6 +39,7 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                     </div>
                     {communities.map(community => {
                         return (
+                            
                             <CommunityItem key={community._id} community={community} />
                         )
                     }

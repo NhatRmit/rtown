@@ -25,4 +25,8 @@ router.put('/join/:community_id', auth, joinCommunity)
 
 router.put('/leave/:community_id', auth, leaveCommunity)
 
+// router.put('/rpoint/increase', auth, increaseRpoint)
+
+// router.put('/rpoint/descrease', auth, descRpoint)
+
 module.exports = router

@@ -10,6 +10,7 @@ import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
 import { deletePost, clearPost, getPostById } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
+import { getProfileById } from '../../actions/profile'
 
 
 const PostsSection = ({ post }) => {
@@ -31,6 +32,8 @@ const PostsSection = ({ post }) => {
         dispatch(deletePost(post._id))
     }
     const onProfile = (e) => {
+        e.preventDefault()
+        navigate(`/profiles/${post.user}`)
     }
     return (
         <div className='posts-container'>

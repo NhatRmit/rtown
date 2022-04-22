@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { BsFillChatDotsFill, BsSearch } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import logo from './logo.png'
 import './Navbar.css'
-import { logoutUser } from '../../actions/auth'
+import { loadUser, logoutUser } from '../../actions/auth'
 import { getSearch } from '../../actions/post'
 
 const Navbar = () => {
     const [text, setText] = useState('')
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth)
+
+    useEffect(() => {
+        dispatch(loadUser())
+    }, [dispatch])
 
     const onLogout = (e) => {
         dispatch(logoutUser())
@@ -21,12 +26,12 @@ const Navbar = () => {
     }
 
     const onProfile = (e) => {
-        navigate('/profiles/myProfile')
+        navigate(`/profiles/${auth._id}`)
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(getSearch(text ))
+        dispatch(getSearch(text))
         setText('')
     }
 

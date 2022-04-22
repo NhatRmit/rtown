@@ -108,10 +108,10 @@ export const deleteCommunity = (community_id) => async dispatch => {
 }
 
 
-export const getMyCommunities = () => async dispatch => {
+export const getMyCommunities = (userId) => async dispatch => {
     dispatch({ type: CLEAR_COMMUNITY })
     try {
-        const res = await axios.get(`/api/communities/myCommunities`)
+        const res = await axios.get(`/api/communities/myCommunities/${userId}`)
         dispatch({
             type: GET_MY_COMMUNITIES,
             payload: res.data

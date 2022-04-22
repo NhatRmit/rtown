@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
 import NewsfeedPage from './pages/NewsfeedPage'
@@ -17,6 +17,7 @@ import EditPost from './components/Posts/EditPost'
 import RItems from './components/Profile/RItems'
 import RShop from './components/Profile/RShop'
 import RequestForm from './components/Form/RequestForm'
+import { getPosts } from './actions/post'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,7 @@ const App = () => {
     }
     dispatch(loadUser())
   }, [dispatch])
+
 
   return (
     <>
@@ -56,11 +58,7 @@ const App = () => {
           />
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
-            exact path='/profiles/myProfile'
-            element={<PrivateRoute element={Profile} />}
-          />
-          <Route
-            exact path='newsfeed/profiles/:user_id'
+            exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
           />
           <Route

@@ -180,6 +180,16 @@ const leaveCommunity = asyncHandler(async (req, res) => {
     }
 })
 
+const increaseRpoint = asyncHandler(async (req, res) => {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    try {
+        
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({msg: 'Server Error'})
+    }
+})
 module.exports = {
     getUserProfile,
     getProfile,
@@ -188,4 +198,5 @@ module.exports = {
     updateProfile,
     joinCommunity,
     leaveCommunity,
+    increaseRpoint,
 }

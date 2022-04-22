@@ -107,9 +107,18 @@ const deleteCommunity = asyncHandler(async (req, res) => {
 
 const getMyCommunities = asyncHandler(async(req, res) => {
     try {
-        const profile = await Profile.findOne({user: req.user.id})
+        const profile = await Profile.findOne({user: req.params.user_id})
         res.status(200).json(profile.community)
 
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({msg: 'Server Error'})
+    }
+})
+
+const createEventCommunity = asyncHandler(async(req, res) => {
+    try {
+        
     } catch (err) {
         console.error(err.message);
         res.status(500).json({msg: 'Server Error'})
@@ -127,4 +136,5 @@ module.exports = {
     updateCommunity,
     deleteCommunity,
     getMyCommunities,
+    createEventCommunity,
 }

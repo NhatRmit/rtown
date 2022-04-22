@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyPosts } from '../../actions/post'
+import { useParams } from 'react-router-dom'
+import { getPosts } from '../../actions/post'
+import Filter from '../Filter/Filter'
 import Spinner from '../Layout/Spinner'
 import PostsSection from '../Newsfeed/PostsSection'
 import Header from './Header'
@@ -9,9 +11,10 @@ import Header from './Header'
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
     const dispatch = useDispatch()
+    const { userId } = useParams()
 
     useEffect(() => {
-        dispatch(getMyPosts())
+        dispatch(getPosts())
     }, [dispatch])
 
     return (
@@ -20,9 +23,10 @@ const ProfileMain = ({ profile, loading }) => {
                 <Spinner />
             ) : (
                 <>
-                    <Header />
+                    <Filter />
                     {
                         posts.map(post =>
+                            post.user === userId &&
                             <PostsSection key={post._id} post={post} />)
                     }
                 </>

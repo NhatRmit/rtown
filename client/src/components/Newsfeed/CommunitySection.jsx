@@ -13,7 +13,7 @@ const CommunitySection = ({ community }) => {
         <div className="community-container">
             <div onClick={onClick} className='joined-community'>
                 <span className='community'>
-
+                    
                 </span>
             </div>
         </div>
