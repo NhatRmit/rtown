@@ -10,6 +10,8 @@ import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
 import { deletePost, clearPost, getPostById } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
+import CommentItem from '../../post/CommentItem'
+import CommentForm from '../../post/CommentForm'
 
 
 const PostsSection = ({ post }) => {
@@ -122,6 +124,10 @@ const PostsSection = ({ post }) => {
 
                     </div>
                 </div>
+            </div>
+            <div>
+                <CommentForm postId={post._id}/>
+                <CommentItem post={post}/>
             </div>
         </div>
     )

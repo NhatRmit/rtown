@@ -1,54 +1,33 @@
-import React, { Fragment} from 'react'
+import React, { Fragment, useState} from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { connect} from 'react-redux'
+import { connect, useDispatch} from 'react-redux'
 import Moment from 'react-moment'
 import { deleteComment,
          editComment } from '../actions/post'
 
-const CommentItem = ({
-    postId,
-    comment: {_id, text, name, avatar, user, date},
-    auth,
-    deleteComment
-}) => {
-  return (
-      <div>
-          <div>
-              <Link to= {`/profile/${user}`} >
-                  <img
-                   src={avatar}
-                    alt="" 
-                  />
-                  <h4>{name}</h4>
-              </Link>
-          </div>
-          <div>
-              <p>{text}</p>
-              <p>Posted on <Moment format='YYYY/MM/DD'>{date}</Moment></p>
-              {!auth.loading && user === auth.user._id && (
-                  <div>
-                    <button onClick={e => deleteComment(postId, _id)} type= 'button' > Delete icon</button>
-                    <button onClick={e => editComment(postIdm, _id)} type='button' >Edit icon</button>
-                  </div>
+const CommentItem = ({post }) => {
+    const dispatch = useDispatch()
+    const [edit, setEdit] = useState(false)
+    const onDelete = (e) => {
+        e.preventDefault()
+        dispatch(deleteComment(post._id))
+    }
 
-              )}
-              
-          </div>
+    return (
+        post.comments.map(comment =>(
+        <div>     
+            <div>{post.name}</div>
+            <p>{comment.text}</p>
+            <p>Posted on <Moment format='DD/MM/YYYY  HH:mm '>{comment.date}</Moment></p> 
+            <button onClick={onDelete} type='button'>Delete</button>
+            <button ></button>
+        </div>  
+        ))
 
-      </div> 
-  )
+    )
 }
 
-CommentItem.propTypes = {
-    postId: PropTypes.number.isRequired,
-    comment: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired,
-    deleteComment: PropTypes.func.isRequired
-}
 
-const mapSateToProps = state => ({
-    auth: state.auth
-})
 
-export default connect(mapSateToProps, { deleteComment }) (CommentItem)
+export default CommentItem

@@ -27,7 +27,7 @@ export const getPosts = () => async dispatch => {
 }
 
 //Add comment
-export const addComment = (postId, FormData) => async dispatch => {
+export const addComment = (postId, formData,navigate) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -35,13 +35,13 @@ export const addComment = (postId, FormData) => async dispatch => {
     };
 
     try {
-        const res = await axios.post(`/api/posts/comment/${postId}`, FormData, config);
+        const res = await axios.post(`/api/posts/comment/${postId}`, formData, config);
 
         dispatch({
             type: ADD_COMMENT,
             payload: res.data
         });
-
+        navigate('/')
         // dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
         dispatch({
@@ -50,39 +50,17 @@ export const addComment = (postId, FormData) => async dispatch => {
         });
     }
 };
-//Edit comment
-export const editComment = (postId, commentId) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    try {
-        const res = await axios.put(`/api/posts/comment/${postId}/${commentId}`, FormData, config);
 
-        dispatch({
-            type: EDIT_COMMENT,
-            payload: commentId
-        })
+// //Edit comment
+// export const editComment = (commentId, formData, navigate) => 
 
-    } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status}
-        });
-    }
-}
 
 //Delete comment
 export const deleteComment = (postId, commentId) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
+
 
     try {
-        const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`, FormData, config);
+        const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 
         dispatch({
             type: REMOVE_COMMENT,
