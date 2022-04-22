@@ -202,29 +202,32 @@ const createComment = asyncHandler(async (req, res) => {
 });
 
 const editComment = asyncHandler(async (req, res) => {
+    const postFields = {}
+    const { text } = req.body
+    postFields.user = req.user.id
+    if (text) postFields.text = text
+
     try {
-        // get the post
-        const post = await Post.findById(req.params.id)
-
-        //get the comment from post
-        const comment = post.comments.find(
-            (comment) => { comment.id === req.params.comment_id }
-        )
-
-        //check if comment exist
-        if (!comment) {
-            res.status(404).json({ msg: 'Comment does not exist' })
+        let post = await Post.findOne({ _id: req.params.post_id})
+        let comments = await post.comments
+        if (post) {
+            //UPDATE
+            let comment = await comments.findOneAndUpdate(
+                { _id: req.params.comment_id},
+                { $set: postFields },
+                { new: true }
+            )
+            // post = await Post.findOneAndUpdate(
+                
+            //     { _id: req.params.post_id},
+            //     { $set: postFields },
+            //     { new: true }
+            // )
+            return res.json(post)
         }
-
-        post.comments.unshift(newComment);
-
-        await post.save();
-
-        res.json(post.comments);
-
-
     } catch (error) {
-        res.status(404).json({ msg: error.message })
+        console.error(error.message)
+        res.status(500).send('Server Error')
     }
 })
 

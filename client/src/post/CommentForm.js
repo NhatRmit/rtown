@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect} from 'react-redux'
-import { useParams } from 'react-router-dom' 
+import { useNavigate, useParams } from 'react-router-dom' 
 import { addComment } from '../actions/post'
 import './CommentForm.css'
 
 
 
 const CommentForm = ({ postId, addComment}) => {
+  const navigate = useNavigate()
   const [text, setText] = useState('');
   const onChange = e => (
     setText(e.target.value)
@@ -21,7 +22,7 @@ const CommentForm = ({ postId, addComment}) => {
         <form
           onSubmit={ e=> {
               e.preventDefault();
-              addComment(postId, { text });
+              addComment(postId, { text }, navigate);
               setText('');
           }} 
         >

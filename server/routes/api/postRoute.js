@@ -18,7 +18,7 @@ router.post('/', auth, createPost)
 
 router.put('/update/:post_id', auth, editPost)
 
-router.put('/editcomment/:id', auth, editComment)
+router.put('/editcomment/:post_id/:comment_id', auth, editComment)
 
 router.put('/upvote/:id', auth, upvotePost)
 

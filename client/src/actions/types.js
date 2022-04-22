@@ -1,6 +1,7 @@
 export const GET_POSTS = 'GET_POSTS';
 export const ADD_POST  = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const POST_ERROR = 'POST_ERROR';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
@@ -26,6 +27,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAIL = 'LOGIN_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const GET_POST = 'GET_POST'
-export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
 export const CLEAR_POST = 'CLEAR_POST';
