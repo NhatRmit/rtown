@@ -3,20 +3,29 @@ import { TiStarburstOutline } from 'react-icons/ti'
 import { HiTrendingUp } from 'react-icons/hi'
 import { IoIosPodium } from 'react-icons/io'
 import { IconContext } from 'react-icons/lib'
+import { getPosts, getFilter } from '../../actions/post'
 
 import './Filter.css'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Filter = () => {
-  const onClickTop = () => {
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const onClickTop = (e) => {
+    e.preventDefault()
+    navigate(`/newsfeed/filter?top`)
+    dispatch(getFilter('top'))
   }
 
-  const onClickTrending = () => {
-
+  const onClickTrending = (e) => {
+    e.preventDefault()
+    dispatch(getFilter('trending'))
   }
 
-  const onClickNewest = () => {
-
+  const onClickNewest = (e) => {
+    e.preventDefault()
+    dispatch(getPosts())
   }
 
   return (

@@ -13,6 +13,7 @@ import { IconContext } from 'react-icons/lib'
 import { Link, useNavigate } from "react-router-dom";
 import { getPosts } from '../actions/post'
 import { loadUser } from '../actions/auth'
+import Filter from '../components/Filter/Filter'
 
 
 const NewsfeedPage = () => {
@@ -55,6 +56,9 @@ const NewsfeedPage = () => {
           <div className='right-container'>
             <div>
               <CreatePost />
+            </div>
+            <div>
+              <Filter />
             </div>
             <div>
               {

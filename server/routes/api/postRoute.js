@@ -8,11 +8,11 @@ router.get('/', getPosts)
 
 router.get('/myPosts', auth, getMyPosts)
 
-router.get('/:id', auth, getPostById)
+router.get('/top', filterTrendingPost)
 
 router.get('/search', searchPost)
 
-router.get('/filter', filterTrendingPost)
+router.get('/:id', auth, getPostById)
 
 router.post('/', auth, createPost)
 

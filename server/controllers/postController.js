@@ -15,7 +15,7 @@ const searchPost = asyncHandler(async (req, res) => {
     const { search } = req.query;
     try {
         const post = await Post.find({
-            $or: [{ "title": { $regex: search, $options: 'i' } }]
+            $or: [{ "text": { $regex: search, $options: 'i' } }]
         })
         res.status(200).json(post)
     } catch (error) {
@@ -26,7 +26,7 @@ const searchPost = asyncHandler(async (req, res) => {
 const getPostById = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        res.status(200).json( post )
+        res.status(200).json(post)
     } catch (error) {
         res.status(404).json({ msg: error.message })
     }
@@ -36,17 +36,20 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
     let posts;
     try {
-        if (filter === 'top') {
-            posts = await Post.aggregate([
+
+        // if (filter === 'top') {
+        posts = await Post
+            .aggregate([
                 { "$addFields": { "upvotesCount": { $size: "$upvotes" } } },
                 { "$sort": { "upvotesCount": -1 } }
             ])
-        } else if (filter === 'trending') {
-            posts = await Post.aggregate([
-                { "$addFields": { "commentsCount": { $size: "$comments" } } },
-                { "$sort": { "commentsCount": -1 } }
-            ])
-        }
+        // }
+        //  else if (filter === 'trending') {
+        //     posts = await Post.aggregate([
+        //         { "$addFields": { "commentsCount": { $size: "$comments" } } },
+        //         { "$sort": { "commentsCount": -1 } }
+        //     ])
+        // }
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -78,11 +81,11 @@ const editPost = asyncHandler(async (req, res) => {
     if (text) postFields.text = text
 
     try {
-        let post = await Post.findOne({_id: req.params.post_id})
+        let post = await Post.findOne({ _id: req.params.post_id })
         if (post) {
             //UPDATE
             post = await Post.findOneAndUpdate(
-                {_id: req.params.post_id},
+                { _id: req.params.post_id },
                 { $set: postFields },
                 { new: true }
             )
@@ -141,14 +144,14 @@ const downvotePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
-        if(post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length > 0) {
-           return res.status(400).json({ msg: 'Post already downvoted' })
+        if (post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already downvoted' })
         }
 
         post.downvotes.unshift({ user: req.user.id });
 
         await post.save();
-        
+
         res.json(post.downvotes);
     } catch (err) {
         console.error(err.message);
@@ -181,26 +184,26 @@ const deletePost = asyncHandler(async (req, res) => {
 
 
 const createComment = asyncHandler(async (req, res) => {
-        try {
-            const user = await User.findById(req.user.id).select('-password');
-            const post = await Post.findById(req.params.id);
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const post = await Post.findById(req.params.id);
 
-            const newComment = {
-                text: req.body.text,
-                name: user.name,
-                avatar: user.avatar,
-                user: req.user.id
-            };
+        const newComment = {
+            text: req.body.text,
+            name: user.name,
+            avatar: user.avatar,
+            user: req.user.id
+        };
 
-            post.comments.unshift(newComment);
+        post.comments.unshift(newComment);
 
-            await post.save();
+        await post.save();
 
-            res.json(post.comments);
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server Error');
-        }
+        res.json(post.comments);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 const editComment = asyncHandler(async (req, res) => {
@@ -210,12 +213,12 @@ const editComment = asyncHandler(async (req, res) => {
 
         //get the comment from post
         const comment = post.comments.find(
-            (comment)=>{comment.id === req.params.comment_id}
+            (comment) => { comment.id === req.params.comment_id }
         )
 
         //check if comment exist
-        if(!comment){
-            res.status(404).json({msg: 'Comment does not exist'})
+        if (!comment) {
+            res.status(404).json({ msg: 'Comment does not exist' })
         }
 
         post.comments.unshift(newComment);
@@ -224,9 +227,9 @@ const editComment = asyncHandler(async (req, res) => {
 
         res.json(post.comments);
 
-        
+
     } catch (error) {
-        res.status(404).json({msg: error.message})
+        res.status(404).json({ msg: error.message })
     }
 })
 
@@ -260,7 +263,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 const getMyPosts = asyncHandler(async (req, res) => {
     try {
-        const posts = await Post.find({user: req.user.id}).sort({ date: -1 })
+        const posts = await Post.find({ user: req.user.id }).sort({ date: -1 })
         res.status(200).json(posts)
 
     } catch (err) {
@@ -269,19 +272,6 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
-// const getPostById = asyncHandler(async(req, res) => {
-//     try {
-//         const post = await Post.find({
-//             user: req.user.id,
-//             _id: req.params.id,
-//         })
-//         res.status(200).json(post)
-
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//     }
-// }) 
 
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
