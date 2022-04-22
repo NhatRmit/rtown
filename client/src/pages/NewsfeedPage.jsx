@@ -49,7 +49,7 @@ const NewsfeedPage = () => {
             </div>
             {
               communities.map(community =>
-                <CommunitySection key={community._id} communities={communities} />
+                <CommunitySection key={community._id} community={community} />
               )
             }
           </div>

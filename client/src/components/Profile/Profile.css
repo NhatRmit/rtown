@@ -18,6 +18,6 @@
 .profile-avatar-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     margin-top: 3em;
 }

@@ -1,17 +1,18 @@
 import './CommunityItem.css'
-import { Link } from "react-router-dom";
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCommunityById } from '../../actions/community';
-
+import { Link, useNavigate } from "react-router-dom";
 
 const CommunityItem = ({ community }) => {
+    const navigate = useNavigate()
+    const onClick = e => {
+        e.preventDefault()
+        navigate(`/communities/${community.communityId}`)
+    }
     return (
         <div className="community-item-container">
-            <div className='community-item-joined-community'>
+            <div onClick={onClick}className='community-item-joined-community'>
                 <span className='community-item-community'>
                     {/* <Link to='/'> <img src={require('./media/' + community.img + '.jpg')} alt="Community logo" className={community.title} /></Link> */}
-                    <Link to='/'>{community.communityName}</Link>
+                    {/* <Link to='/'>{community.communityName}</Link> */}
                 </span>
             </div>
         </div>

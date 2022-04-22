@@ -11,10 +11,9 @@ import { useNavigate } from 'react-router-dom'
 
 const Filter = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  
   const onClickTop = (e) => {
     e.preventDefault()
-    navigate(`/newsfeed/filter?top`)
     dispatch(getFilter('top'))
   }
 

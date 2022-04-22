@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import logo from './logo.png'
 import './Navbar.css'
 import { logoutUser } from '../../actions/auth'
+import { getSearch } from '../../actions/post'
 
 const Navbar = () => {
     const [text, setText] = useState('')
@@ -25,6 +26,8 @@ const Navbar = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        dispatch(getSearch(text ))
+        setText('')
     }
 
     const onChange = (e) => {

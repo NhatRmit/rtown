@@ -24,7 +24,8 @@ const postSchema = mongoose.Schema({
         }
     ],
     upvotesCount: {
-        type: Number
+        type: Number,
+        default: 0,
     },
     downvotes: [
         {
@@ -58,7 +59,8 @@ const postSchema = mongoose.Schema({
         }
     ],
     commentsCount:{
-        type: Number
+        type: Number,
+        default: 0,
     },
     date: {
         type: Date,

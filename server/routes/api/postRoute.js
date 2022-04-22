@@ -8,7 +8,7 @@ router.get('/', getPosts)
 
 router.get('/myPosts', auth, getMyPosts)
 
-router.get('/top', filterTrendingPost)
+router.get('/filter', filterTrendingPost)
 
 router.get('/search', searchPost)
 

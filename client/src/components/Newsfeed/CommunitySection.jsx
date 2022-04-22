@@ -1,14 +1,19 @@
 
 import './CommunitySection.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-const CommunitySection = ({ community: communityName, avatar }) => {
+const CommunitySection = ({ community }) => {
+    const navigate = useNavigate()
+    const onClick = e => {
+        e.preventDefault()
+        navigate(`/communities/${community._id}`)
+    }
     return (
         <div className="community-container">
-            <div className='joined-community'>
+            <div onClick={onClick} className='joined-community'>
                 <span className='community'>
-                    <Link to='/'> <img src="" alt="Community logo" className="community-logo" /></Link>
+
                 </span>
             </div>
         </div>

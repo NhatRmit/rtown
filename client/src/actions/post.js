@@ -220,7 +220,7 @@ export const getPostById = (postId) => async dispatch => {
 
 export const getFilter = (filter) => async dispatch => {
     try {
-        const res = await axios.get(`/api/posts/filter?${filter}`)
+        const res = await axios.get(`/api/posts/filter?filter=${filter}`)
 
         dispatch({
             type: GET_POSTS,
@@ -233,6 +233,24 @@ export const getFilter = (filter) => async dispatch => {
         })
     }
 }
+
+export const getSearch = (keyword) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/search?search=${keyword}`)
+
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+
 
 export const clearPost = () => async dispatch => {
     dispatch({

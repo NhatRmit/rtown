@@ -37,19 +37,13 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
     let posts;
     try {
 
-        // if (filter === 'top') {
-        posts = await Post
-            .aggregate([
-                { "$addFields": { "upvotesCount": { $size: "$upvotes" } } },
-                { "$sort": { "upvotesCount": -1 } }
-            ])
-        // }
-        //  else if (filter === 'trending') {
-        //     posts = await Post.aggregate([
-        //         { "$addFields": { "commentsCount": { $size: "$comments" } } },
-        //         { "$sort": { "commentsCount": -1 } }
-        //     ])
-        // }
+        if (filter === 'top') {
+            posts = await Post.find().sort({ upvotesCount: -1 })
+        }
+        else if (filter === 'trending') {
+            posts = await Post.find().sort({ commentsCount: -1 })
+
+        }
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -107,7 +101,7 @@ const upvotePost = asyncHandler(async (req, res) => {
         }
 
         post.upvotes.unshift({ user: req.user.id });
-
+        post.upvotesCount++
         await post.save();
 
         res.json(post.upvotes);
@@ -130,6 +124,7 @@ const removeupvotePost = asyncHandler(async (req, res) => {
         const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
 
         post.upvotes.splice(removeIndex, 1);
+        post.upvotesCount--
 
         await post.save();
 
@@ -196,6 +191,7 @@ const createComment = asyncHandler(async (req, res) => {
         };
 
         post.comments.unshift(newComment);
+        post.commentsCount++;
 
         await post.save();
 
@@ -251,6 +247,8 @@ const deleteComment = asyncHandler(async (req, res) => {
         post.comments = post.comments.filter(
             ({ id }) => { id !== req.params.comment_id }
         )
+
+        post.commentsCount--
 
         await post.save();
 
