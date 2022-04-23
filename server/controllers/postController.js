@@ -236,13 +236,19 @@ const editComment = asyncHandler(async (req, res) => {
     const update = (array, index, newValue) => {
         array[index] = newValue
     }
+    const comment = (array, index) => {
+        return array[index]
+    }
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
         const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
 
         update(post.comments, removeIndex, req.body)
+        comment(post.comments, removeIndex)
 
-        return res.status(200).json(post)
+        await post.save()
+
+        return res.status(200).json(comment(post.comments, removeIndex))
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')

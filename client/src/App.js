@@ -56,6 +56,7 @@ const App = () => {
             exact path='posts/:postId'
             element={<PrivateRoute element={EditPost} />}
           />
+
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
             exact path='profiles/:userId'

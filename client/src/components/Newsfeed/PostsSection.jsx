@@ -26,7 +26,7 @@ const PostsSection = ({ post }) => {
         e.preventDefault()
         setEdit(true)
         // navigate(`/posts/${post._id}`)
-        dispatch(getPostById(post._id))
+        // dispatch(getPostById(post._id))
         dispatch(clearPost())
     }
     const onDelete = (e) => {
@@ -129,8 +129,9 @@ const PostsSection = ({ post }) => {
                 </div>
             </div>
             <div>
-                <CommentForm postId={post._id}/>
-                <CommentItem post={post} />
+                <CommentForm postId={post._id} />
+                {post.comments.map(comment => <CommentItem post={post} comment={comment} />)}
+
             </div>
         </div>
     )

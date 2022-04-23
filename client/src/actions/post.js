@@ -46,7 +46,7 @@ export const addComment = (postId, formData,navigate) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
@@ -54,12 +54,7 @@ export const addComment = (postId, formData,navigate) => async dispatch => {
 // //Edit comment
 export const editComment = (postId, commentId, formData, navigate) => async dispatch => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        const res = await axios.put(`/api/posts/comment/${postId}/${commentId}`, formData, config);
+        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData);
         dispatch({
             type: EDIT_COMMENT,
             payload: res.data
@@ -69,7 +64,7 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
@@ -91,7 +86,7 @@ export const deleteComment = (postId, commentId, navigate) => async dispatch => 
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };

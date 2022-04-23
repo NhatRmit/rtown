@@ -95,7 +95,7 @@ const EditPost = ({ singlePost }) => {
         if (!singlePost) {
             dispatch(getPostById(singlePost._id));
         }
-
+ 
         // if we finished loading and we do have a profile
         // then build our profileData
         if (singlePost) {

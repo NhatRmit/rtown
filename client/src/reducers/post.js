@@ -81,16 +81,9 @@ function postReducer(state = initialState, action) {
           comments: state.post.comments.filter(comment => comment._id !== payload)
         }
       }
-
-    case EDIT_COMMENT:
-      return {
-        ...state,
-        post: { ...state.post, comments: payload },
-        loading: false
-      }
     case CLEAR_POST:
       return {
-        ...state, 
+        ...state,
         loading: false,
         post: null,
       }
