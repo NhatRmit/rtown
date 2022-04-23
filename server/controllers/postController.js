@@ -201,30 +201,18 @@ const createComment = asyncHandler(async (req, res) => {
     }
 });
 
-const editComment = asyncHandler(async (req, res) => {
-    const postFields = {}
-    const { text } = req.body
-    postFields.user = req.user.id
-    if (text) postFields.text = text
 
+const editComment = asyncHandler(async (req, res) => {
+    const update = (array, index, newValue) => {
+        array[index] = newValue
+    }
     try {
-        let post = await Post.findOne({ _id: req.params.post_id})
-        let comments = await post.comments
-        if (post) {
-            //UPDATE
-            let comment = await comments.findOneAndUpdate(
-                { _id: req.params.comment_id},
-                { $set: postFields },
-                { new: true }
-            )
-            // post = await Post.findOneAndUpdate(
-                
-            //     { _id: req.params.post_id},
-            //     { $set: postFields },
-            //     { new: true }
-            // )
-            return res.json(post)
-        }
+        let post = await Post.findOne({ _id: req.params.post_id })
+        const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
+
+        update(post.comments, removeIndex, req.body)
+
+        return res.status(200).json(post)
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
