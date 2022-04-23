@@ -9,6 +9,8 @@ const {
     updateProfile, 
     joinCommunity, 
     leaveCommunity,
+    increaseRpoint,
+    descreaseRpoint,
 } = require('../../controllers/profileController')
 
 router.get('/myProfile', auth, getProfile)
@@ -25,8 +27,8 @@ router.put('/join/:community_id', auth, joinCommunity)
 
 router.put('/leave/:community_id', auth, leaveCommunity)
 
-// router.put('/rpoint/increase', auth, increaseRpoint)
+router.put('/rpoint/increase/:post_id', auth, increaseRpoint)
 
-// router.put('/rpoint/descrease', auth, descRpoint)
+router.put('/rpoint/descrease/:item_id', auth, descreaseRpoint)
 
 module.exports = router

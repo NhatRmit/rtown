@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
+const Community = require('../models/communityModel')
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
@@ -60,6 +61,24 @@ const createPost = asyncHandler(async (req, res) => {
 
         const post = await newPost.save()
         res.json(post)
+
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const createEvent = asyncHandler(async(req, res) => {
+    try {
+        const community = await Community.findById(req.params.community_id)
+        const newEvent = new Post({
+            text: req.body.text,
+            name: community.communityName,
+            Rpoint: req.body.Rpoint
+        })
+
+        const event = await newEvent.save()
+        res.json(event)
 
     } catch (error) {
         console.error(error.message)
@@ -226,7 +245,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
         //get the comment from post
         const comment = post.comments.find(
-            (comment) => { comment.id === req.params.comment_id }
+            (comment) =>  comment._id === req.params.comment_id 
         )
 
         //check if comment exist
@@ -235,7 +254,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         }
 
         post.comments = post.comments.filter(
-            ({ id }) => { id !== req.params.comment_id }
+            ({ id }) => id !== req.params.comment_id 
         )
 
         post.commentsCount--
@@ -260,8 +279,7 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
-
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost, getPostById, editComment
+    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent
 }

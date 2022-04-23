@@ -235,3 +235,19 @@ export const clearPost = () => async dispatch => {
         type: CLEAR_POST
     })
 }
+
+export const createEvent = (formData, communityId) => async dispatch => {
+    try {
+        const res = await axios.post(`/api/posts/event/${communityId}`, formData)
+        dispatch({
+            type: ADD_POST,
+            payload: res.data
+
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}

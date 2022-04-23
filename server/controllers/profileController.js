@@ -1,5 +1,6 @@
 const Profile = require('../models/profileModel')
-const Community = require('../models/communityModel')
+const Post = require('../models/postModel')
+const Item = require('../models/itemModel')
 const asyncHandler = require('express-async-handler')
 
 const getProfile = asyncHandler(async (req, res) => {
@@ -15,7 +16,7 @@ const getProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -32,7 +33,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -44,7 +45,7 @@ const getAllProfiles = asyncHandler(async (req, res) => {
         res.status(200).json(profiles)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -65,7 +66,7 @@ const createProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
 
     }
 })
@@ -92,7 +93,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.log(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -103,7 +104,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
 
     let isAlreadyJoined
 
-    if(profile.community.length < 1){
+    if (profile.community.length < 1) {
         isAlreadyJoined = true
     } else {
         profile.community.find(comm => {
@@ -120,8 +121,8 @@ const joinCommunity = asyncHandler(async (req, res) => {
     }
 
     try {
-        profile.community.unshift({ 
-            communityId: req.params.community_id, 
+        profile.community.unshift({
+            communityId: req.params.community_id,
             communityName: community.communityName
         })
         community.members.unshift({ memberId: req.user.id })
@@ -132,7 +133,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
         res.json(profile.community)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -155,7 +156,7 @@ const leaveCommunity = asyncHandler(async (req, res) => {
     console.log(isNoneToDelete)
 
     if (isNoneToDelete) {
-        return res.status(400).json({msg: 'Already leave the community'})
+        return res.status(400).json({ msg: 'Already leave the community' })
     }
 
     try {
@@ -176,18 +177,33 @@ const leaveCommunity = asyncHandler(async (req, res) => {
         res.json(profile)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
 const increaseRpoint = asyncHandler(async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id })
-
+    const post = await Post.findOne({ _id: req.params.post_id })
     try {
-        
+        profile.Rpoint += post.Rpoint
+        await profile.save()
+        res.status(200).json(profile)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
+const descreaseRpoint = asyncHandler(async (req, res) => {
+    const profile = await Profile.findOne({ user: req.user.id })
+    const item = await Item.findOne({ _id: req.params.item_id })
+    try {
+        profile.Rpoint -= item.Rpoint
+        await profile.save()
+        res.status(200).json(profile)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 module.exports = {
@@ -199,4 +215,5 @@ module.exports = {
     joinCommunity,
     leaveCommunity,
     increaseRpoint,
+    descreaseRpoint,
 }

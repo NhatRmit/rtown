@@ -62,6 +62,10 @@ const postSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
+    Rpoint: {
+        type: Number,
+        default: 3,
+    },
     date: {
         type: Date,
         default: Date.now
