@@ -36,7 +36,7 @@ const EditComment = ({ singlePost, singleComment }) => {
     }, [singleComment, singlePost._id, dispatch])
 
     const onUpdate = (e) => {
-        e.presentDefault()
+        e.preventDefault()
         dispatch(editComment(singlePost._id, singleComment._id, formData, navigate))
     }
 
