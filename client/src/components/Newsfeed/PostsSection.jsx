@@ -13,7 +13,6 @@ import EditPost from '../Posts/EditPost'
 
 
 const PostsSection = ({ post }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
     const profiles = useSelector(state => state.profile.profiles)
@@ -22,7 +21,6 @@ const PostsSection = ({ post }) => {
     const onEdit = e => {
         e.preventDefault()
         setEdit(true)
-        // navigate(`/posts/${post._id}`)
         dispatch(getPostById(post._id))
         dispatch(clearPost())
     }
