@@ -1,7 +1,7 @@
 import {
   GET_POSTS,
   POST_ERROR,
-  UPDATE_LIKES,
+  UPDATE_UPVOTE,
   DELETE_POST,
   ADD_POST,
   ADD_COMMENT,
@@ -59,11 +59,11 @@ function postReducer(state = initialState, action) {
         error: payload,
         loading: false
       };
-    case UPDATE_LIKES:
+    case UPDATE_UPVOTE:
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post._id === payload.id ? { ...post, likes: payload.likes } : post
+          post._id === payload.id ? { ...post, upvotes: payload.upvotes } : post
         ),
         loading: false
       };
