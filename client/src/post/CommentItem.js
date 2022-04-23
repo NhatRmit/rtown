@@ -20,7 +20,14 @@ const CommentItem = ({ post }) => {
         post.comments.map(comment =>(
         <div>     
             <div>{post.name}</div>
-            <p>{comment.text}</p>
+            <div className='comment-content'>
+                        <div>
+                            {
+                                !edit ? comment.text :
+                                    <EditComment singlePost={post} singleComment ={comment}/>
+                            }
+                        </div>
+            </div>
             <p>Posted on <Moment format='DD/MM/YYYY  HH:mm '>{comment.date}</Moment></p> 
             <button onClick={(e) => 
             {
@@ -30,18 +37,12 @@ const CommentItem = ({ post }) => {
             type='submit'>
                 Delete
             </button>
-            <div className='comment-content'>
-                        <div>
-                            {
-                                !edit ? comment.text :
-                                    <EditComment singlePost={post} singleComment ={comment._id}/>
-                            }
-                        </div>
-            </div>
+            
             <button onClick={(e) =>
             {
                 e.preventDefault()
-                dispatch(editComment(post._id, comment._id, navigate))                
+                setEdit(true)
+                dispatch(getCommentById(post._id, comment._id))                
             }} 
             type='submit'>
                 Edit Comment
