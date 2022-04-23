@@ -29,3 +29,4 @@ export const LOGOUT = 'LOGOUT'
 export const GET_POST = 'GET_POST'
 export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
 export const CLEAR_POST = 'CLEAR_POST';
+export const GET_COMMENT = 'GET_COMMENT';

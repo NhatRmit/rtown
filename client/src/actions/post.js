@@ -7,7 +7,7 @@ import {
     UPDATE_LIKES,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT
 } from "./types";
 
 //Get post
@@ -52,11 +52,31 @@ export const addComment = (postId, formData,navigate) => async dispatch => {
 };
 
 // //Edit comment
-// export const editComment = (commentId, formData, navigate) => 
+export const editComment = (postId, commentId, formData, navigate) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.put(`/api/posts/comment/${postId}/${commentId}`, formData, config);
+        dispatch({
+            type: EDIT_COMMENT,
+            payload: res.data
+        })
+        navigate('/')
+
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
 
 
 //Delete comment
-export const deleteComment = (postId, commentId) => async dispatch => {
+export const deleteComment = (postId, commentId, navigate) => async dispatch => {
 
 
     try {
@@ -66,7 +86,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
             type: REMOVE_COMMENT,
             payload: commentId
         });
-
+        navigate('/')
         // dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
         dispatch({
@@ -98,7 +118,7 @@ export const deletePost = (id, navigate) => async dispatch => {
         dispatch({
             type: DELETE_POST,
             payload: id
-        })
+        });
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -186,6 +206,21 @@ export const getPostById = (postId) => async dispatch => {
 
         dispatch({
             type: GET_POST,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const getCommentById = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/${postId}/${commentId}`)
+        dispatch({
+            type: GET_COMMENT,
             payload: res.data
         })
     } catch (err) {

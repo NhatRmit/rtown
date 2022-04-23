@@ -32,6 +32,18 @@ const getPostById = asyncHandler(async (req, res) => {
     }
 })
 
+const getCommentById = asyncHandler(async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.post_id);
+        const comment = post.comments.find(
+            (comment) => comment.id === req.params.comment_id
+        )
+        res.status(200).json(comment)
+    } catch (error) {
+        res.status(404).json({ msg: error.message })
+    }
+})
+
 const filterTrendingPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
     let posts;
@@ -173,7 +185,7 @@ const downvotePost = asyncHandler(async (req, res) => {
 })
 
 
-
+//Delete Post
 const deletePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -195,7 +207,7 @@ const deletePost = asyncHandler(async (req, res) => {
 });
 
 
-
+//Create Comment
 const createComment = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -219,8 +231,7 @@ const createComment = asyncHandler(async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-
+//Edit Comment
 const editComment = asyncHandler(async (req, res) => {
     const update = (array, index, newValue) => {
         array[index] = newValue
@@ -237,7 +248,7 @@ const editComment = asyncHandler(async (req, res) => {
         res.status(500).send('Server Error')
     }
 })
-
+// Delete Comment
 const deleteComment = asyncHandler(async (req, res) => {
     try {
         //get the post
@@ -245,7 +256,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
         //get the comment from post
         const comment = post.comments.find(
-            (comment) =>  comment._id === req.params.comment_id 
+            (comment) =>  comment.id === req.params.comment_id 
         )
 
         //check if comment exist
@@ -254,7 +265,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         }
 
         post.comments = post.comments.filter(
-            ({ id }) => id !== req.params.comment_id 
+            ({ id }) =>  id !== req.params.comment_id 
         )
 
         post.commentsCount--
@@ -281,5 +292,5 @@ const getMyPosts = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent
+    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent, getCommentById
 }

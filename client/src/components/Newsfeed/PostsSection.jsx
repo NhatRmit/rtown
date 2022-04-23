@@ -129,8 +129,7 @@ const PostsSection = ({ post }) => {
                 </div>
             </div>
             <div>
-                <CommentForm postId={post._id} />
-                
+                <CommentForm postId={post._id}/>
                 <CommentItem post={post} />
             </div>
         </div>
