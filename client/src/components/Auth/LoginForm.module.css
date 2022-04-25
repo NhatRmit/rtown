@@ -56,6 +56,14 @@
     color: var(--darker-grey);
 }
 
+.a {
+    color: var(--darker-grey);
+}
+
+.a:hover {
+    color: var(--red);
+}
+
 .login-btn {
     background-color: var(--dark-grey);
     padding: 10px 20px;

@@ -8,9 +8,9 @@ const PostsSection = () => {
     return (
        <div className='posts-container'>
            <div className='post-types'>
-                <h1 className="title">Popular posts</h1>
-                <h1 className="title">Trending posts</h1>
-                <h1 className="title">Top posts</h1>
+                <h2 className="title">Popular posts</h2>
+                <h2 className="title">Trending posts</h2>
+                <h2 className="title">Top posts</h2>
            </div>
            <div className='post-section'>
                 <div className='vote-section'>

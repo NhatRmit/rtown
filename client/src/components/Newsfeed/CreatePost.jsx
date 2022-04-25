@@ -4,7 +4,7 @@ import { IconContext } from 'react-icons/lib'
 
 const CreatePost = () => {
     return (
-       <div>
+       <div className='create-container'>
            <h1 className="title">Create post</h1>
            <form class="textarea-container">
                <textarea placeholder='Write something...'></textarea>

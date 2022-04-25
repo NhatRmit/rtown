@@ -1,4 +1,5 @@
 .posts-container {
+
     margin-top: 3em;
     padding-bottom: 3rem;
 }
@@ -6,18 +7,21 @@
 .post-types {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 50%;
+    width: 90%;
+    margin: auto;
+    justify-content: flex-start;
 }
 
-.post-types h1 {
+.post-types h2 {
     color: var(--dark-grey);
     cursor: pointer;
     padding-bottom: 3px;
     margin-bottom: 1em;
+    font-size: 1.2em;
+    margin-right: 1em;
 }
 
-.post-types h1:first-child {
+.post-types h2:first-child {
     color: var(--navy);
     border-bottom: 4px solid var(--navy);
 }
@@ -25,6 +29,9 @@
 .post-section {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    width: 90%;
+    margin: auto;
     background-color: var(--lighter-grey);
     border-radius: 10px;
     margin-bottom: 2rem;
