@@ -1,5 +1,6 @@
 import React from 'react'
 import Post from './Post'
+import CommentSection from '../Comment/CommentSection'
 import './PostSection.css'
 
 
@@ -8,6 +9,7 @@ const PostSection = () => {
     <>
      <div className='post-section'>
          <Post/>
+         <CommentSection/>
          <Post/>
          <Post/>
          <Post/>

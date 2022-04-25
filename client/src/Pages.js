@@ -6,7 +6,6 @@ import ContentPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import RPointsPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import CommunityRequestPage from "./pages/community/CommunityRequestPage";
-import CommentsPage from "./pages/CommentsPage";
 import CommunityPage from "./pages/community/CommunityPage"
 
 const pages = {
@@ -49,11 +48,6 @@ const pages = {
     name: "R-Points Policy",
     link: "/rpoints-policy",
     component: <RPointsPolicyPage />,
-  },
-  commentsPage: {
-    name:"Comment Page",
-    link:"/comments",
-    component: <CommentsPage />
   },
   communityPage: {
     name: "Community Page",
