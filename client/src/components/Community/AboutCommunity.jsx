@@ -1,27 +1,65 @@
 import "./AboutCommunity.css";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateEvent from "./CreateEventButton"
 import LeaveCommunity from "./LeaveButton"
 import EditCommunity from "./EditButton"
+import JoinCommunity from "./JoinButton"
+import { useDispatch, useSelector } from "react-redux";
+import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
+import { useEffect, useState } from "react";
+import { loadUser } from "../../actions/auth";
 
-const AboutCommunity = () => {
+
+const AboutCommunity = ({ community_id, community }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const onEdit = e => {
+    e.preventDefault()
+    navigate(`/communities/edit/${community_id}`)
+  }
+
+  const onLeave = e => {
+    e.preventDefault()
+    dispatch(leaveCommunity(community_id, navigate))
+  }
+
+  const onJoin = e => {
+    e.preventDefault()
+    dispatch(joinCommunity(community_id, navigate))
+  }
+
+  const onCreateEvent = e => {
+    e.preventDefault()
+    navigate(`/communities/event-request`)
+  }
+
+  useEffect(() => {
+    dispatch(loadUser())
+    dispatch(getCommunityById(community_id))
+  }, [dispatch, community_id])
+
+  const user = useSelector(state => state.auth)
+  // const community = useSelector(state => state.community.community)
+
   return (
     <div className='about-container'>
-      <h1 className='title'>Community's name</h1>
+      <h1 className='title'>{community && community.communityName}</h1>
       <p className='description'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla libero
-        diam, facilisis non ante vestibulum, egestas commodo nisi. Donec
-        elementum erat a sem sodales, ac dignissim est hendrerit. Ut fringilla
-        quam vitae ligula tempor posuere. Nam ac purus nibh. Pellentesque ut
-        feugiat nulla, ac venenatis felis. Curabitur facilisis aliquet turpis,
-        sed convallis neque maximus non. Donec in orci sodales, suscipit enim
-        id, vulputate erat. Etiam faucibus felis vitae eros tempus, a iaculis
-        nisi dignissim.
+        {community && community.description}
       </p>
       <div className="buttons">
-          <div><CreateEvent/></div>
-          <div><EditCommunity/></div>
-          <div><LeaveCommunity/></div>
+        <div onClick={onCreateEvent}><CreateEvent /></div>
+        <div onClick={onEdit}><EditCommunity /></div>
+        {
+          community && community.members && community.members.length === 0 ?
+            <div onClick={onJoin}><JoinCommunity /></div> :
+            community && community.members && community.members.map(member =>
+              member.memberId === user._id ?
+                <div onClick={onLeave}><LeaveCommunity /></div> :
+                <div onClick={onJoin}><JoinCommunity /></div>
+            )
+        }
       </div>
     </div>
   );

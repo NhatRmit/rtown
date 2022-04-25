@@ -15,12 +15,20 @@ const profileStudentSchema = mongoose.Schema({
     avatar: {
         type: String,
     },
+    itemList: [
+        {
+            item: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'item'
+            },
+        }
+    ],
     community: [
         {
             communityId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'community'            
-            }, 
+                ref: 'community'
+            },
             communityName: {
                 type: mongoose.Schema.Types.String,
                 ref: 'community'

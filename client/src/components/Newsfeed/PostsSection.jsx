@@ -63,11 +63,11 @@ const PostsSection = ({ post }) => {
                                     <BiUserCircle />
                                 </IconContext.Provider>
                             </label>
-                            <p id="username" className='username'>{post.name}</p>
+                            <p id="username" className='username'>{post.name && post.name}</p>
                         </span>
                         <p className='uploaded-time'>
                             <Moment format='DD/MM/YYYY'>
-                                {post.date}
+                                {post.date && post.date}
                             </Moment></p>
                     </div>
                     <div className='post-content'>

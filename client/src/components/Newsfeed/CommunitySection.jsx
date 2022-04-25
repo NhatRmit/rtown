@@ -10,7 +10,7 @@ const CommunitySection = ({ community }) => {
         navigate(`/communities/${community._id}`)
     }
     return (
-        <div className="community-container">
+        <div className="community-section-container">
             <div onClick={onClick} className='joined-community'>
                 <span className='community'>
                     

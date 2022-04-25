@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel')
+const Profile = require('../models/profileModel');
 const getItems = asyncHandler(async (req, res) => {
     try {
         const items = await Item.find().sort({ Rpoint: -1 });
@@ -25,7 +26,19 @@ const createItem = asyncHandler(async (req, res) => {
     }
 })
 
+// const getItemByProfile = asyncHandler(async (req, res) => {
+//     try {
+//         const profile = await Profile.findOne({user: req.user.id})
+//         profile.itemList.map(item => )
+
+//     } catch (error) {
+//         console.error(error.message)
+//         res.status(500).send('Server Error')
+//     }
+// }) 
+
 module.exports = {
     getItems,
     createItem,
+    
 }

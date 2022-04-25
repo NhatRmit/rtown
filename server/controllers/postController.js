@@ -80,18 +80,37 @@ const createPost = asyncHandler(async (req, res) => {
     }
 })
 
-const createEvent = asyncHandler(async(req, res) => {
+const createEvent = asyncHandler(async (req, res) => {
     try {
         const community = await Community.findById(req.params.community_id)
         const newEvent = new Post({
             text: req.body.text,
-            name: community.communityName,
+            // name: community.communityName,
             Rpoint: req.body.Rpoint
         })
 
         const event = await newEvent.save()
         res.json(event)
 
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const checkOut = asyncHandler(async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (post.checkouts.filter(checkout => checkout.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already checked out' })
+        }
+
+        post.checkouts.unshift({ user: req.user.id });
+        post.upvotesCount++
+        await post.save();
+
+        res.json(post.checkouts);
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
@@ -262,7 +281,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
         //get the comment from post
         const comment = post.comments.find(
-            (comment) =>  comment.id === req.params.comment_id 
+            (comment) => comment.id === req.params.comment_id
         )
 
         //check if comment exist
@@ -271,7 +290,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         }
 
         post.comments = post.comments.filter(
-            ({ id }) =>  id !== req.params.comment_id 
+            ({ id }) => id !== req.params.comment_id
         )
 
         post.commentsCount--
@@ -298,5 +317,5 @@ const getMyPosts = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent, getCommentById
+    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent, getCommentById, checkOut
 }

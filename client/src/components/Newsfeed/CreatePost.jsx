@@ -20,7 +20,7 @@ const CreatePost = () => {
     }
 
     return (
-        <div>
+        <>
             <h1 className="title">Create post</h1>
             <form onSubmit={onSubmit} className="textarea-container">
                 <textarea
@@ -56,7 +56,7 @@ const CreatePost = () => {
                     <button type="submit">Post</button>
                 </div>
             </form>
-        </div>
+        </>
     )
 }
 

@@ -1,18 +1,18 @@
 import React from 'react'
 import Layout from '../../components/Layout'
 // import Filter from '../components/Filter/Filter'
-import RequestForm from '../../components/Form/RequestForm'
+import EditCommunity from '../../components/Form/EditCommunity'
 
 
-const CommunityRequest = () => {
+const CommunityEdit = () => {
   return (
     <>
       <Layout header footer >
-        <RequestForm />
+        <EditCommunity />
       </Layout>
     </>
 
   )
 }
 
-export default CommunityRequest
+export default CommunityEdit

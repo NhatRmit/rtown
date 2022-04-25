@@ -36,7 +36,7 @@ const NewsfeedPage = () => {
     <>
       <Layout header footer >
         <div className='newsfeed-container'>
-          <div className='left-container'>
+          <div className='newsfeed-left-container'>
             <h1 className="title">Communnity</h1>
             <div onClick={onCreate} className="create-community">
               {/*CHANGE ICON FOR ME*/}
@@ -48,25 +48,25 @@ const NewsfeedPage = () => {
               <p>Create community</p>
             </div>
             {
-              communities.map(community =>
+              communities && communities.map(community =>
                 <CommunitySection key={community._id} community={community} />
               )
             }
           </div>
-          <div className='right-container'>
-            <div>
+          <div className='newsfeed-right-container'>
+            <>
               <CreatePost />
-            </div>
-            <div>
+            </>
+            <>
               <Filter />
-            </div>
-            <div>
+            </>
+            <>
               {
                 posts.map(post =>
-                  <PostsSection key={post._id} post={post}/>
+                  <PostsSection key={post._id} post={post} />
                 )
               }
-            </div>
+            </>
           </div>
         </div>
       </Layout>

@@ -27,7 +27,7 @@ export const getPosts = () => async dispatch => {
 }
 
 //Add comment
-export const addComment = (postId, formData,navigate) => async dispatch => {
+export const addComment = (postId, formData, navigate) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -266,14 +266,20 @@ export const clearPost = () => async dispatch => {
     })
 }
 
-export const createEvent = (formData, communityId) => async dispatch => {
+export const createEvent = (formData, communityId, navigate) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
     try {
-        const res = await axios.post(`/api/posts/event/${communityId}`, formData)
+        const res = await axios.post(`/api/posts/event/${communityId}`, formData, config)
         dispatch({
             type: ADD_POST,
             payload: res.data
 
         })
+        navigate(`communities/${communityId}`)
     } catch (error) {
         dispatch({
             type: POST_ERROR,

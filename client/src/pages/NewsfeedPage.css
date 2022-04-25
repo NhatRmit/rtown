@@ -5,12 +5,12 @@
     margin-top: 8em;
 }
 
-.left-container {
+.newsfeed-left-container {
     width: 15%;
     margin-left: 4rem;
 }
 
-.right-container {
+.newsfeed-right-container {
     width: 75%;
     margin-right: 4rem;
 }
