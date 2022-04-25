@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout";
-import "./DisclaimerPage.css";
+import "./LegalPages.css";
 
 const DisclaimerPage = () => {
   return (

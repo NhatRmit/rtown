@@ -1,0 +1,19 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.description {
+    text-align: justify;
+    padding-bottom: 1em;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+}

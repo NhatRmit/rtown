@@ -27,12 +27,13 @@
     padding: 0 40em;
 }
 
-.footer-nav a {
+.footer-link {
     all: unset;
     cursor: pointer;
+    color: var(--white);
 }
 
-.footer-nav a:hover {
+.footer-link:hover {
     text-decoration: underline;
 }
 
