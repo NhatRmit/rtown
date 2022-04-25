@@ -51,7 +51,7 @@ const PostsSection = ({ post }) => {
     }
     const handleDownvote = (e) => {
         e.preventDefault()
-        post.upvotes.length === 1 ?  unUpvote(e)  :  onUpvote(e)
+        post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
     }
 
 
