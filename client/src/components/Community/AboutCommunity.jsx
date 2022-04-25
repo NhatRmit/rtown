@@ -1,8 +1,8 @@
 import "./AboutCommunity.css";
 import {Link} from "react-router-dom";
-import CreateEvent from "./CreateEventButton"
-import LeaveCommunity from "./LeaveButton"
-import EditCommunity from "./EditButton"
+import CreateEvent from "../Buttons/CreateEventButton"
+import LeaveCommunity from "../Buttons/LeaveButton"
+import EditCommunity from "../Buttons/EditButton"
 
 const AboutCommunity = () => {
   return (

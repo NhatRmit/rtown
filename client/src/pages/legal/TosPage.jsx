@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout";
 import "./LegalPages.css";
 import {Link} from "react-router-dom";
-import ToTopBtn from "../../components/ToTopButton";
+import ToTopBtn from "../../components/Buttons/ToTopButton";
 
 const TosPage = () => {
   return (

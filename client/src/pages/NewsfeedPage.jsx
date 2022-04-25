@@ -1,9 +1,10 @@
 import React from 'react'
 import Layout from '../components/Layout'
 // import Filter from '../components/Filter/Filter'
-import CommunitySection from '../components/Newsfeed/CommunitySection'
-import CreatePost from '../components/Newsfeed/CreatePost'
-import PostsSection from '../components/Newsfeed/PostsSection'
+import CommunityList from '../components/Community/CommunityList'
+import CreatePost from '../components/Post/CreatePost'
+import PostSection from '../components/Post/PostSection'
+import Comment from '../components/Comment/Comment'
 import './NewsfeedPage.css'
 
 
@@ -13,15 +14,15 @@ const Newsfeed = () => {
       <Layout header footer >
         <div className='newsfeed-container'>
           <div className='left-container'> 
-            <CommunitySection />
+            <CommunityList />
           </div>
           <div className='right-container'>
-            <div>
+            
               <CreatePost />
-            </div>
-            <div>
-              <PostsSection />
-            </div>
+            
+              <PostSection />
+              {/* <Comment /> */}
+    
           </div>
         </div>
       </Layout>
