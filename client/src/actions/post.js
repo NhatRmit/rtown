@@ -4,10 +4,9 @@ import {
     GET_POST,
     POST_ERROR,
     ADD_POST,
-    UPDATE_LIKES,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE
 } from "./types";
 
 //Get post
@@ -149,13 +148,13 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
 }
 
 
-// Add Like
-export const addLike = id => async dispatch => {
+// Add Upvote
+export const addUpvote = id => async dispatch => {
     try {
-        const res = await axios.put(`/api/posts/like/${id}`)
+        const res = await axios.put(`/api/posts//upvote/${id}`)
         dispatch({
-            type: UPDATE_LIKES,
-            payload: { id, likes: res.data }
+            type: UPDATE_UPVOTE,
+            payload: { id, upvotes : res.data }
         })
     } catch (error) {
         dispatch({
@@ -164,13 +163,45 @@ export const addLike = id => async dispatch => {
         })
     }
 }
-// Remove Like
-export const removeLike = id => async dispatch => {
+// Remove Upvote
+export const removeUpvote = id => async dispatch => {
     try {
-        const res = await axios.put(`/api/posts/unlike/${id}`)
+        const res = await axios.put(`/api/posts/removeupvote/${id}`)
         dispatch({
-            type: UPDATE_LIKES,
-            payload: { id, likes: res.data }
+            type: UPDATE_UPVOTE,
+            payload: { id, upvotes: res.data }
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+
+// Add Downvote
+export const addDownvote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts//downvote/${id}`)
+        dispatch({
+            type: UPDATE_DOWNVOTE,
+            payload: { id, upvotes : res.data }
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+// Remove Upvote
+export const removeDownvote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/removedownvote/${id}`)
+        dispatch({
+            type: UPDATE_DOWNVOTE,
+            payload: { id, upvotes: res.data }
         })
     } catch (error) {
         dispatch({
