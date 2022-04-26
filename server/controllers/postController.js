@@ -183,7 +183,7 @@ const removeupvotePost = asyncHandler(async (req, res) => {
         res.status(500).send('Server error')
     }
 })
-
+// Down vote
 const downvotePost = asyncHandler(async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);

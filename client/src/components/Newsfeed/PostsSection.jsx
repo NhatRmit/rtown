@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, getPostById } from '../../actions/post'
+import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
 import { getProfileById } from '../../actions/profile'
 import CommentItem from '../../post/CommentItem'
@@ -37,22 +37,46 @@ const PostsSection = ({ post }) => {
         e.preventDefault()
         navigate(`/profiles/${post.user}`)
     }
+    const onUpvote = (e) => {
+        e.preventDefault()
+        e.target.style.color='blue'
+        dispatch(addUpvote(post._id))
+    }
+    const unUpvote = (e) => {
+        e.preventDefault()
+        e.target.style.color='red'
+        dispatch(removeUpvote(post._id))
+    }
+
+    const handleUpvote = (e) => {
+        e.preventDefault()
+        post.upvotes.length === 0 ?  onUpvote(e)  :  unUpvote(e)
+    }
+    const handleDownvote = (e) => {
+        e.preventDefault()
+        post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
+    }
+
+
+
     return (
         <div className='posts-container'>
             <div className='post-section'>
                 <div className='vote-section'>
-                    <span className='icon'>
+                    <span className='icon' onClick={ handleUpvote } >
                         {/*CHANGE ICONS FOR ME */}
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiUpvote />
                         </IconContext.Provider>
+
                     </span>
                     <p className='vote-total'>{post.upvotes.length}</p>
-                    <span className='icon'>
+                    <span className='icon' onClick={ handleDownvote }>
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiDownvote />
                         </IconContext.Provider>
                     </span>
+
                 </div>
 
                 <div className='content-section'>
