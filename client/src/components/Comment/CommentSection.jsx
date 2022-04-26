@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 // import Filter from '../components/Filter/Filter'
 import Comment from "./Comment";
 import "./Comment";
+import { useNavigate } from "react-router-dom";
+import { addComment } from "../../actions/post";
 
-const CommentSection = () => {
+const CommentSection = ({ post, comment }) => {
   return (
     <>
       <div className='comment-page-container'>
-        <div className='comment-section'>
-          <form class='comment-textarea'>
-            <textarea placeholder='Write something...'></textarea>
-            <button class='post-btn'>Comment</button>
-          </form>
-        </div>
-        <Comment />
+        <Comment post={post} comment={comment} />
       </div>
     </>
   );

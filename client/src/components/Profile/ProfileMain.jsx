@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom'
 import { getPosts } from '../../actions/post'
 import Filter from '../Filter/Filter'
 import Spinner from '../Layout/Spinner'
-import PostsSection from '../Newsfeed/PostsSection'
-import Header from './Header'
+import PostsSection from '../Post/PostsSection'
 
 
 const ProfileMain = ({ profile, loading }) => {

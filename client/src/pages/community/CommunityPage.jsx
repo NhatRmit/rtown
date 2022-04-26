@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getCommunityById } from '../../actions/community'
 import EditCommunity from '../../components/Form/EditCommunity'
-import MemberSection from "../../components/Community/MemberSection";
+// import MemberSection from "../../components/Community/MemberSection";
 import Layout from "../../components/Layout";
 import MemberList from "../../components/Community/MemberList";
 
@@ -43,7 +43,7 @@ const CommunityPage = () => {
               )}
             </div>
           </div>
-          <div className='right-container'>
+          <div className='right-community-container'>
             <AboutCommunity key={community_id} community_id={community_id} community={community} />
           </div>
         </div>

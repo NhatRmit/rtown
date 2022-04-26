@@ -15,9 +15,6 @@ const CommentItem = ({ post, comment }) => {
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false)
 
-
-
-
     return (
         // post.comments.map(comment => (
         <div>
@@ -39,8 +36,6 @@ const CommentItem = ({ post, comment }) => {
                     type='submit'>
                     Delete
                 </button>
-
-
             </div>
             <button onClick={(e) => {
                 e.preventDefault()
@@ -50,8 +45,6 @@ const CommentItem = ({ post, comment }) => {
                 Edit Comment
             </button>
         </div>
-
-        // ))
     )
 }
 
