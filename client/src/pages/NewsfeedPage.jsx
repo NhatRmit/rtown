@@ -34,7 +34,7 @@ const NewsfeedPage = () => {
   }
   return (
     <>
-      <Layout header footer >
+      <Layout header footer>
         <div className='newsfeed-container'>
           <div className='newsfeed-left-container'>
             <h1 className="title">Communnity</h1>
@@ -71,7 +71,6 @@ const NewsfeedPage = () => {
         </div>
       </Layout>
     </>
-
-  )
-}
+  );
+};
 export default NewsfeedPage

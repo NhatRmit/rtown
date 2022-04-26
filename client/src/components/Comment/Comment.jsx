@@ -1,7 +1,7 @@
 import React from "react";
 // import Filter from '../components/Filter/Filter'
 import {Link} from "react-router-dom";
-import {BsFillChatDotsFill} from "react-icons/bs";
+import {FaUserCircle} from "react-icons/fa";
 import {IconContext} from "react-icons/lib";
 import "./Comment.css";
 
@@ -15,7 +15,7 @@ const Comment = () => {
               <span className='user-icon'>
                 {/*CHANGE ICON FOR ME*/}
                 <IconContext.Provider value={{color: "#676767", size: "1em"}}>
-                  <BsFillChatDotsFill />
+                  <FaUserCircle />
                 </IconContext.Provider>
               </span>
             </Link>

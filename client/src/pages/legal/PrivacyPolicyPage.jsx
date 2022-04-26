@@ -1,6 +1,6 @@
 import Layout from "../../components/Layout";
 import "./LegalPages.css";
-import ToTopBtn from "../../components/ToTopButton";
+import ToTopBtn from "../../components/Buttons/ToTopButton";
 
 const PrivacyPolicyPage = () => {
   return (
