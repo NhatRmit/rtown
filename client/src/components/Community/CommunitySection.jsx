@@ -1,4 +1,4 @@
-import "./CommunityList.css";
+import "./CommunitySection.css";
 import {Link} from "react-router-dom";
 import {GrAddCircle} from "react-icons/gr";
 import {IconContext} from "react-icons/lib";
@@ -7,7 +7,7 @@ import logo2 from "../Newsfeed/media/fintech-club-logo.jpg";
 import logo3 from "../Newsfeed/media/mass-media-club-logo.jpg";
 import logo4 from "../Newsfeed/media/mobi-logo.jpg";
 
-const CommunityList = () => {
+const CommunitySection = () => {
   return (
     <div className='community-list-container'>
       <h1 className='title'>Community</h1>
@@ -54,4 +54,4 @@ const CommunityList = () => {
   );
 };
 
-export default CommunityList;
+export default CommunitySection;

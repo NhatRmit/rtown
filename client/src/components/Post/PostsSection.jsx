@@ -1,4 +1,4 @@
-import "./Post.css";
+import "./PostsSection.css";
 import {BiUpvote, BiDownvote, BiCommentAdd} from "react-icons/bi";
 import {FaUserCircle} from "react-icons/fa";
 import {AiFillEdit, AiFillDelete} from "react-icons/ai"
@@ -6,7 +6,7 @@ import {IconContext} from "react-icons/lib";
 import {MdReportGmailerrorred} from "react-icons/md";
 import {Link} from "react-router-dom";
 
-const Post = () => {
+const PostsSection = () => {
   return (
     <div className='post-container'>
       <div className='vote-container'>
@@ -106,4 +106,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostsSection;
