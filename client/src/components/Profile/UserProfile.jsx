@@ -1,26 +1,3 @@
-// import React, { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { loadUser } from '../../actions/auth'
-// import { getProfileById } from '../../actions/profile'
-// import Sp
-
-// const UserProfile = () => {
-//   const dispatch = useDispatch()
-//   const auth = useSelector(state => state.auth)
-//   const profile = useSelector(state => state.profile.profile)
-
-//   useEffect(() => {
-//     dispatch(loadUser())
-//     dispatch(getProfileById(auth._id))
-//   }, [dispatch, auth._id])
-
-//   return (
-//     <div>{}</div>
-//   )
-// }
-
-// export default UserProfile
-
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile, getProfileById } from '../../actions/profile'
