@@ -89,7 +89,17 @@
 .content-section-footer {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     padding-top: 1rem;
+}
+
+.content-right-footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-right-footer .icon:last-child {
+    margin-left: 2rem;
 }
 
 .icon {
@@ -101,6 +111,7 @@
 }
 
 .icon-label {
-    padding: 0 1.5rem 0 0.5rem;
+    padding-left: 0.5rem;
     color: var(--darker-grey);
 }
+

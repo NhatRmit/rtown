@@ -12,30 +12,32 @@
 }
 
 .create-community-section {
-    background-color: var(--light-grey);
-    width: 8em;
-    height: 8em;
-    border-radius: 10px;
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--light-grey);
+    width: 8em;
+    height: 8em;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
     border: 1px solid var(--dark-grey);
     cursor: pointer;
 }
 
-.create-community-section .link p {
-    text-align: center;
+ .community-link p {
+   text-align: center;
     font-family: var(--heading-font);
     font-size: 1em;
     font-weight: 500;
     color: var(--dark-grey);
 }
 
-.create-community-section .link:hover {
+.community-link {
     text-decoration: none;
+    padding-top: 0.5em;
 }
+
 
 .joined-community {
     display: flex;

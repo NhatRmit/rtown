@@ -1,6 +1,6 @@
 import "./CommunityList.css";
 import {Link} from "react-router-dom";
-import {BsFillChatDotsFill} from "react-icons/bs";
+import {GrAddCircle} from "react-icons/gr";
 import {IconContext} from "react-icons/lib";
 import logo1 from "../Newsfeed/media/badminton-club-logo.jpg";
 import logo2 from "../Newsfeed/media/fintech-club-logo.jpg";
@@ -15,12 +15,12 @@ const CommunityList = () => {
         <Link to='/community-request'>
           <span className='create-icon'>
             {/*CHANGE ICON FOR ME*/}
-            <IconContext.Provider value={{color: "#C0BFBF", size: "2em"}}>
-              <BsFillChatDotsFill />
+            <IconContext.Provider value={{color: '#C0BFBF', size: "2em"}}>
+              <GrAddCircle />
             </IconContext.Provider>
           </span>
         </Link>
-        <Link to='/community-request' className='link'>
+        <Link to='/community-request' className='community-link'>
           <p>Create community</p>
         </Link>
       </div>

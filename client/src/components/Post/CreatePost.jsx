@@ -1,5 +1,5 @@
 import './CreatePost.css'
-import { BsFillChatDotsFill } from 'react-icons/bs'
+import { BsFillCloudUploadFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 
 const CreatePost = () => {
@@ -14,19 +14,10 @@ const CreatePost = () => {
                             {/*CHANGE ICON FOR ME*/}
                             <label htmlFor='img-input'>
                             <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                                <BsFillChatDotsFill />
+                                <BsFillCloudUploadFill />
                             </IconContext.Provider>
                             </label>
                             <input id="img-input" type="file"/>
-                        </span>
-                        <span className='file-upload'>
-                            {/*CHANGE ICON FOR ME*/}
-                            <label htmlFor='file-input'>
-                            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                                <BsFillChatDotsFill />
-                            </IconContext.Provider>
-                            </label>
-                            <input id="file-input" type="file"/>
                         </span>
                    </div>
                    <button>Post</button>

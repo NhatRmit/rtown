@@ -1,6 +1,9 @@
 import "./Post.css";
-import {BsFillChatDotsFill} from "react-icons/bs";
+import {BiUpvote, BiDownvote, BiCommentAdd} from "react-icons/bi";
+import {FaUserCircle} from "react-icons/fa";
+import {AiFillEdit, AiFillDelete} from "react-icons/ai"
 import {IconContext} from "react-icons/lib";
+import {MdReportGmailerrorred} from "react-icons/md";
 import {Link} from "react-router-dom";
 
 const Post = () => {
@@ -10,14 +13,14 @@ const Post = () => {
         <span className='upvote-icon'>
           {/*CHANGE ICONS FOR ME */}
           <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-            <BsFillChatDotsFill />
+            <BiUpvote />
           </IconContext.Provider>
         </span>
         <p>1000</p>
         <span className='downvote-icon'>
           {/*CHANGE ICONS FOR ME */}
           <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-            <BsFillChatDotsFill />
+            <BiDownvote />
           </IconContext.Provider>
         </span>
       </div>
@@ -28,7 +31,7 @@ const Post = () => {
           <span className="users-icon">
             <label htmlFor='username'>
               <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                <BsFillChatDotsFill />
+                <FaUserCircle />
               </IconContext.Provider>
             </label>
           </span>
@@ -51,25 +54,13 @@ const Post = () => {
           </p>
         </div>
         <div className='content-section-footer'>
-          <span className='icon'>
-            <Link to='/comment'>
-              <label htmlFor='comment'>
-                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                  <BsFillChatDotsFill />
-                </IconContext.Provider>
-              </label>
-            </Link>
-            <p id='comment' className='icon-label'>
-             
-              Comments
-            </p>
-          </span>
-
+          <div className="content-left-footer">
+            {/*Report icon*/}
           <span className='icon'>
             <Link to='/'>
               <label htmlFor='report'>
                 <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                  <BsFillChatDotsFill />
+                  <MdReportGmailerrorred />
                 </IconContext.Provider>
               </label>
             </Link>
@@ -77,6 +68,38 @@ const Post = () => {
               Report
             </p>
           </span>
+          </div>
+
+          <div className="content-right-footer">
+            {/*Edit post icon*/}
+          <span className='icon'>
+            <Link to='/'>
+              <label htmlFor='edit-post'>
+                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
+                  <AiFillEdit />
+                </IconContext.Provider>
+              </label>
+            </Link>
+            <p id='edit-post' className='icon-label'>
+              Edit
+            </p>
+          </span>
+
+          {/*Delete post icon*/}
+          <span className='icon'>
+            <Link to='/'>
+              <label htmlFor='delete-post'>
+                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
+                  <AiFillDelete />
+                </IconContext.Provider>
+              </label>
+            </Link>
+            <p id='delete-post' className='icon-label'>
+              Delete
+            </p>
+          </span>
+          </div>
+          
         </div>
       </div>
     </div>
