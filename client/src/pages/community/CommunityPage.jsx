@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getCommunityById } from '../../actions/community'
 import EditCommunity from '../../components/Form/EditCommunity'
-import MemberSection from "../../components/Community/MemberSection";
+// import MemberSection from "../../components/Community/MemberSection";
 import Layout from "../../components/Layout";
+import MemberList from "../../components/Community/MemberList";
+
 // import Filter from '../components/Filter/Filter'
-import CreatePost from "../../components/Newsfeed/CreatePost";
-import PostsSection from "../../components/Newsfeed/PostsSection";
+import CreatePost from "../../components/Post/CreatePost";
+import PostsSection from "../../components/Post/PostsSection";
 import AboutCommunity from "../../components/Community/AboutCommunity";
 import "./CommunityPage.css";
 import { getPosts } from '../../actions/post'
@@ -29,10 +31,10 @@ const CommunityPage = () => {
     <>
       <Layout header footer>
         <div className='community-container'>
-          <div className='left-container'>
-            <MemberSection />
+          <div className='left-community-container'>
+            <MemberList />
           </div>
-          <div className='center-container'>
+          <div className='center-community-container'>
             <div>
               <CreatePost />
             </div>
@@ -41,7 +43,7 @@ const CommunityPage = () => {
               )}
             </div>
           </div>
-          <div className='right-container'>
+          <div className='right-community-container'>
             <AboutCommunity key={community_id} community_id={community_id} community={community} />
           </div>
         </div>

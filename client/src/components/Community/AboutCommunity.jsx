@@ -1,9 +1,9 @@
 import "./AboutCommunity.css";
 import { Link, useNavigate } from "react-router-dom";
-import CreateEvent from "./CreateEventButton"
-import LeaveCommunity from "./LeaveButton"
-import EditCommunity from "./EditButton"
-import JoinCommunity from "./JoinButton"
+import CreateEvent from "../Buttons/CreateEventButton"
+import LeaveCommunity from "../Buttons/LeaveButton"
+import EditCommunity from "../Buttons/EditButton"
+import JoinCommunity from "../Buttons/JoinButton"
 import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
 import { useEffect, useState } from "react";

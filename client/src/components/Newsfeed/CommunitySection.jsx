@@ -1,5 +1,5 @@
 
-import './CommunitySection.css'
+import '../Community/CommunitySection.css'
 import { Link, useNavigate } from "react-router-dom";
 
 

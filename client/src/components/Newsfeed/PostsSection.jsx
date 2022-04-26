@@ -1,4 +1,4 @@
-import './PostsSection.css'
+import '../Post/PostsSection.css'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
@@ -56,8 +56,6 @@ const PostsSection = ({ post }) => {
         e.preventDefault()
         post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
     }
-
-
 
     return (
         <div className='posts-container'>

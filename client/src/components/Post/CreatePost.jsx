@@ -1,5 +1,6 @@
 import './CreatePost.css'
 import { BsFillChatDotsFill } from 'react-icons/bs'
+import { BsFillCloudUploadFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import { useState } from 'react'
 import { addPost } from '../../actions/post'
@@ -36,27 +37,36 @@ const CreatePost = () => {
                     <div className='upload-icons'>
                         <span className='image-upload'>
                             {/*CHANGE ICON FOR ME*/}
-                            <label htmlFor='img-input'>
+                            {/* <label htmlFor='img-input'>
                                 <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                                     <BsFillChatDotsFill />
                                 </IconContext.Provider>
-                            </label>
+                            </label >
+                            <input id="img-input" type="file" /> */}
+                        </span >
+                        <span>
+                            <label>
+                                <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
+                                    <BsFillCloudUploadFill />
+                                </IconContext.Provider>
+                            </label >
                             <input id="img-input" type="file" />
-                        </span>
+                        </span >
                         <span className='file-upload'>
                             {/*CHANGE ICON FOR ME*/}
-                            <label htmlFor='file-input'>
+                            {/* <label htmlFor='file-input'>
                                 <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                                     <BsFillChatDotsFill />
                                 </IconContext.Provider>
                             </label>
-                            <input id="file-input" type="file" />
+                            <input id="file-input" type="file" /> */}
                         </span>
-                    </div>
+                    </div >
                     <button type="submit">Post</button>
-                </div>
-            </form>
+                </div >
+            </form >
         </>
+
     )
 }
 
