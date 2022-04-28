@@ -13,7 +13,7 @@ const {
 
 router.get('/', getAllCommunity)
 
-router.get('/myCommunities', auth, getMyCommunities)
+router.get('/myCommunities/:user_id', auth, getMyCommunities)
 
 router.get('/:community_id', auth, getCommunityById)
 

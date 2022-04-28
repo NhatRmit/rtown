@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
 import NewsfeedPage from './pages/NewsfeedPage'
@@ -18,6 +18,14 @@ import RItems from './components/Profile/RItems'
 import RShop from './components/Profile/RShop'
 import RequestForm from './components/Form/RequestForm'
  import { Chat } from './components/Chatting/Chat'
+import CommunityRequest from './pages/community/CommunityRequestPage'
+import CommunityEditPage from './pages/community/CommunityEditPage'
+import CommunityPage from './pages/community/CommunityPage'
+
+// import EditCommunity from './components/Form/EditCommunity'
+import { getPosts } from './actions/post'
+import RequestEvent from './components/Form/RequestEvent'
+
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -29,6 +37,7 @@ const App = () => {
     dispatch(loadUser())
   }, [dispatch])
 
+
   return (
     <>
       <Router>
@@ -36,12 +45,28 @@ const App = () => {
           <Route exact path='/' element={<LoginPage />} />
           <Route
             exact path='/communities/:community_id'
-            element={<PrivateRoute element={Community} />}
+            element={<PrivateRoute element={CommunityPage} />}
           />
           <Route
+            exact path='/communities/edit/:community_id'
+            element={<PrivateRoute element={CommunityEditPage} />}
+          />
+
+          <Route
+            exact path='/communities/community-request'
+            element={<PrivateRoute element={CommunityRequest} />}
+          />
+          <Route
+            exact path='/communities/event-request'
+            element={<PrivateRoute element={RequestEvent} />}
+          />
+
+          {/* <Route
             exact path='/communities/community-request'
             element={<PrivateRoute element={RequestForm} />}
-          />
+          /> */}
+
+
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
@@ -58,13 +83,10 @@ const App = () => {
             exact path='posts/:postId'
             element={<PrivateRoute element={EditPost} />}
           />
+
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
-            exact path='/profiles/myProfile'
-            element={<PrivateRoute element={Profile} />}
-          />
-          <Route
-            exact path='newsfeed/profiles/:user_id'
+            exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
           />
           <Route

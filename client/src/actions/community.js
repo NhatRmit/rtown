@@ -75,13 +75,13 @@ export const updateCommunity = (community_id, formData, navigate) => async dispa
         }
     }
     try {
-        const res = await axios.put(`/api/communities/${community_id}`, formData, config)
+        const res = await axios.put(`/api/communities/update/`, formData, config)
 
         dispatch({
             type: UPDATE_COMMUNITY,
             payload: res.data
         })
-        navigate(`/community/${res.data._id}`)
+        navigate(`/communities/${community_id}`)
 
     } catch (err) {
         dispatch({
@@ -108,14 +108,53 @@ export const deleteCommunity = (community_id) => async dispatch => {
 }
 
 
-export const getMyCommunities = () => async dispatch => {
+export const getMyCommunities = (userId) => async dispatch => {
     dispatch({ type: CLEAR_COMMUNITY })
     try {
-        const res = await axios.get(`/api/communities/myCommunities`)
+        const res = await axios.get(`/api/communities/myCommunities/${userId}`)
         dispatch({
             type: GET_MY_COMMUNITIES,
             payload: res.data
         })
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const leaveCommunity = (community_id, navigate) => async dispatch => {
+    dispatch({ type: CLEAR_COMMUNITY })
+    try {
+        const res = await axios.put(`/api/profiles/leave/${community_id}`)
+        // dispatch({
+        //     type: GET_MY_COMMUNITIES,
+        //     payload: res.data
+        // })
+        dispatch(getCommunityById(community_id))
+
+        navigate(`/`)
+
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const joinCommunity = (community_id, navigate) => async dispatch => {
+    // dispatch({ type: CLEAR_COMMUNITY })
+    try {
+        const res = await axios.put(`/api/profiles/join/${community_id}`)
+        // dispatch({
+        //     type: GET_COMMUNITY,
+        //     payload: res.data
+        // })
+        dispatch(getCommunityById(community_id))
+        navigate(`/communities/${community_id}`)
+
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,

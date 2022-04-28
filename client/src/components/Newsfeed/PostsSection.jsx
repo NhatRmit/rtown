@@ -1,4 +1,4 @@
-import './PostsSection.css'
+import '../Post/PostsSection.css'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
@@ -8,8 +8,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, getPostById } from '../../actions/post'
+import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
+import { getProfileById } from '../../actions/profile'
+import CommentItem from '../../post/CommentItem'
+import CommentForm from '../../post/CommentForm'
 
 
 const PostsSection = ({ post }) => {
@@ -21,7 +24,8 @@ const PostsSection = ({ post }) => {
     const onEdit = e => {
         e.preventDefault()
         setEdit(true)
-        dispatch(getPostById(post._id))
+        // navigate(`/posts/${post._id}`)
+        // dispatch(getPostById(post._id))
         dispatch(clearPost())
     }
     const onDelete = (e) => {
@@ -29,23 +33,47 @@ const PostsSection = ({ post }) => {
         dispatch(deletePost(post._id))
     }
     const onProfile = (e) => {
+        e.preventDefault()
+        navigate(`/profiles/${post.user}`)
     }
+    const onUpvote = (e) => {
+        e.preventDefault()
+        e.target.style.color='blue'
+        dispatch(addUpvote(post._id))
+    }
+    const unUpvote = (e) => {
+        e.preventDefault()
+        e.target.style.color='red'
+        dispatch(removeUpvote(post._id))
+    }
+
+    const handleUpvote = (e) => {
+        e.preventDefault()
+        post.upvotes.length === 0 ?  onUpvote(e)  :  unUpvote(e)
+    }
+    const handleDownvote = (e) => {
+        e.preventDefault()
+        post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
+    }
+
     return (
         <div className='posts-container'>
             <div className='post-section'>
                 <div className='vote-section'>
-                    <span className='icon'>
+                    <span className='icon' onClick={ handleUpvote } >
                         {/*CHANGE ICONS FOR ME */}
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiUpvote />
                         </IconContext.Provider>
+
                     </span>
                     <p className='vote-total'>{post.upvotes.length}</p>
-                    <span className='icon'>
+                    <span className='icon' onClick={ handleDownvote }>
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiDownvote />
                         </IconContext.Provider>
                     </span>
+
                 </div>
 
                 <div className='content-section'>
@@ -56,11 +84,11 @@ const PostsSection = ({ post }) => {
                                     <BiUserCircle />
                                 </IconContext.Provider>
                             </label>
-                            <p id="username" className='username'>{post.name}</p>
+                            <p id="username" className='username'>{post.name && post.name}</p>
                         </span>
                         <p className='uploaded-time'>
                             <Moment format='DD/MM/YYYY'>
-                                {post.date}
+                                {post.date && post.date}
                             </Moment></p>
                     </div>
                     <div className='post-content'>
@@ -120,6 +148,11 @@ const PostsSection = ({ post }) => {
 
                     </div>
                 </div>
+            </div>
+            <div>
+                <CommentForm postId={post._id} />
+                {post.comments.map(comment => <CommentItem post={post} comment={comment} />)}
+
             </div>
         </div>
     )

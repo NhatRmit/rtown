@@ -1,17 +1,12 @@
 import LoginPage from "./pages/auth/LoginPage";
 import NewsfeedPage from "./pages/NewsfeedPage";
-import AdminProfilePage from "./pages/profile/AdminProfilePage"; 
-import UserProfilePage from "./pages/profile/UserProfilePage"; 
-import ChatPage from "./pages/ChatPage"; 
-import RItemsPage from "./pages/RItemsPage"; 
-import RShopPage from "./pages/RShopPage"; 
-import AboutUsPage from "./pages/support/AboutUsPage";
 import DisclaimerPage from "./pages/legal/DisclaimerPage";
 import TosPage from "./pages/legal/TosPage";
 import ContentPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import RPointsPolicyPage from "./pages/legal/PrivacyPolicyPage";
-import CommunityRequestPage from "./pages/CommunityRequestPage";
+import CommunityRequestPage from "./pages/community/CommunityRequestPage";
+import CommunityPage from "./pages/community/CommunityPage"
 
 const pages = {
   newsfeed: {
@@ -28,36 +23,6 @@ const pages = {
     name: "Login",
     link: "/login",
     component: <LoginPage />,
-  },
-  adminProfile: {
-    name: "Admin Profile",
-    link: "/admin-profile",
-    component: <AdminProfilePage />,
-  },
-  userProfile: {
-    name: "User Profile",
-    link: "/user-profile:id",
-    component: <UserProfilePage />,
-  },
-  chat: {
-    name: "Chat",
-    link: "/chat",
-    component: <ChatPage />,
-  },
-  rItems: {
-    name: "R-Items",
-    link: "/r-items",
-    component: <RItemsPage />,
-  },
-  rShop: {
-    name: "R-Shop",
-    link: "/r-shop",
-    component: <RShopPage />,
-  },
-  aboutUs: {
-    name: "About Us",
-    link: "/abotu-us",
-    component: <AboutUsPage />,
   },
   disclaimer: {
     name: "Disclaimer",
@@ -83,6 +48,11 @@ const pages = {
     name: "R-Points Policy",
     link: "/rpoints-policy",
     component: <RPointsPolicyPage />,
+  },
+  communityPage: {
+    name: "Community Page",
+    link:"/community",
+    component: <CommunityPage />
   }
 };
 

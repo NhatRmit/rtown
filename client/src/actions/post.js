@@ -4,10 +4,9 @@ import {
     GET_POST,
     POST_ERROR,
     ADD_POST,
-    UPDATE_LIKES,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE
 } from "./types";
 
 //Get post
@@ -27,7 +26,7 @@ export const getPosts = () => async dispatch => {
 }
 
 //Add comment
-export const addComment = (postId, FormData) => async dispatch => {
+export const addComment = (postId, formData, navigate) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -35,65 +34,58 @@ export const addComment = (postId, FormData) => async dispatch => {
     };
 
     try {
-        const res = await axios.post(`/api/posts/comment/${postId}`, FormData, config);
+        const res = await axios.post(`/api/posts/comment/${postId}`, formData, config);
 
         dispatch({
             type: ADD_COMMENT,
             payload: res.data
         });
-
+        navigate('/')
         // dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
-//Edit comment
-export const editComment = (postId, commentId) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    try {
-        const res = await axios.put(`/api/posts/comment/${postId}/${commentId}`, FormData, config);
 
+// //Edit comment
+export const editComment = (postId, commentId, formData, navigate) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData);
         dispatch({
             type: EDIT_COMMENT,
-            payload: commentId
+            payload: res.data
         })
+        navigate('/')
 
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status}
+            payload: { msg: err.response, status: err.response }
         });
     }
-}
+};
+
 
 //Delete comment
-export const deleteComment = (postId, commentId) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
+export const deleteComment = (postId, commentId, navigate) => async dispatch => {
+
 
     try {
-        const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`, FormData, config);
+        const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 
         dispatch({
             type: REMOVE_COMMENT,
             payload: commentId
         });
-
+        navigate('/')
         // dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
@@ -120,7 +112,7 @@ export const deletePost = (id, navigate) => async dispatch => {
         dispatch({
             type: DELETE_POST,
             payload: id
-        })
+        });
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -156,13 +148,13 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
 }
 
 
-// Add Like
-export const addLike = id => async dispatch => {
+// Add Upvote
+export const addUpvote = id => async dispatch => {
     try {
-        const res = await axios.put(`/api/posts/like/${id}`)
+        const res = await axios.put(`/api/posts//upvote/${id}`)
         dispatch({
-            type: UPDATE_LIKES,
-            payload: { id, likes: res.data }
+            type: UPDATE_UPVOTE,
+            payload: { id, upvotes : res.data }
         })
     } catch (error) {
         dispatch({
@@ -171,13 +163,45 @@ export const addLike = id => async dispatch => {
         })
     }
 }
-// Remove Like
-export const removeLike = id => async dispatch => {
+// Remove Upvote
+export const removeUpvote = id => async dispatch => {
     try {
-        const res = await axios.put(`/api/posts/unlike/${id}`)
+        const res = await axios.put(`/api/posts/removeupvote/${id}`)
         dispatch({
-            type: UPDATE_LIKES,
-            payload: { id, likes: res.data }
+            type: UPDATE_UPVOTE,
+            payload: { id, upvotes: res.data }
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+
+// Add Downvote
+export const addDownvote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts//downvote/${id}`)
+        dispatch({
+            type: UPDATE_DOWNVOTE,
+            payload: { id, upvotes : res.data }
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+// Remove Upvote
+export const removeDownvote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/removedownvote/${id}`)
+        dispatch({
+            type: UPDATE_DOWNVOTE,
+            payload: { id, upvotes: res.data }
         })
     } catch (error) {
         dispatch({
@@ -208,6 +232,21 @@ export const getPostById = (postId) => async dispatch => {
 
         dispatch({
             type: GET_POST,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const getCommentById = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/${postId}/${commentId}`)
+        dispatch({
+            type: GET_COMMENT,
             payload: res.data
         })
     } catch (err) {
@@ -256,4 +295,26 @@ export const clearPost = () => async dispatch => {
     dispatch({
         type: CLEAR_POST
     })
+}
+
+export const createEvent = (formData, communityId, navigate) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const res = await axios.post(`/api/posts/event/${communityId}`, formData, config)
+        dispatch({
+            type: ADD_POST,
+            payload: res.data
+
+        })
+        navigate(`communities/${communityId}`)
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
 }

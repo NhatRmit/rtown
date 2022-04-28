@@ -56,8 +56,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'react-moment'
 import { connect, useDispatch } from 'react-redux'
-import { addLike, removeLike, deletePost } from '../../actions/post'
-const PostItem = ({ addLike, removeLike, post: { auth, _id, text, name, avatar, user, likes, comments, date } }) => {
+import {  deletePost, addUpvote, removeUpvote } from '../../actions/post'
+const PostItem = ({ addUpvote, removeUpvote, post: { auth, _id, text, name, avatar, user, likes, comments, date } }) => {
   const dispatch = useDispatch()
   const onDelete = (e) => {
     e.preventDefault()
@@ -68,10 +68,10 @@ const PostItem = ({ addLike, removeLike, post: { auth, _id, text, name, avatar, 
       <div>
         <p className=''>{text}</p>
         <p className='post-date'> Posted on <Moment format='DD/MM/YYYY'>{date}</Moment></p>
-        <button type='button' className='btn btn-light' onClick={e => addLike(_id)}>
+        <button type='button' className='btn btn-light' onClick={e => addUpvote(_id)}>
           <i className='fa fa-thumps-up'></i>
         </button>
-        <button type='button' className='btn btn-light' onClick={e => removeLike(_id)}>
+        <button type='button' className='btn btn-light' onClick={e => removeUpvote(_id)}>
           <i className='fa fa-thumps-down'></i>
         </button>
 
@@ -101,4 +101,4 @@ PostItem.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-export default connect(mapStateToProps, { addLike, removeLike, deletePost })(PostItem)
+export default connect(mapStateToProps, { addUpvote, removeUpvote, deletePost })(PostItem)

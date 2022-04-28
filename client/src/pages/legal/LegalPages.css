@@ -1,0 +1,75 @@
+.disclaimer-container,
+.tos-container,
+.privacy-container 
+{
+    margin-top: 7em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 10em;
+}
+
+.disclaimer-container h1,
+.tos-container h1,
+.privacy-container h1 
+{
+    text-align: center;
+    font-size: 2em;
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.disclaimer-container h2,
+.tos-container h2,
+.privacy-container h2 
+{
+    font-family: var(--heading-font);
+    font-size: 1.5em;
+    padding-top: 1em;
+}
+
+.disclaimer-container p,
+.tos-container p,
+.privacy-container p 
+{
+    font-family: var(--body-font);
+    text-align: justify;
+    font-size: 1em;
+    padding: 0.5em 0 1em 0;
+}
+
+.tos-container ul,
+.privacy-container ul 
+{
+    padding-left: 5em;
+}
+
+.tos-container ul li, 
+.privacy-container ul li{
+    font-family: var(--body-font);
+    text-align: justify;
+    font-size: 1em;
+    padding: 0.5em 0 1em 0;
+    list-style-type: disc;
+    padding: 0.3em 0 0.5em 0;
+}
+
+.tos-container ul li::first-letter,
+.privacy-container ul li::first-letter {
+    text-transform: uppercase;
+}
+
+.disclaimer-container a,
+.tos-container a,
+.privacy-container a
+{
+    color: var(--navy);
+}
+
+.disclaimer-container a:hover 
+.tos-container Link:hover
+{
+    color: var(--red);
+}
+

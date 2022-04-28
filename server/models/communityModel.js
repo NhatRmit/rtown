@@ -23,9 +23,11 @@ const communitySchema = mongoose.Schema({
     members: [
         {
             memberId: {
-                type: String       
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'       
             },
         }
+        
     ],
     membersCount: {
         type: Number

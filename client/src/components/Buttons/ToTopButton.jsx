@@ -9,9 +9,7 @@ const ToTopButton = () => {
         })
     }
     return (
-    <button className="btn-wrapper">
-        <div onClick={scrollToTop} className="btn">TO TOP</div>
-    </button>
+        <span onClick={scrollToTop} className="btn">TO TOP</span>
     )
 }
 export default ToTopButton;
