@@ -17,7 +17,7 @@ import EditPost from './components/Posts/EditPost'
 import RItems from './components/Profile/RItems'
 import RShop from './components/Profile/RShop'
 import RequestForm from './components/Form/RequestForm'
-
+ import { Chat } from './components/Chatting/Chat'
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -45,6 +45,10 @@ const App = () => {
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
+          />
+          <Route
+            exact path='/chat'
+            element={<PrivateRoute element={Chat} />}
           />
           <Route
             exact path='/posts'
