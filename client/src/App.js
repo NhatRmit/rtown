@@ -5,25 +5,18 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import NewsfeedPage from './pages/NewsfeedPage'
 import LoginPage from './pages/auth/LoginPage'
 import Posts from './components/Posts/Posts'
-import CommentForm from './pages/CommentForm'
-import Profile from './components/Profile/Profile'
 import UserProfile from './components/Profile/UserProfile'
-import Community from './components/Communities/Community'
-import CreateCommunity from './components/Communities/CreateCommunity'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
 import EditPost from './components/Posts/EditPost'
 import RItems from './components/Profile/RItems'
 import RShop from './components/Profile/RShop'
-import RequestForm from './components/Form/RequestForm'
- import { Chat } from './components/Chatting/Chat'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
 
 // import EditCommunity from './components/Form/EditCommunity'
-import { getPosts } from './actions/post'
 import RequestEvent from './components/Form/RequestEvent'
 
 const App = () => {
@@ -70,10 +63,6 @@ const App = () => {
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
-          />
-          <Route
-            exact path='/chat'
-            element={<PrivateRoute element={Chat} />}
           />
           <Route
             exact path='/posts'
