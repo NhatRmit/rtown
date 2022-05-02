@@ -23,7 +23,7 @@ export const addImage = (image) => async dispatch => {
 }
 export const displayImage = (image) => async dispatch => {
     try {
-        const res = await axios.get(`/api/images/${image}`)
+        const res = await axios.get(`/api/images/getOne/${image}`)
         dispatch({
             type: DISPLAY_IMAGE,
             payload: res.data

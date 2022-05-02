@@ -24,6 +24,15 @@ const selectImage =asyncHandler( async (req, res) => {
     return res.send(imgUrl);
 });
 
+const getFilename = asyncHandler( async (req, res)=> {
+    try {
+        const file = await gfs.files.findOne({ filename: req.params.filename});
+        res.send(file)
+    } catch (error) {
+        res.send("not found");
+    }
+})
+
 const deleteImage = asyncHandler(async (req, res) => {
     try {
         await gfs.files.deleteOne({ filename: req.params.filename });
@@ -37,5 +46,6 @@ const deleteImage = asyncHandler(async (req, res) => {
 module.exports = {
     getImage,
     selectImage,
-    deleteImage
+    deleteImage,
+    getFilename
 } 
