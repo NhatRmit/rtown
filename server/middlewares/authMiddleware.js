@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
-const auth = asyncHandler(async(req, res, next) => {
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+const auth = asyncHandler(async (req, res, next) => {
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             //get token from header
             token = req.headers.authorization.split(' ')[1]
@@ -16,15 +16,15 @@ const auth = asyncHandler(async(req, res, next) => {
 
             next()
         } catch (error) {
-            res.status(404).json({message: error.message})
+            res.status(404).json({ message: error.message })
             throw new Error('No authorization')
         }
     }
 
-    if(!token){
+    if (!token) {
         throw new Error('Access Denied');
     }
 })
 
-module.exports = {auth}
+module.exports = { auth }
 

@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Profile = require('../models/profileModel');
-const Message = require('../models/messageModel');
+const Message = require('../models/messengerModel');
 const fs = require('fs');
 
 const getLastMessage = asyncHandler(async (myId, fdId) => {

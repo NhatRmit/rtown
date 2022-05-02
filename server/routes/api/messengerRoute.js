@@ -1,6 +1,14 @@
-const router = require('express').Router();
+const express = require('express')
+const router = express.Router();
 
-const { getFriends, upMessDB, getMessage, seenMessage, deliverMessage } = require('../../controllers/messengerController');
+const { 
+    getFriends, 
+    upMessDB, 
+    getMessage, 
+    seenMessage, 
+    deliverMessage 
+} = require('../../controllers/messengerController');
+
 const { auth } = require('../../middlewares/authMiddleware');
 
 router.get('/friends', auth, getFriends);
@@ -9,3 +17,5 @@ router.get('/message/:id', auth, getMessage);
 
 router.post('/seen', auth, seenMessage);
 router.post('/deliver', auth, deliverMessage);
+
+module.exports = router

@@ -13,6 +13,7 @@ import EditPost from './components/Posts/EditPost'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
+import Messenger from './components/Messenger/Messenger'
 
 // import EditCommunity from './components/Form/EditCommunity'
 import { getPosts } from './actions/post'
@@ -77,6 +78,11 @@ const App = () => {
             exact path='/image'
             element={<PrivateRoute element={Image}/>} 
           />
+          <Route
+            exact path='/messenger'
+            element={<PrivateRoute element={Messenger}/>} 
+          />
+          
         </Routes>
       </Router>
     </>
