@@ -31,3 +31,6 @@ export const GET_POST = 'GET_POST'
 export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
 export const CLEAR_POST = 'CLEAR_POST';
 export const GET_COMMENT = 'GET_COMMENT';
+export const ADD_IMAGE = 'ADD_IMAGE';
+export const IMAGE_ERROR = 'IMAGE_ERROR';
+export const DISPLAY_IMAGE ='DISPLAY_IMAGE';

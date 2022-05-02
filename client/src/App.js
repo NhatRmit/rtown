@@ -17,7 +17,7 @@ import EditPost from './components/Posts/EditPost'
 import RItems from './components/Profile/RItems'
 import RShop from './components/Profile/RShop'
 import RequestForm from './components/Form/RequestForm'
-
+import Image from './components/Image/Image'
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -70,6 +70,10 @@ const App = () => {
           <Route
             exact path='/profiles/r-shop'
             element={<PrivateRoute element={RShop} />}
+          />
+          <Route
+            exact path='/image'
+            element={<PrivateRoute element={Image}/>} 
           />
 
         </Routes>
