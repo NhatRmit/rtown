@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv').config();
 const connectDB = require('./configs/database');
-const User = require('./models/userModel')
 //connect to database
 connectDB();
 

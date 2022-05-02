@@ -31,3 +31,7 @@ export const GET_POST = 'GET_POST'
 export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
 export const CLEAR_POST = 'CLEAR_POST';
 export const GET_COMMENT = 'GET_COMMENT';
+export const GET_ITEMS = 'GET_ITEMS'
+export const BUY_ITEM = 'BUY_ITEM'
+export const ITEM_ERROR = 'ITEM_ERROR'
+export const CHECK_OUT = 'CHECK_OUT'

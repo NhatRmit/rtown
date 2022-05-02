@@ -1,6 +1,6 @@
 const Profile = require('../models/profileModel')
 const Post = require('../models/postModel')
-const Item = require('../models/itemModel')
+const User = require('../models/userModel')
 const Community = require('../models/communityModel')
 const asyncHandler = require('express-async-handler')
 
@@ -100,7 +100,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 
 const joinCommunity = asyncHandler(async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id })
-
+    const user = await User.findOne({ _id: req.user.id })
     const community = await Community.findById(req.params.community_id)
 
     let isAlreadyJoined = true
@@ -116,7 +116,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
     }
 
     console.log(isAlreadyJoined)
-    
+
     if (!isAlreadyJoined) {
         return res.status(400).json({ msg: 'Already Joined' })
     }
@@ -126,7 +126,10 @@ const joinCommunity = asyncHandler(async (req, res) => {
             communityId: req.params.community_id,
             communityName: community.communityName
         })
-        community.members.unshift({ memberId: req.user.id.toString() })
+        community.members.unshift({
+            memberId: req.user.id,
+            memberName: user.usernameOrEmail
+        })
 
         await profile.save()
         await community.save()
@@ -154,8 +157,6 @@ const leaveCommunity = asyncHandler(async (req, res) => {
         })
     }
 
-
-
     console.log(isNoneToDelete)
 
     if (isNoneToDelete) {
@@ -164,11 +165,11 @@ const leaveCommunity = asyncHandler(async (req, res) => {
 
     try {
         const removeProfileIndex = profile.community
-            .map(item => item.id)
+            .map(item => item.communityId)
             .indexOf(req.params.community_id)
 
         const removeCommunityIndex = community.members
-            .map(item => item.id)
+            .map(item => item.memberId)
             .indexOf(req.user.id)
 
         profile.community.splice(removeProfileIndex, 1)
@@ -201,36 +202,7 @@ const increaseRpoint = asyncHandler(async (req, res) => {
     }
 })
 
-const buyItem = asyncHandler(async (req, res) => {
-    const profile = await Profile.findOne({ user: req.user.id })
-    const item = await Item.findOne({ _id: req.params.item_id })
-    try {
-        profile.Rpoint -= item.Rpoint
-        profile.itemList.unshift({ item: req.params.item_id })
-        await profile.save()
-        res.status(200).json(profile)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
 
-const usedItem = asyncHandler(async (req, res) => {
-    const profile = await Profile.findOne({ user: req.user.id })
-    const item = await Item.findOne({ _id: req.params.item_id })
-    try {
-        const removeItemIndex = item.itemList
-            .map(item => item.id)
-            .indexOf(req.params.item_id)
-
-        profile.itemList.splice(removeItemIndex, 1)
-        await profile.save()
-        res.status(200).json(profile)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
 
 
 module.exports = {
@@ -242,6 +214,5 @@ module.exports = {
     joinCommunity,
     leaveCommunity,
     increaseRpoint,
-    buyItem,
-    usedItem,
+
 }

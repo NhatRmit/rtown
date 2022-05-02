@@ -3,16 +3,16 @@ import { BsFillChatDotsFill } from 'react-icons/bs'
 import { BsFillCloudUploadFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import { useState } from 'react'
-import { addPost } from '../../actions/post'
+import { addPost, addCommunityPost } from '../../actions/post'
 import { useDispatch, useSelector } from 'react-redux'
 
-const CreatePost = () => {
+const CreatePost = ({ isCommunity }) => {
     const dispatch = useDispatch()
     const [text, setText] = useState('')
 
     const onSubmit = e => {
         e.preventDefault()
-        dispatch(addPost({ text }))
+        !isCommunity ? dispatch(addPost({ text })) : dispatch(addCommunityPost({text}))
         setText('')
     }
 

@@ -6,7 +6,6 @@ import community from './community'
 import comment from './comment'
 import item from './item'
 
-
 export default combineReducers({
   auth,
   post,

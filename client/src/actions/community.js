@@ -144,7 +144,7 @@ export const leaveCommunity = (community_id, navigate) => async dispatch => {
     }
 }
 
-export const joinCommunity = (community_id, navigate) => async dispatch => {
+export const joinCommunity = (community_id, profile_id, navigate) => async dispatch => {
     // dispatch({ type: CLEAR_COMMUNITY })
     try {
         const res = await axios.put(`/api/profiles/join/${community_id}`)
@@ -153,7 +153,7 @@ export const joinCommunity = (community_id, navigate) => async dispatch => {
         //     payload: res.data
         // })
         dispatch(getCommunityById(community_id))
-        navigate(`/communities/${community_id}`)
+        navigate(`/profiles/${profile_id}`)
 
     } catch (err) {
         dispatch({

@@ -9,7 +9,8 @@ import {
   EDIT_POST,
   GET_POST,
   EDIT_COMMENT,
-  CLEAR_POST
+  CLEAR_POST,
+  CHECK_OUT
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,7 @@ function postReducer(state = initialState, action) {
         loading: false
       };
     case GET_POST:
+    case CHECK_OUT:
       return {
         ...state,
         post: payload,

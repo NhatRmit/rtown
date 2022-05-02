@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut} = require('../../controllers/postController')
+const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut, getCommunityPosts, createCommunityPost} = require('../../controllers/postController')
 
 const {auth} = require('../../middlewares/authMiddleware')
 
 router.get('/', getPosts)
+
+router.get('/postCommunity/:community_id', getCommunityPosts)
 
 router.get('/myPosts', auth, getMyPosts)
 
@@ -17,6 +19,8 @@ router.get('/:id', auth, getPostById)
 router.get('/:post_id/:comment_id', auth, getCommentById)
 
 router.post('/', auth, createPost)
+
+router.post('/postCommunity/:community_id', auth, createCommunityPost)
 
 router.put('/update/:post_id', auth, editPost)
 
@@ -36,6 +40,6 @@ router.delete('/comment/:id/:comment_id', auth, deleteComment)
 
 router.post('/event/:community_id', createEvent)
 
-router.put('/checkout/:post_id', auth, checkOut)
+router.put('/event/checkout/:post_id', auth, checkOut)
 
 module.exports = router

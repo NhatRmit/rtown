@@ -22,6 +22,7 @@ const Navbar = () => {
 
     const onLogout = (e) => {
         dispatch(logoutUser())
+        // localStorage.removeItem('isJoined')
         navigate('/')
     }
 
