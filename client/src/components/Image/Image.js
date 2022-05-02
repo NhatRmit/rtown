@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addImage, getImg } from '../../actions/image'
+import { addImage, displayImage, getImg } from '../../actions/image'
 
 
 const Image = () => {
@@ -14,6 +14,11 @@ const Image = () => {
         let formdata = new FormData();
         formdata.append("file", uploadFile);
         dispatch(addImage(formdata))
+        
+    }
+    const onDisplay = e => {
+        e.preventDefault();
+        dispatch(displayImage("1651331940235-any-name-kisspng-computer-icons-facebook-logo-flattened-vector-5b49543a2d93e8.7433487315315323461867.png"))
     }
 
     const onChange = e => (
@@ -22,11 +27,12 @@ const Image = () => {
 
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onDisplay}>
                 <input type="file" onChange={onChange} />
                 <br />
                 <input type="submit" value="submit" />
             </form>
+
             
         </div>
     )
