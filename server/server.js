@@ -14,6 +14,8 @@ app.use('/api/auth', require('./routes/api/authRoute'))
 app.use('/api/profiles', require('./routes/api/profileRoute'))
 app.use('/api/communities', require('./routes/api/communityRoute'))
 app.use('/api/items', require('./routes/api/itemRoute'))
+app.use('/api/messengers', require('./routes/api/messengerRoute'))
+
 
 // set port, listen for requests
 const port = process.env.PORT || 5000;
