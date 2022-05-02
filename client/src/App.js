@@ -73,7 +73,10 @@ const App = () => {
             exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
           />
-
+          <Route
+            exact path='/image'
+            element={<PrivateRoute element={Image}/>} 
+          />
         </Routes>
       </Router>
     </>

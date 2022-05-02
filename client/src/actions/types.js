@@ -35,3 +35,6 @@ export const GET_ITEMS = 'GET_ITEMS'
 export const BUY_ITEM = 'BUY_ITEM'
 export const ITEM_ERROR = 'ITEM_ERROR'
 export const CHECK_OUT = 'CHECK_OUT'
+export const ADD_IMAGE = 'ADD_IMAGE';
+export const IMAGE_ERROR = 'IMAGE_ERROR';
+export const DISPLAY_IMAGE ='DISPLAY_IMAGE';
