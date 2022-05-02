@@ -8,7 +8,7 @@ export const addImage = (image) => async dispatch => {
         }
     }
     try {
-        const res = await axios.post('/api/file/upload', image, config)
+        const res = await axios.post('/api/images/upload', image, config)
 
         dispatch({
             type: ADD_IMAGE,
@@ -22,13 +22,8 @@ export const addImage = (image) => async dispatch => {
     }
 }
 export const displayImage = (image) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }
     try {
-        const res = await axios.get(`/api/file/${filename}`, image, config)
+        const res = await axios.get(`/api/images/${image}`)
         dispatch({
             type: DISPLAY_IMAGE,
             payload: res.data

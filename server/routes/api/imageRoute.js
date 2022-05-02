@@ -6,3 +6,5 @@ const {getImage, selectImage, deleteImage} = require("../../controllers/imageCon
 router.post('/upload', upload.single("file"), selectImage);
 router.get('/:filename', getImage);
 router.delete('/delete/:filename', deleteImage);
+
+module.exports = router
