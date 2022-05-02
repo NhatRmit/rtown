@@ -7,6 +7,7 @@ import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import RPointsPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import CommunityRequestPage from "./pages/community/CommunityRequestPage";
 import CommunityPage from "./pages/community/CommunityPage"
+import RShopPage from "./pages/RShopPage"
 
 const pages = {
   newsfeed: {
@@ -53,6 +54,11 @@ const pages = {
     name: "Community Page",
     link:"/community",
     component: <CommunityPage />
+  },
+  RShopPage: {
+    name: "R-Shop Page",
+    link: "/rshop",
+    component: <RShopPage/>
   }
 };
 

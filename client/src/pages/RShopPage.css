@@ -1,0 +1,21 @@
+.rshop-container {
+    display: flex;
+    flex-direction: column;
+    margin: 6rem 4rem 2rem 4rem;
+}
+
+.rshop-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.rshop-container>h1 {
+    text-align: center;
+    font-family: var(--heading-font);
+    color: var(--navy);
+    padding-top: 2rem;
+}
+

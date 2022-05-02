@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import CommunitySection from "../components/Community/CommunitySection";
 import CreatePost from "../components/Post/CreatePost";
 import PostsSection from "../components/Post/PostsSection";
-import Comment from "../components/Comment/Comment";
+import CommentSection from "../components/Comment/CommentSection";
 import "./NewsfeedPage.css";
 
 const Newsfeed = () => {
@@ -23,6 +23,7 @@ const Newsfeed = () => {
               <span className="post-type"><h1 className="type-title">Top</h1></span>
             </div>
             <PostsSection />
+            <CommentSection />
           </div>
         </div>
       </Layout>

@@ -26,6 +26,7 @@
     background-color: var(--navy);
     color: var(--white);
     font-family: var(--heading-font);
+    z-index:10;
 }
 
 .logo-container {
@@ -86,14 +87,16 @@
 }
 
 .icon-chat,
-.icon-user {
+.icon-user,
+.icon-shop {
     cursor: pointer;
     padding: 0 0.5em;
 }
 
 .search-icon:hover,
 .icon-chat:hover,
-.icon-user:hover {
+.icon-user:hover,
+.icon-shop:hover {
     transform: scale(1);
 }
 

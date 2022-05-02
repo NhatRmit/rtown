@@ -1,7 +1,7 @@
 import "./PostsSection.css";
-import {BiUpvote, BiDownvote, BiCommentAdd} from "react-icons/bi";
+import {BiUpvote, BiDownvote} from "react-icons/bi";
 import {FaUserCircle} from "react-icons/fa";
-import {AiFillEdit, AiFillDelete} from "react-icons/ai"
+import {AiFillEdit, AiFillDelete} from "react-icons/ai";
 import {IconContext} from "react-icons/lib";
 import {MdReportGmailerrorred} from "react-icons/md";
 import {Link} from "react-router-dom";
@@ -28,7 +28,7 @@ const PostsSection = () => {
       <div className='content-container'>
         <div className='content-section-header'>
           {/*CHANGE ICONS FOR ME */}
-          <span className="users-icon">
+          <span className='users-icon'>
             <label htmlFor='username'>
               <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
                 <FaUserCircle />
@@ -54,52 +54,54 @@ const PostsSection = () => {
           </p>
         </div>
         <div className='content-section-footer'>
-          <div className="content-left-footer">
+          <div className='content-left-footer'>
             {/*Report icon*/}
-          <span className='icon'>
-            <Link to='/'>
-              <label htmlFor='report'>
-                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                  <MdReportGmailerrorred />
-                </IconContext.Provider>
-              </label>
-            </Link>
-            <p id='report' className='icon-label'>
-              Report
-            </p>
-          </span>
+            <span className='icon'>
+              <Link to='/'>
+                <label htmlFor='report'>
+                  <IconContext.Provider
+                    value={{color: "#676767", size: "1.5em"}}>
+                    <MdReportGmailerrorred />
+                  </IconContext.Provider>
+                </label>
+              </Link>
+              <p id='report' className='icon-label'>
+                Report
+              </p>
+            </span>
           </div>
 
-          <div className="content-right-footer">
+          <div className='content-right-footer'>
             {/*Edit post icon*/}
-          <span className='icon'>
-            <Link to='/'>
-              <label htmlFor='edit-post'>
-                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                  <AiFillEdit />
-                </IconContext.Provider>
-              </label>
-            </Link>
-            <p id='edit-post' className='icon-label'>
-              Edit
-            </p>
-          </span>
+            <span className='icon'>
+              <Link to='/'>
+                <label htmlFor='edit-post'>
+                  <IconContext.Provider
+                    value={{color: "#676767", size: "1.5em"}}>
+                    <AiFillEdit />
+                  </IconContext.Provider>
+                </label>
+              </Link>
+              <p id='edit-post' className='icon-label'>
+                Edit
+              </p>
+            </span>
 
-          {/*Delete post icon*/}
-          <span className='icon'>
-            <Link to='/'>
-              <label htmlFor='delete-post'>
-                <IconContext.Provider value={{color: "#676767", size: "1.5em"}}>
-                  <AiFillDelete />
-                </IconContext.Provider>
-              </label>
-            </Link>
-            <p id='delete-post' className='icon-label'>
-              Delete
-            </p>
-          </span>
+            {/*Delete post icon*/}
+            <span className='icon'>
+              <Link to='/'>
+                <label htmlFor='delete-post'>
+                  <IconContext.Provider
+                    value={{color: "#676767", size: "1.5em"}}>
+                    <AiFillDelete />
+                  </IconContext.Provider>
+                </label>
+              </Link>
+              <p id='delete-post' className='icon-label'>
+                Delete
+              </p>
+            </span>
           </div>
-          
         </div>
       </div>
     </div>
