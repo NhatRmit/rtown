@@ -18,16 +18,25 @@ const getImage = asyncHandler(async (req, res) => {
     }
 });
 
-const selectImage =asyncHandler( async (req, res) => {
+const selectImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
     return res.send(imgUrl);
 });
 
-const getFilename = asyncHandler( async (req, res)=> {
+const getFilename = asyncHandler(async (req, res) => {
     try {
-        const file = await gfs.files.findOne({ filename: req.params.filename});
+        const file = await gfs.files.findOne({ filename: req.params.filename });
         res.send(file)
+    } catch (error) {
+        res.send("not found");
+    }
+})
+
+const getImgURL = asyncHandler(async (req, res) => {
+    try {
+        const file = await gfs.files.findOne({ filename: req.params.filename });
+        res.send(`http://localhost:8000/api/images/${file.filename}`)
     } catch (error) {
         res.send("not found");
     }
@@ -47,5 +56,6 @@ module.exports = {
     getImage,
     selectImage,
     deleteImage,
-    getFilename
+    getFilename,
+    getImgURL,
 } 

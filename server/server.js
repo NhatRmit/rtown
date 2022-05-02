@@ -15,6 +15,7 @@ app.use('/api/profiles', require('./routes/api/profileRoute'))
 app.use('/api/communities', require('./routes/api/communityRoute'))
 app.use('/api/items', require('./routes/api/itemRoute'))
 app.use('/api/messengers', require('./routes/api/messengerRoute'))
+app.use('/api/images', require('./routes/api/imageRoute'))
 
 
 // set port, listen for requests
