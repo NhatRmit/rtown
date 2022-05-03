@@ -1,21 +1,13 @@
 const express = require('express')
-const router = express.Router();
+const router = express.Router()
 
-const { 
-    getFriends, 
-    upMessDB, 
-    getMessage, 
-    seenMessage, 
-    deliverMessage 
-} = require('../../controllers/messengerController');
-
+const { getFriends, messageUploadDB, messageGet, deliveredMessage } = require('../../controllers/messengerController');
 const { auth } = require('../../middlewares/authMiddleware');
 
-router.get('/friends', auth, getFriends);
-router.post('/send', auth, upMessDB);
-router.get('/message/:id', auth, getMessage);
+router.get('/get-friends', auth, getFriends);
+router.post('/send-message', auth, messageUploadDB);
+router.get('/get-message/:id', auth, messageGet);
+router.post('/delivered-message', auth, deliveredMessage);
 
-router.post('/seen', auth, seenMessage);
-router.post('/deliver', auth, deliverMessage);
 
-module.exports = router
+module.exports = router;

@@ -16,7 +16,6 @@ import CommentForm from '../../post/CommentForm'
 
 
 const PostsSection = ({ post }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
     const profiles = useSelector(state => state.profile.profiles)

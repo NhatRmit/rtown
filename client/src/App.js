@@ -13,9 +13,8 @@ import EditPost from './components/Posts/EditPost'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
-
+import Messenger from './components/Chat/Messenger'
 // import EditCommunity from './components/Form/EditCommunity'
-import { getPosts } from './actions/post'
 import RequestEvent from './components/Form/RequestEvent'
 import Image from './components/Image/Image'
 import RShopPage from './pages/RShopPage'
@@ -49,6 +48,10 @@ const App = () => {
           <Route
             exact path='/communities/community-request'
             element={<PrivateRoute element={CommunityRequest} />}
+          />
+          <Route
+            exact path='/chat'
+            element={<PrivateRoute element={Messenger} />}
           />
           <Route
             exact path='/communities/event-request'
