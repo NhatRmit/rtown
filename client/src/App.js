@@ -15,7 +15,7 @@ import RShop from './components/Profile/RShop'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
-
+import Messenger from './components/Chat/Messenger'
 // import EditCommunity from './components/Form/EditCommunity'
 import RequestEvent from './components/Form/RequestEvent'
 
@@ -48,6 +48,10 @@ const App = () => {
           <Route
             exact path='/communities/community-request'
             element={<PrivateRoute element={CommunityRequest} />}
+          />
+          <Route
+            exact path='/chat'
+            element={<PrivateRoute element={Messenger} />}
           />
           <Route
             exact path='/communities/event-request'
