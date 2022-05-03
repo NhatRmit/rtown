@@ -18,6 +18,7 @@ import CommunityPage from './pages/community/CommunityPage'
 import { getPosts } from './actions/post'
 import RequestEvent from './components/Form/RequestEvent'
 import Image from './components/Image/Image'
+import RShopPage from './pages/RShopPage'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -69,7 +70,10 @@ const App = () => {
             exact path='/image'
             element={<PrivateRoute element={Image}/>} 
           />
-
+          <Route
+            exact path='/rshop'
+            element={<PrivateRoute element={RShopPage}/>} 
+          />
           
         </Routes>
       </Router>

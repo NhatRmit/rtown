@@ -16,9 +16,7 @@ const AboutCommunity = ({ community_id, community }) => {
   // const [isJoined, setIsJoined] = useState('false')
 
   const auth = useSelector(state => state.auth._id)
-
-
-
+  
   const onEdit = e => {
     e.preventDefault()
     navigate(`/communities/edit/${community_id}`)
