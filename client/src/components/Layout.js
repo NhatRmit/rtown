@@ -6,7 +6,7 @@ const Layout = ({children, header, footer, className}) => {
         <>
           {header ? <Navbar /> : null}
           <main className={className}>{children}</main>
-          {footer ? <Footer /> : null}
+          {/* {footer ? <Footer /> : null} */}
         </>
     )
   }

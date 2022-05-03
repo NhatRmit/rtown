@@ -4,21 +4,22 @@ import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFriends, messageSend, getMessage, ImageMessageSend, seenMessage, updateMessage, getTheme, themeSet } from '../../actions/messengerAction';
+import { getFriends, messageSend, getMessage, ImageMessageSend, seenMessage, updateMessage, getTheme, themeSet } from '../../actions/messenger';
 import { logoutUser } from '../../actions/auth';
-
+import { getProfile } from '../../actions/profile'
 import toast, { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
+import Layout from '../Layout'
 
 const Messenger = () => {
-
+     const dispatch = useDispatch();
      const scrollRef = useRef();
      const socket = useRef();
 
-
      const { friends, message, mesageSendSuccess, message_get_success, themeMood, new_user_add } = useSelector(state => state.messenger);
-     //const { myInfo } = useSelector(state => state.auth);
-     const { auth } = useSelector(state => state.auth);
+     const auth = useSelector(state => state.auth);
+     console.log(auth)
+     // const profile = useSelector(state => state.profile.profile);
      const [currentfriend, setCurrentFriend] = useState('');
      const [newMessage, setNewMessage] = useState('');
 
@@ -27,6 +28,7 @@ const Messenger = () => {
      const [typingMessage, setTypingMessage] = useState('');
 
      useEffect(() => {
+          dispatch(getProfile())
           socket.current = io('ws://localhost:8000');
           socket.current.on('getMessage', (data) => {
                setSocketMessage(data);
@@ -61,12 +63,12 @@ const Messenger = () => {
                })
           })
 
-     }, []);
+     }, [dispatch]);
 
 
      useEffect(() => {
           if (socketMessage && currentfriend) {
-               if (socketMessage.senderId === currentfriend._id && socketMessage.reseverId === auth.id) {
+               if (socketMessage.senderId === currentfriend._id && socketMessage.receiverId === auth._id) {
                     dispatch({
                          type: 'SOCKET_MESSAGE',
                          payload: {
@@ -85,17 +87,17 @@ const Messenger = () => {
                }
           }
           setSocketMessage('')
-     }, [socketMessage]);
+     }, [socketMessage, currentfriend, auth._id, dispatch]);
 
 
 
      useEffect(() => {
-          socket.current.emit('addUser', auth.id, auth)
-     }, []);
+          socket.current.emit('addUser', auth._id, auth)
+     }, [auth]);
 
      useEffect(() => {
           socket.current.on('getUser', (users) => {
-               const filterUser = users.filter(u => u.userId !== auth.id)
+               const filterUser = users.filter(u => u.userId !== auth._id)
                setActiveUser(filterUser);
           })
 
@@ -107,10 +109,10 @@ const Messenger = () => {
                     }
                })
           })
-     }, []);
+     }, [dispatch, auth]);
 
      useEffect(() => {
-          if (socketMessage && socketMessage.senderId !== currentfriend._id && socketMessage.reseverId === auth.id) {
+          if (socketMessage && socketMessage.senderId !== currentfriend._id && socketMessage.receiverId === auth._id) {
                toast.success(`${socketMessage.senderName} Send a New Message`)
                dispatch(updateMessage(socketMessage));
                socket.current.emit('delivaredMessage', socketMessage);
@@ -123,7 +125,7 @@ const Messenger = () => {
                })
 
           }
-     }, [socketMessage]);
+     }, [socketMessage, currentfriend._id, dispatch, auth._id]);
 
 
 
@@ -132,8 +134,8 @@ const Messenger = () => {
           setNewMessage(e.target.value);
 
           socket.current.emit('typingMessage', {
-               senderId: auth.id,
-               reseverId: currentfriend._id,
+               senderId: auth._id,
+               receiverId: currentfriend._id,
                msg: e.target.value
           })
 
@@ -142,15 +144,15 @@ const Messenger = () => {
      const sendMessage = (e) => {
           e.preventDefault();
           const data = {
-               senderName: auth.userName,
-               reseverId: currentfriend._id,
+               senderName: auth.usernameOrEmail,
+               receiverId: currentfriend._id,
                message: newMessage ? newMessage : '❤'
           }
 
 
           socket.current.emit('typingMessage', {
-               senderId: auth.id,
-               reseverId: currentfriend._id,
+               senderId: auth._id,
+               receiverId: currentfriend._id,
                msg: ''
           })
 
@@ -172,14 +174,13 @@ const Messenger = () => {
                     type: 'MESSAGE_SEND_SUCCESS_CLEAR'
                })
           }
-     }, [mesageSendSuccess]);
+     }, [mesageSendSuccess, dispatch, message]);
 
 
-     const dispatch = useDispatch();
      useEffect(() => {
           dispatch(getFriends());
           dispatch({ type: 'NEW_USER_ADD_CLEAR' })
-     }, [new_user_add]);
+     }, [new_user_add, dispatch]);
 
      useEffect(() => {
           if (friends && friends.length > 0)
@@ -193,19 +194,19 @@ const Messenger = () => {
           if (friends.length > 0) {
 
           }
-     }, [currentfriend?._id]);
+     }, [currentfriend._id, dispatch, friends.length]);
 
 
      useEffect(() => {
           if (message.length > 0) {
-               if (message[message.length - 1].senderId !== auth.id && message[message.length - 1].status !== 'seen') {
+               if (message[message.length - 1].senderId !== auth._id && message[message.length - 1].status !== 'seen') {
                     dispatch({
                          type: 'UPDATE',
                          payload: {
                               id: currentfriend._id
                          }
                     })
-                    socket.current.emit('seen', { senderId: currentfriend._id, reseverId: auth.id })
+                    socket.current.emit('seen', { senderId: currentfriend._id, receiverId: auth._id })
                     dispatch(seenMessage({ _id: message[message.length - 1]._id }))
                }
           }
@@ -213,7 +214,7 @@ const Messenger = () => {
                type: 'MESSAGE_GET_SUCCESS_CLEAR'
           })
 
-     }, [message_get_success]);
+     }, [message_get_success, dispatch, currentfriend._id, auth._id, message]);
 
 
 
@@ -225,51 +226,51 @@ const Messenger = () => {
      const emojiSend = (emu) => {
           setNewMessage(`${newMessage}` + emu);
           socket.current.emit('typingMessage', {
-               senderId: auth.id,
-               reseverId: currentfriend._id,
+               senderId: auth._id,
+               receiverId: currentfriend._id,
                msg: emu
           })
      }
 
-     const ImageSend = (e) => {
+     // const ImageSend = (e) => {
 
-          if (e.target.files.length !== 0) {
-               const imagename = e.target.files[0].name;
-               const newImageName = Date.now() + imagename;
+     //      if (e.target.files.length !== 0) {
+     //           const imagename = e.target.files[0].name;
+     //           const newImageName = Date.now() + imagename;
 
-               socket.current.emit('sendMessage', {
-                    senderId: auth.id,
-                    senderName: auth.userName,
-                    reseverId: currentfriend._id,
-                    time: new Date(),
-                    message: {
-                         text: '',
-                         image: newImageName
-                    }
-               })
+     //           socket.current.emit('sendMessage', {
+     //                senderId: auth.id,
+     //                senderName: auth.userName,
+     //                receiverId: currentfriend._id,
+     //                time: new Date(),
+     //                message: {
+     //                     text: '',
+     //                     image: newImageName
+     //                }
+     //           })
 
-               const formData = new FormData();
+     //           const formData = new FormData();
 
-               formData.append('senderName', auth.userName);
-               formData.append('imageName', newImageName);
-               formData.append('reseverId', currentfriend._id);
-               formData.append('image', e.target.files[0]);
-               dispatch(ImageMessageSend(formData));
+     //           formData.append('senderName', auth.userName);
+     //           formData.append('imageName', newImageName);
+     //           formData.append('receiverId', currentfriend._id);
+     //           formData.append('image', e.target.files[0]);
+     //           dispatch(ImageMessageSend(formData));
 
-          }
+     //      }
 
-     }
+     // }
 
      const [hide, setHide] = useState(true);
 
      const logout = () => {
           dispatch(logoutUser);
-          socket.current.emit('logout', auth.id);
+          socket.current.emit('logout', auth._id);
      }
 
      useEffect(() => {
           dispatch(getTheme());
-       },[ ]);
+     }, [dispatch]);
 
      // const search = (e) => {
 
@@ -287,119 +288,106 @@ const Messenger = () => {
 
 
      return (
-          <div className={themeMood === 'dark' ? 'messenger theme' : 'messenger'}>
-               <Toaster
-                    position={'top-right'}
-                    reverseOrder={false}
+          <Layout header footer>
+               <div className={themeMood === 'dark' ? 'messenger theme' : 'messenger'}>
+                    <Toaster
+                         position={'top-right'}
+                         reverseOrder={false}
                     // toastOptions={{
                     //      style: {
                     //           fontSize: '18px'
                     //      }
                     // }}
 
-               />
+                    />
 
 
-               <div className='row'>
-                    <div className='col-3'>
-                         <div className='left-side'>
-                              <div className='top'>
-                                   <div className='image-name'>
-                                        <div className='image'>
-                                             <img src={`./image/${auth.image}`} alt='' />
+                    <div className='row'>
+                         <div className='col-3'>
+                              <div className='left-side'>
+                                   <div className='top'>
+                                        <div className='image-name'>
+                                             <div className='image'>
+                                                  <img src={`./image/${auth}`} alt='user avatar' />
 
+                                             </div>
+                                             <div className='name'>
+                                                  <h3>{auth.usernameOrEmail} </h3>
+                                             </div>
                                         </div>
-                                        <div className='name'>
-                                             <h3>{auth.userName} </h3>
+
+                                        <div className='icons'>
+                                             <div onClick={() => setHide(!hide)} className='icon'>
+                                                  <FaEllipsisH />
+                                             </div>
+                                             <div className='icon'>
+                                                  <FaEdit />
+                                             </div>
+
+                                             <div className={hide ? 'theme_logout' : 'theme_logout show'}>
+                                                  <h3>Dark Mode </h3>
+                                                  <div className='on'>
+                                                       <label htmlFor='dark'>ON</label>
+                                                       <input onChange={(e) => dispatch(themeSet(e.target.value))} type="radio" value="dark" name="theme" id="dark" />
+                                                  </div>
+
+                                                  <div className='of'>
+                                                       <label htmlFor='white'>OFF</label>
+                                                       <input onChange={(e) => dispatch(themeSet(e.target.value))} type="radio" value="white" name="theme" id="white" />
+                                                  </div>
+                                             </div>
                                         </div>
                                    </div>
 
-                                   <div className='icons'>
-                                        <div onClick={() => setHide(!hide)} className='icon'>
-                                             <FaEllipsisH />
-                                        </div>
-                                        <div className='icon'>
-                                             <FaEdit />
-                                        </div>
-
-                                        <div className={hide ? 'theme_logout' : 'theme_logout show'}>
-                                             <h3>Dark Mode </h3>
-                                             <div className='on'>
-                                                  <label htmlFor='dark'>ON</label>
-                                                  <input onChange={(e) => dispatch(themeSet(e.target.value))} type="radio" value="dark" name="theme" id="dark" />
-                                             </div>
-
-                                             <div className='of'>
-                                                  <label htmlFor='white'>OFF</label>
-                                                  <input onChange={(e) => dispatch(themeSet(e.target.value))} type="radio" value="white" name="theme" id="white" />
-                                             </div>
-
-                                             <div onClick={logout} className='logout'>
-                                                  <FaSignOutAlt /> Logout
-                                             </div>
-
-
-
-                                        </div>
-
-
-
-
-
-
-
-
-                                   </div>
-                              </div>
-
-                              {/* <div className='friend-search'>
+                                   {/* <div className='friend-search'>
                                    <div className='search'>
                                         <button> <FaSistrix /> </button>
                                         <input onChange={search} type="text" placeholder='Search' className='form-control' />
                                    </div>
                               </div> */}
 
-                              {/* <div className='active-friends'>
+                                   {/* <div className='active-friends'>
      {
         activeUser && activeUser.length > 0 ? activeUser.map(u =>  <ActiveFriend setCurrentFriend = {setCurrentFriend} user={u} />) : ''  
      }
                         
                </div> */}
 
-                              <div className='friends'>
-                                   {
-                                        friends && friends.length > 0 ? friends.map((fd) => <div onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
-                                             <Friends activeUser={activeUser} myId={auth.id} friend={fd} />
-                                        </div>) : 'No Friend'
-                                   }
+                                   <div className='friends'>
+                                        {
+                                             friends && friends.length > 0 ? friends.map((fd) => <div onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
+                                                  <Friends activeUser={activeUser} auth={auth._id} friend={fd} />
+                                             </div>) : 'No Friend'
+                                        }
 
 
+
+                                   </div>
 
                               </div>
 
                          </div>
 
+                         {
+                              currentfriend ? <RightSide
+                                   currentfriend={currentfriend}
+                                   inputHendle={inputHendle}
+                                   newMessage={newMessage}
+                                   sendMessage={sendMessage}
+                                   message={message}
+                                   scrollRef={scrollRef}
+                                   emojiSend={emojiSend}
+                                   // ImageSend={ImageSend}
+                                   activeUser={activeUser}
+                                   typingMessage={typingMessage}
+                              /> : 'Please Select your Friend'
+                         }
+
+
                     </div>
 
-                    {
-                         currentfriend ? <RightSide
-                              currentfriend={currentfriend}
-                              inputHendle={inputHendle}
-                              newMessage={newMessage}
-                              sendMessage={sendMessage}
-                              message={message}
-                              scrollRef={scrollRef}
-                              emojiSend={emojiSend}
-                              ImageSend={ImageSend}
-                              activeUser={activeUser}
-                              typingMessage={typingMessage}
-                         /> : 'Please Select your Friend'
-                    }
-
-
                </div>
-
-          </div>
+          </Layout>
      )
 };
 

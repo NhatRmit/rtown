@@ -1,15 +1,15 @@
 const User = require('../models/userModel');
-const messageModel = require('../models/messageModel');
+const Message = require('../models/messageModel');
 
 const getLastMessage = async (myId, fdId) => {
-     const msg = await messageModel.findOne({
+     const msg = await Message.findOne({
           $or: [{
                $and: [{
                     senderId: {
                          $eq: myId
                     }
                }, {
-                    reseverId: {
+                    receiverId: {
                          $eq: fdId
                     }
                }]
@@ -19,7 +19,7 @@ const getLastMessage = async (myId, fdId) => {
                          $eq: fdId
                     }
                }, {
-                    reseverId: {
+                    receiverId: {
                          $eq: myId
                     }
                }]
@@ -31,20 +31,19 @@ const getLastMessage = async (myId, fdId) => {
      return msg;
 }
 
-module.exports.getFriends = async (req, res) => {
-     const myId = req.myId;
+const getFriends = async (req, res) => {
      let fnd_msg = [];
      try {
           const friendGet = await User.find({
                _id: {
-                    $ne: myId
+                    $ne: req.user.id
                }
           });
           for (let i = 0; i < friendGet.length; i++) {
-               let lmsg = await getLastMessage(myId, friendGet[i].id);
+               let lmsg = await getLastMessage(req.user.id, friendGet[i].id);
                fnd_msg = [...fnd_msg, {
                     fndInfo: friendGet[i],
-                    msgInfo: lmsg
+                    // msgInfo: lmsg
                }]
 
           }
@@ -61,23 +60,20 @@ module.exports.getFriends = async (req, res) => {
      }
 }
 
-module.exports.messageUploadDB = async (req, res) => {
-
+const messageUploadDB = async (req, res) => {
      const {
           senderName,
-          reseverId,
+          receiverId,
           message
      } = req.body
-     const senderId = req.myId;
 
      try {
-          const insertMessage = await messageModel.create({
-               senderId: senderId,
+          const insertMessage = await Message.create({
+               senderId: req.user.id,
                senderName: senderName,
-               reseverId: reseverId,
+               receiverId: receiverId,
                message: {
                     text: message,
-               
                }
           })
           res.status(201).json({
@@ -92,40 +88,37 @@ module.exports.messageUploadDB = async (req, res) => {
                }
           })
      }
-
-
 }
-module.exports.messageGet = async (req, res) => {
-     const myId = req.myId;
-     const fdId = req.params.id;
+
+const messageGet = async (req, res) => {
 
      try {
-          let getAllMessage = await messageModel.find({
+          let getAllMessage = await Message.find({
 
                $or: [{
                     $and: [{
                          senderId: {
-                              $eq: myId
+                              $eq: req.user.id
                          }
                     }, {
-                         reseverId: {
-                              $eq: fdId
+                         receiverId: {
+                              $eq: req.params.id
                          }
                     }]
                }, {
                     $and: [{
                          senderId: {
-                              $eq: fdId
+                              $eq: req.params.id
                          }
                     }, {
-                         reseverId: {
-                              $eq: myId
+                         receiverId: {
+                              $eq: req.user.id
                          }
                     }]
                }]
           })
 
-          // getAllMessage = getAllMessage.filter(m=>m.senderId === myId && m.reseverId === fdId || m.reseverId ===  myId && m.senderId === fdId );
+          getAllMessage = getAllMessage.filter(m => (m.senderId === req.user.id && m.receiverId === req.params.id) || (m.receiverId === req.user.id && m.senderId === req.params.id));
 
           res.status(200).json({
                success: true,
@@ -144,10 +137,10 @@ module.exports.messageGet = async (req, res) => {
 }
 
 
-module.exports.deliveredMessage = async (req, res) => {
+const deliveredMessage = async (req, res) => {
      const messageId = req.body._id;
 
-     await messageModel.findByIdAndUpdate(messageId, {
+     await Message.findByIdAndUpdate(messageId, {
           status: 'delivared'
      })
           .then(() => {
@@ -161,4 +154,11 @@ module.exports.deliveredMessage = async (req, res) => {
                     }
                })
           })
+}
+
+module.exports = {
+     getFriends,
+     messageUploadDB,
+     messageGet,
+     deliveredMessage
 }
