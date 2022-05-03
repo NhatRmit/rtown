@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
-import { BsFillChatDotsFill, BsSearch } from 'react-icons/bs'
+import { BsFillChatDotsFill, BsSearch, BsShopWindow } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,6 +28,10 @@ const Navbar = () => {
 
     const onProfile = (e) => {
         navigate(`/profiles/${auth._id}`)
+    }
+
+    const onShop = (e) => {
+        navigate('/rshop')
     }
 
     const onSubmit = (e) => {
@@ -122,6 +126,12 @@ const Navbar = () => {
             </section>
 
             <div className='right-section'>
+            <span className='icon-shop' onClick={onShop}>
+                    <IconContext.Provider value={{ color: '#FFFFFF', size: '2em' }}>
+                        <BsShopWindow />
+                    </IconContext.Provider>
+                </span>
+
                 <span className='icon-chat' onClick={onProfile}>
                     <IconContext.Provider value={{ color: '#FFFFFF', size: '2em' }}>
                         <BsFillChatDotsFill />
