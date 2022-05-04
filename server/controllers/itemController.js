@@ -31,7 +31,10 @@ const buyItem = asyncHandler(async (req, res) => {
     const item = await Item.findOne({ _id: req.params.item_id })
     try {
         profile.Rpoint -= item.Rpoint
-        profile.itemList.unshift({ item: req.params.item_id })
+        profile.itemList.unshift({
+            item: req.params.item_id,
+            itemName: item.name
+        })
         await profile.save()
         res.status(200).json(profile)
     } catch (err) {
@@ -59,7 +62,7 @@ const usedItem = asyncHandler(async (req, res) => {
 
 const getItemByProfile = asyncHandler(async (req, res) => {
     try {
-        const profile = await Profile.findOne({user: req.user.id})
+        const profile = await Profile.findOne({ user: req.user.id })
         const items = profile.itemList.map(item => item)
         res.json(items)
 

@@ -18,6 +18,10 @@ import Messenger from './components/Chat/Messenger'
 import RequestEvent from './components/Form/RequestEvent'
 import Image from './components/Image/Image'
 import RShopPage from './pages/RShopPage'
+import Modal from 'react-modal'
+
+Modal.setAppElement('#root');
+
 
 const App = () => {
   const dispatch = useDispatch()

@@ -10,7 +10,7 @@ const itemSchema = mongoose.Schema({
     },
     Rpoint: {
         type: Number,
-        default: 3,
+        default: 0,
     },
     date: {
         type: Date,

@@ -64,13 +64,13 @@ const Filter = () => {
               {
                 auth === userId ?
                 <>
-                  <li>
+                  {/* <li>
                     <button className='btn-filter' onClick={onRItems}>
                       <IconContext.Provider value={{ size: '0.75rem' }}>
                         <AiFillShop /> R-Items
                       </IconContext.Provider>
                     </button>
-                  </li>
+                  </li> */}
                   <li>
                     <button className='btn-filter' onClick={onRShop}>
                       <IconContext.Provider value={{ size: '0.75rem' }}>

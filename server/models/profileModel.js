@@ -21,6 +21,10 @@ const profileStudentSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'item'
             },
+            itemName: {
+                type: mongoose.Schema.Types.String,
+                ref: 'item'
+            },
         }
     ],
     community: [

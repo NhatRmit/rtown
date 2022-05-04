@@ -46,9 +46,16 @@
 
 .tabs-container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 100%;
-    padding-left: 10rem;
+    /* padding-left: 10rem; */
+}
+
+#tabs-profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* padding-left: 10rem; */
 }
   
 .bloc-tabs {
@@ -119,10 +126,10 @@
     background: #222;
     margin-bottom: 5px;
   }
-  .content p {
+  /* .content p {
     width: 100%;
     height: 100%;
-  }
+  } */
 
   .active-content {
     display: block;
