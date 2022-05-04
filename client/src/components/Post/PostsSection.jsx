@@ -86,10 +86,15 @@ const PostsSection = ({ post }) => {
             <div className="content-left-header">
               <span className="users-icon" onClick={onProfile}>
                 <label htmlFor='username'>
-                  {/* <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                    <FaUserCircle />
-                  </IconContext.Provider> */}
-                  <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem" }} />
+                  {
+                    (post.profile && post.profile.avatar) === undefined ?
+                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                        <FaUserCircle />
+                      </IconContext.Provider> :
+                      <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem", borderRadius: "50%" }} />
+
+                  }
+
                 </label>
                 <p id='username' className='username'>
                   {post.name && post.name}
@@ -113,6 +118,7 @@ const PostsSection = ({ post }) => {
           </div>
 
           <div className='post-content'>
+            <img src={post.image} alt="" style={{ width: "30%" }} />
             <p>
               {
                 !edit ? post.text :

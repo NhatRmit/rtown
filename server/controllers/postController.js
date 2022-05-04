@@ -280,7 +280,8 @@ const createComment = asyncHandler(async (req, res) => {
             text: req.body.text,
             name: user.usernameOrEmail,
             avatar: profile.avatar,
-            user: req.user.id
+            user: req.user.id,
+            profile: profile._id
         };
 
         post.comments.unshift(newComment);

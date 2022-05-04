@@ -46,11 +46,12 @@ const Comment = ({ post, comment }) => {
             {/* <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
               <FaUserCircle />
             </IconContext.Provider> */}
-            <img src={comment && comment.avatar} alt="" style={{width: "2rem"}}/>
+            <img src={comment && comment.avatar} alt="" style={{ width: "1.5rem", borderRadius: "50%" }} />
           </span>
           <p>{comment.name}</p>
         </div>
         <div className='comment-content'>
+          <img src={comment.image} alt="" style={{ width: "30%" }} />
           <p>
             {
               !edit ? comment.text :

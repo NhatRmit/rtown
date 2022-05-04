@@ -10,7 +10,8 @@ import {
   GET_POST,
   EDIT_COMMENT,
   CLEAR_POST,
-  CHECK_OUT
+  CHECK_OUT,
+  DISPLAY_IMAGE,
 } from '../actions/types';
 
 const initialState = {
@@ -38,6 +39,8 @@ function postReducer(state = initialState, action) {
         loading: false
       }
     case ADD_POST:
+    case DISPLAY_IMAGE:
+
       return {
         ...state,
         posts: [payload, ...state.posts],
