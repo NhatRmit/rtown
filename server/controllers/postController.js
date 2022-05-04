@@ -2,6 +2,8 @@ const any = require('@hapi/joi/lib/types/any');
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
+const Profile = require('../models/profileModel');
+const { request } = require('express');
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
@@ -194,11 +196,11 @@ const createComment = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
-
+        const profile = await Profile.findOne({user: req.user.id})
         const newComment = {
             text: req.body.text,
-            name: user.name,
-            avatar: user.avatar,
+            name: user.usernameOrEmail,
+            avatar: profile.avatar,
             user: req.user.id
         };
 
