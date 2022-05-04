@@ -20,6 +20,7 @@ const PostsSection = ({ post }) => {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const profiles = useSelector(state => state.profile.profiles)
+
   const [edit, setEdit] = useState(false)
 
   const onEdit = e => {

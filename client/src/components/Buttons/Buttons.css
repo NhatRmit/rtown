@@ -1,7 +1,9 @@
 .leave-btn,
 .edit-btn,
 .join-btn,
-.createEvent-btn {
+.createEvent-btn,
+.redeemed-btn,
+.redeem-btn {
     width: 100%;
     border: none;
     margin-bottom: 1em;
@@ -56,4 +58,21 @@
 .join-btn:hover {
     background-color: var(--yellow);
     color: var(--darker-grey);
+}
+
+.redeemed-btn {
+    background-color: #1AD222;
+    color: var(--white);
+    cursor:default;
+    width: 100%;
+}
+
+.redeem-btn {
+    background-color: var(--dark-grey);
+    color: var(--white);
+    width: 100%;
+}
+
+.redeem-btn:hover {
+    background-color: #1AD222;
 }

@@ -25,7 +25,7 @@ const NewsfeedPage = () => {
   useEffect(() => {
     dispatch(getAllCommunities())
     dispatch(getPosts())
-    dispatch(loadUser())
+    // dispatch(loadUser())
   }, [dispatch])
 
   const onCreate = e => {
@@ -65,7 +65,7 @@ const NewsfeedPage = () => {
           </div>
           <div className='newsfeed-right-container'>
             <>
-              <CreatePost />
+              <CreatePost isCommunity={false}/>
             </>
             <>
               <Filter />

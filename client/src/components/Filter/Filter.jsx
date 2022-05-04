@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TiStarburstOutline } from 'react-icons/ti'
 import { HiTrendingUp } from 'react-icons/hi'
 import { IoIosPodium } from 'react-icons/io'
@@ -7,14 +7,17 @@ import { AiFillShop } from 'react-icons/ai'
 import { getPosts, getFilter, getMyPosts } from '../../actions/post'
 
 import './Filter.css'
-import { useDispatch } from 'react-redux'
-import { useMatch, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useMatch, useNavigate, useParams } from 'react-router-dom'
+import { loadUser } from '../../actions/auth'
 
 const Filter = () => {
   const dispatch = useDispatch()
   const profile = useMatch('/profiles/myProfile')
   const userprofile = useMatch('/profiles/:userId')
   const navigate = useNavigate()
+  const { userId } = useParams()
+  const auth = useSelector(state => state.auth._id)
 
   const onClickTop = (e) => {
     e.preventDefault()
@@ -45,7 +48,6 @@ const Filter = () => {
     e.preventDefault()
   }
 
-
   return (
     <div className="container-filter">
       <header className='header-filter'>
@@ -59,20 +61,25 @@ const Filter = () => {
                   </IconContext.Provider>
                 </button>
               </li>
-              <li>
-                <button className='btn-filter' onClick={onRItems}>
-                  <IconContext.Provider value={{ size: '0.75rem' }}>
-                    <AiFillShop /> R-Items
-                  </IconContext.Provider>
-                </button>
-              </li>
-              <li>
-                <button className='btn-filter' onClick={onRShop}>
-                  <IconContext.Provider value={{ size: '0.75rem' }}>
-                    <AiFillShop /> R-Shop
-                  </IconContext.Provider>
-                </button>
-              </li>
+              {
+                auth === userId ?
+                <>
+                  {/* <li>
+                    <button className='btn-filter' onClick={onRItems}>
+                      <IconContext.Provider value={{ size: '0.75rem' }}>
+                        <AiFillShop /> R-Items
+                      </IconContext.Provider>
+                    </button>
+                  </li> */}
+                  <li>
+                    <button className='btn-filter' onClick={onRShop}>
+                      <IconContext.Provider value={{ size: '0.75rem' }}>
+                        <AiFillShop /> R-Shop
+                      </IconContext.Provider>
+                    </button>
+                  </li>
+                </> : <></>
+              }
             </ul >
           ) : (
             <ul>

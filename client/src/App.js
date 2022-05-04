@@ -4,20 +4,24 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
 import NewsfeedPage from './pages/NewsfeedPage'
 import LoginPage from './pages/auth/LoginPage'
-import Posts from './components/Posts/Posts'
+import Profile from './components/Profile/Profile'
 import UserProfile from './components/Profile/UserProfile'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
 import EditPost from './components/Posts/EditPost'
-import RItems from './components/Profile/RItems'
-import RShop from './components/Profile/RShop'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
 import Messenger from './components/Chat/Messenger'
 // import EditCommunity from './components/Form/EditCommunity'
 import RequestEvent from './components/Form/RequestEvent'
+import Image from './components/Image/Image'
+import RShopPage from './pages/RShopPage'
+import Modal from 'react-modal'
+
+Modal.setAppElement('#root');
+
 
 const App = () => {
   const dispatch = useDispatch()
@@ -58,23 +62,10 @@ const App = () => {
             element={<PrivateRoute element={RequestEvent} />}
           />
 
-          {/* <Route
-            exact path='/communities/community-request'
-            element={<PrivateRoute element={RequestForm} />}
-          /> */}
-
 
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
-          />
-          <Route
-            exact path='/posts'
-            element={<PrivateRoute element={Posts} />}
-          />
-          <Route
-            exact path='posts/:postId'
-            element={<PrivateRoute element={EditPost} />}
           />
 
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
@@ -83,14 +74,14 @@ const App = () => {
             element={<PrivateRoute element={UserProfile} />}
           />
           <Route
-            exact path='/profiles/r-items'
-            element={<PrivateRoute element={RItems} />}
+            exact path='/image'
+            element={<PrivateRoute element={Image}/>} 
           />
           <Route
-            exact path='/profiles/r-shop'
-            element={<PrivateRoute element={RShop} />}
+            exact path='/rshop'
+            element={<PrivateRoute element={RShopPage}/>} 
           />
-
+          
         </Routes>
       </Router>
     </>

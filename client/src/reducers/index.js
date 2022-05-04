@@ -5,7 +5,8 @@ import profile from './profile'
 import community from './community'
 import comment from './comment'
 import item from './item'
-
+import image from './image'
+import messenger from './messenger'
 
 export default combineReducers({
   auth,
@@ -14,4 +15,6 @@ export default combineReducers({
   community,
   comment,
   item,
+  image,
+  messenger,
 });

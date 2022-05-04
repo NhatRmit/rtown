@@ -14,7 +14,7 @@ const getAllCommunity = asyncHandler(async (req, res) => {
         res.status(200).json(communities)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -29,14 +29,14 @@ const getCommunityById = asyncHandler(async (req, res) => {
         res.status(200).json(community)
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
 const createCommunity = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
-
+        const profile = await Profile.findById(req.user.id)
         const newCommunity = new Community({
             communityName: req.body.communityName,
             description: req.body.description,
@@ -45,11 +45,22 @@ const createCommunity = asyncHandler(async (req, res) => {
         })
 
         const community = await newCommunity.save()
+        profile.community.unshift({
+            communityId: req.params.community_id,
+            communityName: community.communityName
+        })
+        community.members.unshift({
+            memberId: req.user.id,
+            memberName: user.usernameOrEmail
+        })
+
+        await profile.save()
+        await community.save()
         res.status(200).json(community)
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -69,13 +80,13 @@ const updateCommunity = asyncHandler(async (req, res) => {
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
 
-    let community = await Community.findOne({user: req.user.id})
+    let community = await Community.findOne({ user: req.user.id })
     try {
-        if(community){
+        if (community) {
             community = await Community.findOneAndUpdate(
-                {user: req.user.id},
-                {$set: communityFields},
-                {new: true}
+                { user: req.user.id },
+                { $set: communityFields },
+                { new: true }
             )
         }
 
@@ -83,7 +94,7 @@ const updateCommunity = asyncHandler(async (req, res) => {
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
@@ -91,42 +102,55 @@ const deleteCommunity = asyncHandler(async (req, res) => {
     try {
         const community = await Community.findById(req.params.community_id)
 
-        if(community.user.toString() !== req.user.id) {
+        if (community.user.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'User is not authorized' })
         }
 
         await community.remove()
 
-        res.status(200).json({msg: 'Community Deleted'})
+        res.status(200).json({ msg: 'Community Deleted' })
 
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
-const getMyCommunities = asyncHandler(async(req, res) => {
+const getMyCommunities = asyncHandler(async (req, res) => {
     try {
-        const profile = await Profile.findOne({user: req.params.user_id})
+        const profile = await Profile.findOne({ user: req.params.user_id })
         res.status(200).json(profile.community)
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
-const createEventCommunity = asyncHandler(async(req, res) => {
+const createEventCommunity = asyncHandler(async (req, res) => {
     try {
-        
+
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 })
 
-const deleteMemberCommunity = asyncHandler(async(req, res) => {
+const getCommunityMember = asyncHandler(async (req, res) => {
+    try {
+        const community = await Community.findOne({ _id: req.params.community_id })
+        // const member = community.members.find(member => member.memberId === profile.user)
+        const profile = await Profile.findOne({ user: req.user.id })
+        await community.members.find(member => {
+            if (member.memberId === profile.user) {
+                res.status(200).json(profile)
+            }
+        })
 
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ msg: 'Server Error' })
+    }
 })
 
 module.exports = {
@@ -137,4 +161,5 @@ module.exports = {
     deleteCommunity,
     getMyCommunities,
     createEventCommunity,
+    getCommunityMember,
 }
