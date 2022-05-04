@@ -61,7 +61,7 @@ const MessageSend = ({ inputHendle, newMessage, sendMessage, emojiSend, ImageSen
                <div className='emoji-section'>
                     <div className='emoji'>
                          {
-                              emojis.map(e => <span onClick={() => emojiSend(e)} >{e}</span>)
+                              emojis.map((e, index) => <span key={index} onClick={() => emojiSend(e)} >{e}</span>)
                          }
 
                     </div>

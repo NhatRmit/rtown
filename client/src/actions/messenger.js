@@ -74,7 +74,6 @@ export const seenMessage = (msg) => async (dispatch) => {
      }
 }
 
-
 export const updateMessage = (msg) => async (dispatch) => {
      try {
           const response = await axios.post('/api/messengers/delivered-message', msg);
@@ -84,6 +83,7 @@ export const updateMessage = (msg) => async (dispatch) => {
 
      }
 }
+
 export const getTheme = () => async (dispatch) => {
 
      const theme = localStorage.getItem('theme');
@@ -95,7 +95,6 @@ export const getTheme = () => async (dispatch) => {
      })
 
 }
-
 
 export const themeSet = (theme) => async (dispatch) => {
      localStorage.setItem('theme', theme);

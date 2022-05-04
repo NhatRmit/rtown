@@ -75,13 +75,13 @@ const App = () => {
           />
           <Route
             exact path='/image'
-            element={<PrivateRoute element={Image}/>} 
+            element={<PrivateRoute element={Image} />}
           />
           <Route
             exact path='/rshop'
-            element={<PrivateRoute element={RShopPage}/>} 
+            element={<PrivateRoute element={RShopPage} />}
           />
-          
+
         </Routes>
       </Router>
     </>
@@ -110,7 +110,7 @@ export default App;
 //         <Router>
 //           <Routes>
 //             <Route path='/' element={<Newsfeed />} />
-//             <Route path='/login' element={<Login />} />            
+//             <Route path='/login' element={<Login />} />
 //           </Routes>
 //         </Router>
 //     </>
