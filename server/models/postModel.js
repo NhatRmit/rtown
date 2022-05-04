@@ -16,7 +16,7 @@ const postSchema = mongoose.Schema({
     name: {
         type: String
     },
-    avatar: {
+    image: {
         type: String
     },
     upvotes: [
@@ -53,8 +53,9 @@ const postSchema = mongoose.Schema({
             name: {
                 type: String
             },
-            avatar: {
-                type: String
+            image: {
+                type: String, 
+                default: ''
             },
             date: {
                 type: Date,

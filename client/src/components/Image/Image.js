@@ -19,7 +19,7 @@ const Image = () => {
 
     const onDisplay = e => {
         e.preventDefault();
-        dispatch(displayImage("1651331940235-any-name-kisspng-computer-icons-facebook-logo-flattened-vector-5b49543a2d93e8.7433487315315323461867.png"))
+        dispatch(displayImage(formdata.filesname))
     }
 
     const onChange = e => (
@@ -28,10 +28,16 @@ const Image = () => {
 
     return (
         <div>
-            <form onSubmit={onDisplay}>
+            <form onSubmit={onSubmit}>
                 <input type="file" onChange={onChange} />
                 <br />
                 <input type="submit" value="submit" />
+                <span onSubmit={onDisplay}>
+                    <input type="submit" value="show image" />
+                    <img src="" alt="" />
+                </span>
+                
+
             </form>
             <img src={image} alt="" />
 
