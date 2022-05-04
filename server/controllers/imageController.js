@@ -1,4 +1,3 @@
-
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose')
 const Grid = require('gridfs-stream');
@@ -23,15 +22,15 @@ const getImage = asyncHandler(async (req, res) => {
     }
 });
 
-const selectImage =asyncHandler( async (req, res) => {
+const selectImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
     return res.send(imgUrl);
 });
 
-const getFilename = asyncHandler( async (req, res)=> {
+const getFilename = asyncHandler(async (req, res) => {
     try {
-        const file = await gfs.files.findOne({ filename: req.params.filename});
+        const file = await gfs.files.findOne({ filename: req.params.filename });
         res.send(file)
     } catch (error) {
         res.send("not found");

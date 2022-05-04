@@ -1,4 +1,4 @@
-import './PostsSection.css'
+import '../Post/PostsSection.css'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
@@ -10,12 +10,12 @@ import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
 import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
+import { getProfileById } from '../../actions/profile'
 import CommentItem from '../../post/CommentItem'
 import CommentForm from '../../post/CommentForm'
 
 
 const PostsSection = ({ post }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
     const profiles = useSelector(state => state.profile.profiles)
@@ -25,7 +25,7 @@ const PostsSection = ({ post }) => {
         e.preventDefault()
         setEdit(true)
         // navigate(`/posts/${post._id}`)
-        dispatch(getPostById(post._id))
+        // dispatch(getPostById(post._id))
         dispatch(clearPost())
     }
     const onDelete = (e) => {
@@ -33,6 +33,8 @@ const PostsSection = ({ post }) => {
         dispatch(deletePost(post._id))
     }
     const onProfile = (e) => {
+        e.preventDefault()
+        navigate(`/profiles/${post.user}`)
     }
     const onUpvote = (e) => {
         e.preventDefault()
@@ -53,8 +55,6 @@ const PostsSection = ({ post }) => {
         e.preventDefault()
         post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
     }
-
-
 
     return (
         <div className='posts-container'>
@@ -84,11 +84,11 @@ const PostsSection = ({ post }) => {
                                     <BiUserCircle />
                                 </IconContext.Provider>
                             </label>
-                            <p id="username" className='username'>{post.name}</p>
+                            <p id="username" className='username'>{post.name && post.name}</p>
                         </span>
                         <p className='uploaded-time'>
                             <Moment format='DD/MM/YYYY'>
-                                {post.date}
+                                {post.date && post.date}
                             </Moment></p>
                     </div>
                     <div className='post-content'>
@@ -150,8 +150,9 @@ const PostsSection = ({ post }) => {
                 </div>
             </div>
             <div>
-                <CommentForm postId={post._id}/>
-                <CommentItem post={post} />
+                <CommentForm postId={post._id} />
+                {post.comments.map(comment => <CommentItem post={post} comment={comment} />)}
+
             </div>
         </div>
     )

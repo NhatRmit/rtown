@@ -63,9 +63,31 @@ const postSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
+    Rpoint: {
+        type: Number,
+        default: 0,
+    },
+    checkouts: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now
+    },
+    startTime: {
+        type: Date,
+    },
+    endTime: {
+        type: Date,
+    },
+    community: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'community'
     }
 })
 

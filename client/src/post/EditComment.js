@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react";
-import { addComment, editComment, editPost, getCommentById } from "../actions/post";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { addComment, getPostById, editComment, editPost, getCommentById } from "../actions/post";
+import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from "react-router-dom";
 
-const initialState ={
+const initialState = {
     text: ''
 }
 
-const EditComment = ({singlePost, singleComment }) => {
+const EditComment = ({ singlePost, singleComment }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState)
@@ -17,27 +17,29 @@ const EditComment = ({singlePost, singleComment }) => {
         text
     } = formData
 
-    const onChange = (e) => setFormData({...formData, [e.target.name]: e.target.value })
-    
+    // const comment = useSelector(state => state.comment.comment)
+    // console.log(comment && comment.text)
+    const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
     useEffect(() => {
         if (!singleComment) {
-            dispatch(getCommentById(singlePost._id ,singleComment._id))
+            dispatch(getCommentById(singlePost._id, singleComment._id))
         }
+        dispatch(getPostById(singlePost._id));
 
-        if(singleComment) {
-            const textData = {...initialState};
-            for (const key in singleComment){
+        if (singleComment) {
+            const textData = { ...initialState };
+            for (const key in singleComment) {
                 if (key in textData) textData[key] = singleComment[key];
             }
             setFormData(textData);
         }
-    }, [singleComment, dispatch])
+    }, [singleComment, singlePost._id, dispatch])
 
     const onUpdate = (e) => {
-        e.presentDefault()
+        e.preventDefault()
         dispatch(editComment(singlePost._id, singleComment._id, formData, navigate))
     }
-    console.log(singleComment)
+
     return (
         <div>
             <form className="form" onSubmit={onUpdate}>

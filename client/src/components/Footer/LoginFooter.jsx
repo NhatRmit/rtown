@@ -1,18 +1,18 @@
-import style from "./LoginFooter.module.css";
+import "./LoginFooter.css";
 import {Link} from "react-router-dom";
 
 const LoginFooter = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className={style["loginform-footer"]}>
-            <div className={[style["copyright"]]}>Copyright &copy; {currentYear} RMIT Town. All Rights Reserved.</div>
-            <div className={style["footer-nav"]}>
-                <Link to="/">Disclaimer</Link>
-                <div className={style["vl"]}></div>
-                <Link to="/">Terms</Link>
-                <div className={style["vl"]}></div>
-                <Link to="/">Privacy</Link>
+        <footer className="loginform-footer">
+            <div className="copyright">Copyright &copy; {currentYear} RMIT Town. All Rights Reserved.</div>
+            <div className="footer-nav">
+                <Link to="/disclaimer" className="footer-link">Disclaimer</Link>
+                <div className="vl"></div>
+                <Link to="/tos" className="footer-link">Terms</Link>
+                <div className="vl"></div>
+                <Link to="/privacy-policy" className="footer-link">Privacy</Link>
             </div>
       </footer>
   )

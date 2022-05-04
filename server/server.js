@@ -1,13 +1,10 @@
 const express = require('express');
-const app = express();
 const dotenv = require('dotenv').config();
 const connectDB = require('./configs/database');
+const cors = require('cors')
 
-
-// IMAGE Import 
-// const upload = require("./routes/upload");
-// const Grid = require("gridfs-stream");
-// const mongoose = require("mongoose");
+const app = express();
+app.use(cors())
 //connect to database
 connectDB();
 
@@ -19,41 +16,20 @@ app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/auth', require('./routes/api/authRoute'))
 app.use('/api/profiles', require('./routes/api/profileRoute'))
 app.use('/api/communities', require('./routes/api/communityRoute'))
+app.use('/api/items', require('./routes/api/itemRoute'))
+app.use('/api/messengers', require('./routes/api/messengerRoute'))
 app.use('/api/images', require('./routes/api/imageRoute'))
 
 
-// IMAGE
+//////////////////////////TEST
+// const bodyParser = require('body-parser');
+// const cookieParser = require('cookie-parser');
+// app.use(bodyParser.json());
+// app.use(cookieParser());
 
-
-
-// app.use("/api/file", upload);
-
-// // media routes
-// app.get("/api/file/:filename", async (req, res) => {
-//     try {
-//         const file = await gfs.files.findOne({ filename: req.params.filename });
-//         const readStream = gfs.createReadStream(file.filename);
-//         readStream.pipe(res);
-//     } catch (error) {
-//         res.send("not found");
-//     }
-// });
-
-
-// app.delete("/api/file/:filename", async (req, res) => {
-//     try {
-//         await gfs.files.deleteOne({ filename: req.params.filename });
-//         res.send("success");
-//     } catch (error) {
-//         console.log(error);
-//         res.send("An error occured.");
-//     }
-// });
-
-
+// app.use('/api/messenger', require('./routes/api/authRoute'));
+// app.use('/api/messenger', require('./routes/api/messengerRoute'));
 
 // set port, listen for requests
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
-
-

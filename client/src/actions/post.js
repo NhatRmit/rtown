@@ -6,7 +6,7 @@ import {
     ADD_POST,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE, CHECK_OUT
 } from "./types";
 
 //Get post
@@ -25,8 +25,24 @@ export const getPosts = () => async dispatch => {
     }
 }
 
+export const getCommunityPosts = (community_id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/postCommunity/${community_id}`)
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+
 //Add comment
-export const addComment = (postId, formData,navigate) => async dispatch => {
+export const addComment = (postId, formData, navigate) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -45,7 +61,7 @@ export const addComment = (postId, formData,navigate) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
@@ -53,12 +69,7 @@ export const addComment = (postId, formData,navigate) => async dispatch => {
 // //Edit comment
 export const editComment = (postId, commentId, formData, navigate) => async dispatch => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        const res = await axios.put(`/api/posts/comment/${postId}/${commentId}`, formData, config);
+        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData);
         dispatch({
             type: EDIT_COMMENT,
             payload: res.data
@@ -68,7 +79,7 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
@@ -90,12 +101,27 @@ export const deleteComment = (postId, commentId, navigate) => async dispatch => 
     } catch (err) {
         dispatch({
             type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: err.response, status: err.response }
         });
     }
 };
 // Add post
 export const addPost = formData => async dispatch => {
+    try {
+        const res = await axios.post('/api/posts', formData)
+        dispatch({
+            type: ADD_POST,
+            payload: res.data
+
+        })
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+export const addCommunityPost = formData => async dispatch => {
     try {
         const res = await axios.post('/api/posts', formData)
         dispatch({
@@ -300,4 +326,42 @@ export const clearPost = () => async dispatch => {
     dispatch({
         type: CLEAR_POST
     })
+}
+
+export const createEvent = (formData, communityId, navigate) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const res = await axios.post(`/api/posts/event/${communityId}`, formData, config)
+        dispatch({
+            type: ADD_POST,
+            payload: res.data
+
+        })
+        navigate(`communities/${communityId}`)
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+export const checkOut = (post_id, profile_id, navigate) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/event/checkout/${post_id}`)
+        dispatch({
+            type: CHECK_OUT,
+            payload: res.data
+        })
+        navigate(`/profiles/${profile_id}`)
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
 }

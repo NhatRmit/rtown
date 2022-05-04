@@ -26,7 +26,7 @@ export const getProfile = () => async dispatch => {
     }
 }
 
-export const getProfileById = (userId, navigate) => async dispatch => {
+export const getProfileById = (userId) => async dispatch => {
     try {
         const res = await axios.get(`/api/profiles/${userId}`)
 
@@ -34,7 +34,6 @@ export const getProfileById = (userId, navigate) => async dispatch => {
             type: GET_PROFILE,
             payload: res.data
         })
-        navigate(`profiles/${userId}`)
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,

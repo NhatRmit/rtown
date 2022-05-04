@@ -74,4 +74,19 @@ export const displayImage = (image) => async dispatch => {
             payload: { msg: error.response, status: error.response }
         })
     }
-}    
+}
+
+export const showImage = (image) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/images/${image}`)
+        dispatch({
+            type: DISPLAY_IMAGE,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: IMAGE_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}

@@ -5,6 +5,10 @@ const communitySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    name: {
+        type: mongoose.Schema.Types.String,
+        ref: 'user'
+    },
     communityName: {
         type: String,
         require: true,
@@ -23,9 +27,15 @@ const communitySchema = mongoose.Schema({
     members: [
         {
             memberId: {
-                type: String       
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'       
+            },
+            memberName: {
+                type: mongoose.Schema.Types.String,
+                ref: 'user'       
             },
         }
+        
     ],
     membersCount: {
         type: Number

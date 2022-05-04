@@ -1,21 +1,22 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addImage, displayImage, getImg } from '../../actions/image'
+import { addImage, displayImage, getImg, showImage } from '../../actions/image'
 
 
 const Image = () => {
     const dispatch = useDispatch()
     const [uploadFile, setUploadFile] = useState(null)
     const [img, setImg] = useState('')
+    const image = useSelector(state => state.image.image)
 
     const onSubmit = e => {
         e.preventDefault();
         let formdata = new FormData();
         formdata.append("file", uploadFile);
         dispatch(addImage(formdata))
-        
     }
+
     const onDisplay = e => {
         e.preventDefault();
         dispatch(displayImage(formdata.filesname))
@@ -38,8 +39,8 @@ const Image = () => {
                 
 
             </form>
+            <img src={image} alt="" />
 
-            
         </div>
     )
 }

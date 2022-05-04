@@ -1,9 +1,10 @@
-const any = require('@hapi/joi/lib/types/any');
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
-const Profile = require('../models/profileModel');
-const { request } = require('express');
+const Community = require('../models/communityModel')
+const Profile = require('../models/profileModel')
+const mongoose = require('mongoose')
+
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
@@ -76,6 +77,75 @@ const createPost = asyncHandler(async (req, res) => {
         const post = await newPost.save()
         res.json(post)
 
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const createCommunityPost = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password')
+        // const community = await Community.findOne({ _id: req.params.community_id })
+        const newPost = new Post({
+            text: req.body.text,
+            name: user.usernameOrEmail,
+            user: req.user.id,
+            community: req.params.community_id,
+        })
+
+        const post = await newPost.save()
+        res.json(post)
+
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const getCommunityPosts = asyncHandler(async (req, res) => {
+    const communityId = mongoose.Types.ObjectId(req.params.community_id)
+    try {
+        const posts = await Post.find({ community: communityId }).sort({ date: -1 });
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(404).json({ msg: error.message })
+    }
+})
+
+const createEvent = asyncHandler(async (req, res) => {
+    try {
+        const community = await Community.findById(req.params.community_id)
+        const newEvent = new Post({
+            text: req.body.text,
+            Rpoint: req.body.Rpoint,
+            community: community,
+        })
+
+        const event = await newEvent.save()
+        res.json(event)
+
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const checkOut = asyncHandler(async (req, res) => {
+    const post = await Post.findById(req.params.post_id);
+    const profile = await Profile.findOne({ user: req.user.id })
+    try {
+        if (post.checkouts.filter(checkout => checkout.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already checked out' })
+        }
+
+        post.checkouts.unshift({ user: req.user.id });
+        profile.Rpoint += post.Rpoint
+
+        await post.save();
+        await profile.save()
+
+        res.json(post);
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
@@ -220,13 +290,19 @@ const editComment = asyncHandler(async (req, res) => {
     const update = (array, index, newValue) => {
         array[index] = newValue
     }
+    const comment = (array, index) => {
+        return array[index]
+    }
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
         const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
 
         update(post.comments, removeIndex, req.body)
+        comment(post.comments, removeIndex)
 
-        return res.status(200).json(post)
+        await post.save()
+
+        return res.status(200).json(comment(post.comments, removeIndex))
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
@@ -240,7 +316,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
         //get the comment from post
         const comment = post.comments.find(
-            (comment) =>  comment.id === req.params.comment_id 
+            (comment) => comment.id === req.params.comment_id
         )
 
         //check if comment exist
@@ -249,7 +325,7 @@ const deleteComment = asyncHandler(async (req, res) => {
         }
 
         post.comments = post.comments.filter(
-            ({ id }) =>  id !== req.params.comment_id 
+            ({ id }) => id !== req.params.comment_id
         )
 
         post.commentsCount--
@@ -274,8 +350,7 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
-
 module.exports = {
     getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost, getPostById, editComment, getCommentById
+    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent, getCommentById, checkOut, createCommunityPost, getCommunityPosts
 }

@@ -1,21 +1,22 @@
-import { GET_COMMENT } from "../actions/types";
+import { GET_COMMENT, EDIT_COMMENT } from "../actions/types";
 
 const initialState = {
     comment: null
 };
 
-function postReducer(state = initialState, action) {
+function commentReducer(state = initialState, action) {
     const { type, payload } = action;
-    
-    switch(type){
+
+    switch (type) {
         case GET_COMMENT:
-           return {
-        ...state,
-        comment: payload
-        }
-      default:
-      return state;
+        case EDIT_COMMENT:
+            return {
+                ...state,
+                comment: payload
+            }
+        default:
+            return state;
     }
-    
-}  
-export default postReducer;
+
+}
+export default commentReducer;

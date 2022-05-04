@@ -1,0 +1,43 @@
+.loginform-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height:max-content;
+    margin-top: 5rem;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: var(--heading-font);
+    padding: 1em 0 2em 0;
+    position: relative;
+}
+
+.copyright {
+    color: var(--light-grey);
+    text-align: center;
+    padding: 1em 0 1.5em 0;
+}
+
+.footer-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 40em;
+}
+
+.footer-link {
+    all: unset;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.vl {
+    border-left: 2px solid var(--white);
+    height: 20px;
+}

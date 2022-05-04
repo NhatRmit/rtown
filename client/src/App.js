@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
 import NewsfeedPage from './pages/NewsfeedPage'
 import LoginPage from './pages/auth/LoginPage'
-import Posts from './components/Posts/Posts'
-import CommentForm from './pages/CommentForm'
 import Profile from './components/Profile/Profile'
 import UserProfile from './components/Profile/UserProfile'
-import Community from './components/Communities/Community'
-import CreateCommunity from './components/Communities/CreateCommunity'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
 import EditPost from './components/Posts/EditPost'
-import RItems from './components/Profile/RItems'
-import RShop from './components/Profile/RShop'
-import RequestForm from './components/Form/RequestForm'
+import CommunityRequest from './pages/community/CommunityRequestPage'
+import CommunityEditPage from './pages/community/CommunityEditPage'
+import CommunityPage from './pages/community/CommunityPage'
+import Messenger from './components/Chat/Messenger'
+// import EditCommunity from './components/Form/EditCommunity'
+import RequestEvent from './components/Form/RequestEvent'
 import Image from './components/Image/Image'
+import RShopPage from './pages/RShopPage'
+import Modal from 'react-modal'
+
+Modal.setAppElement('#root');
+
+
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -29,6 +34,7 @@ const App = () => {
     dispatch(loadUser())
   }, [dispatch])
 
+
   return (
     <>
       <Router>
@@ -36,46 +42,46 @@ const App = () => {
           <Route exact path='/' element={<LoginPage />} />
           <Route
             exact path='/communities/:community_id'
-            element={<PrivateRoute element={Community} />}
+            element={<PrivateRoute element={CommunityPage} />}
           />
           <Route
-            exact path='/communities/community-request'
-            element={<PrivateRoute element={RequestForm} />}
+            exact path='/communities/edit/:community_id'
+            element={<PrivateRoute element={CommunityEditPage} />}
           />
+
+          <Route
+            exact path='/communities/community-request'
+            element={<PrivateRoute element={CommunityRequest} />}
+          />
+          <Route
+            exact path='/chat'
+            element={<PrivateRoute element={Messenger} />}
+          />
+          <Route
+            exact path='/communities/event-request'
+            element={<PrivateRoute element={RequestEvent} />}
+          />
+
+
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
           />
-          <Route
-            exact path='/posts'
-            element={<PrivateRoute element={Posts} />}
-          />
-          <Route
-            exact path='posts/:postId'
-            element={<PrivateRoute element={EditPost} />}
-          />
+
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
-            exact path='/profiles/myProfile'
-            element={<PrivateRoute element={Profile} />}
-          />
-          <Route
-            exact path='newsfeed/profiles/:user_id'
+            exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
-          />
-          <Route
-            exact path='/profiles/r-items'
-            element={<PrivateRoute element={RItems} />}
-          />
-          <Route
-            exact path='/profiles/r-shop'
-            element={<PrivateRoute element={RShop} />}
           />
           <Route
             exact path='/image'
             element={<PrivateRoute element={Image}/>} 
           />
-
+          <Route
+            exact path='/rshop'
+            element={<PrivateRoute element={RShopPage}/>} 
+          />
+          
         </Routes>
       </Router>
     </>
