@@ -38,7 +38,7 @@ router.post('/comment/:id', auth, createComment)
 
 router.delete('/comment/:id/:comment_id', auth, deleteComment)
 
-router.post('/event/:community_id', createEvent)
+router.post('/event/:community_id', auth, createEvent)
 
 router.put('/event/checkout/:post_id', auth, checkOut)
 

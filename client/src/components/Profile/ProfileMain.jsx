@@ -13,6 +13,7 @@ const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
     // const profile = useSelector(state => state.profile.profile)
     const items = useSelector(state => state.item.items)
+    const auth = useSelector(state => state.auth)
     const { userId } = useParams()
     const dispatch = useDispatch()
     const [toggleState, setToggleState] = useState(1);
@@ -47,11 +48,17 @@ const ProfileMain = ({ profile, loading }) => {
                                         onClick={onMyPosts}>
                                         My Posts
                                     </button>
-                                    <button
-                                        className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
-                                        onClick={() => toggleTab(2)}>
-                                        My Items
-                                    </button>
+                                    {
+                                        auth._id === profile.user ?
+                                            <button
+                                                className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+                                                onClick={() => toggleTab(2)}>
+                                                My Items
+                                            </button>
+                                            :
+                                            <></>
+                                    }
+
                                 </div>
 
                                 <div className='content-tabs'>

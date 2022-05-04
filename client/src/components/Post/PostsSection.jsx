@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, } from '../../actions/post'
+import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, checkOut, } from '../../actions/post'
 import EditPost from '../Posts/EditPost'
 import { getProfileById } from '../../actions/profile'
 import Comment from '../Comment/Comment'
@@ -19,8 +19,6 @@ const PostsSection = ({ post }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
-  const profiles = useSelector(state => state.profile.profiles)
-
   const [edit, setEdit] = useState(false)
 
   const onEdit = e => {
@@ -58,6 +56,11 @@ const PostsSection = ({ post }) => {
     post.upvotes.length === 1 ? unUpvote(e) : unUpvote(e)
   }
 
+  const onCheckout = e => {
+    e.preventDefault()
+    dispatch(checkOut(post._id, auth._id, navigate))
+  }
+
   return (
     <>
       <div className='post-container'>
@@ -80,22 +83,33 @@ const PostsSection = ({ post }) => {
         <div className='content-container'>
           <div className='content-section-header'>
             {/*CHANGE ICONS FOR ME */}
-            <span className="users-icon" onClick={onProfile}>
-              <label htmlFor='username'>
-                <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                  <FaUserCircle />
-                </IconContext.Provider>
-              </label>
-              <p id='username' className='username'>
-                {post.name && post.name}
-              </p>
-            </span>
+            <div className="content-left-header">
+              <span className="users-icon" onClick={onProfile}>
+                <label htmlFor='username'>
+                  {/* <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                    <FaUserCircle />
+                  </IconContext.Provider> */}
+                  <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem" }} />
+                </label>
+                <p id='username' className='username'>
+                  {post.name && post.name}
+                </p>
+              </span>
 
-            <p className='uploaded-time'>
-              <Moment format='DD/MM/YYYY'>
-                {post.date && post.date}
-              </Moment>
-            </p>
+              <p className='uploaded-time'>
+                <Moment format='DD/MM/YYYY'>
+                  {post.date && post.date}
+                </Moment>
+              </p>
+            </div>
+            {
+              post && post.Rpoint !== 0 ?
+                <div className="content-right-header">
+                  <button onClick={onCheckout}>Check Out</button>
+                </div> : <></>
+            }
+
+
           </div>
 
           <div className='post-content'>

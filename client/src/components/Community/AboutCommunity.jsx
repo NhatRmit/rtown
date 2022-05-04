@@ -16,7 +16,7 @@ const AboutCommunity = ({ community_id, community }) => {
   // const [isJoined, setIsJoined] = useState('false')
 
   const auth = useSelector(state => state.auth._id)
-  
+
   const onEdit = e => {
     e.preventDefault()
     navigate(`/communities/edit/${community_id}`)
@@ -36,7 +36,7 @@ const AboutCommunity = ({ community_id, community }) => {
 
   const onCreateEvent = e => {
     e.preventDefault()
-    navigate(`/communities/event-request`)
+    navigate(`/communities/event-request/${community_id}`)
   }
 
 
@@ -51,8 +51,6 @@ const AboutCommunity = ({ community_id, community }) => {
   const memberIndex = community && community.members
     .map(item => item.memberId)
     .indexOf(user._id)
-
-  console.log(memberIndex)
 
   // const community = useSelector(state => state.community.community)
   return (

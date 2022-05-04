@@ -19,6 +19,7 @@ import RequestEvent from './components/Form/RequestEvent'
 import Image from './components/Image/Image'
 import RShopPage from './pages/RShopPage'
 import Modal from 'react-modal'
+import { getAllProfiles } from './actions/profile'
 
 Modal.setAppElement('#root');
 
@@ -31,6 +32,7 @@ const App = () => {
     } else {
       setAuthToken(localStorage.token)
     }
+    dispatch(getAllProfiles())
     dispatch(loadUser())
   }, [dispatch])
 
@@ -58,7 +60,7 @@ const App = () => {
             element={<PrivateRoute element={Messenger} />}
           />
           <Route
-            exact path='/communities/event-request'
+            exact path='/communities/event-request/:community_id'
             element={<PrivateRoute element={RequestEvent} />}
           />
 

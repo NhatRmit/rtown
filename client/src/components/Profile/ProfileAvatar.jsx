@@ -1,10 +1,10 @@
 import React from 'react'
 import './Profile.css'
 
-const ProfileAvatar = () => {
+const ProfileAvatar = ({ profile }) => {
   return (
     <div className='profile-avatar-container'>
-        ProfileAvatar
+      <img src={profile && profile.avatar} alt="profileavatar" style={{width: "8rem"}}/>
     </div>
   )
 }

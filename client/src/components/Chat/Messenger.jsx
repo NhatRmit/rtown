@@ -18,7 +18,6 @@ const Messenger = () => {
 
      const { friends, message, mesageSendSuccess, message_get_success, themeMood, new_user_add } = useSelector(state => state.messenger);
      const auth = useSelector(state => state.auth);
-     console.log(auth)
      // const profile = useSelector(state => state.profile.profile);
      const [currentfriend, setCurrentFriend] = useState('');
      const [newMessage, setNewMessage] = useState('');
@@ -355,7 +354,7 @@ const Messenger = () => {
 
                                    <div className='friends'>
                                         {
-                                             friends && friends.length > 0 ? friends.map((fd) => <div onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
+                                             friends && friends.length > 0 ? friends.map((fd, index) => <div key={index} onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
                                                   <Friends activeUser={activeUser} auth={auth._id} friend={fd} />
                                              </div>) : 'No Friend'
                                         }

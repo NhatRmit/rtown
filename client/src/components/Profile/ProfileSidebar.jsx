@@ -26,7 +26,7 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                 <Spinner />
             ) : (
                 <>
-                    <ProfileAvatar />
+                    <ProfileAvatar profile={profile}/>
                     <div className="community-item-container">
                         <div onClick={onCreate} className="community-item-create-community">
                             <span className='create-icon'>

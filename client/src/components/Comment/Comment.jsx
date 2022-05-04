@@ -43,9 +43,10 @@ const Comment = ({ post, comment }) => {
         <div onClick={onProfile} className='user'>
           <span className='user-icon'>
             {/*CHANGE ICON FOR ME*/}
-            <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
+            {/* <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
               <FaUserCircle />
-            </IconContext.Provider>
+            </IconContext.Provider> */}
+            <img src={comment && comment.avatar} alt="" style={{width: "2rem"}}/>
           </span>
           <p>{comment.name}</p>
         </div>

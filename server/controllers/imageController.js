@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose')
-const Grid = require('gridfs-stream')
+const Grid = require('gridfs-stream');
+const { post } = require('request');
 
 const conn = mongoose.connection;
 conn.once("open", function () {

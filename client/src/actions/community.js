@@ -59,7 +59,7 @@ export const addCommunity = (formData, navigate) => async dispatch => {
             payload: res.data
         })
 
-        navigate(`/community/${res.data._id}`)
+        navigate(`/communities/${res.data._id}`)
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,

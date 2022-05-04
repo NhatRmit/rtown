@@ -10,7 +10,7 @@ const Message = ({ message, currentfriend, scrollRef, typingMessage }) => {
                <div className='message-show'>
                     {
                          message && message.length > 0 ? message.map((m, index) =>
-                              m.senderId === auth._id ? <div ref={scrollRef} className='my-message'>
+                              m.senderId === auth._id ? <div key={index} ref={scrollRef} className='my-message'>
                                    <div className='image-message'>
                                         <div className='my-text'>
                                              <p className='message-text'> {m.message.text === '' ? <img src={`./image/${m.message.image}`} alt=""/> : m.message.text} </p>
@@ -25,7 +25,7 @@ const Message = ({ message, currentfriend, scrollRef, typingMessage }) => {
                                    <div className='time'>
                                         {moment(m.createdAt).startOf('mini').fromNow()}
                                    </div>
-                              </div> : <div ref={scrollRef} className='fd-message'>
+                              </div> : <div key={index} ref={scrollRef} className='fd-message'>
                                    <div className='image-message-time'>
                                         <img src={`./image/${currentfriend.image}`} alt='' />
                                         <div className='message-time'>

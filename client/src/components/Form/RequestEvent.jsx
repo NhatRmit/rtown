@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout'
 // import Filter from '../components/Filter/Filter'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createEvent } from '../../actions/post'
 
-const RequestEvent = ({ community }) => {
+const RequestEvent = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const { community_id } = useParams()
+    const { community_id } = useParams()
 
     const [formData, setFormData] = useState({
         // name: community.communityName,
@@ -19,12 +19,12 @@ const RequestEvent = ({ community }) => {
     const {
         // name,
         text,
-        RPoint
+        Rpoint
     } = formData
-
+ 
     const onSubmit = e => {
         e.preventDefault()
-        dispatch(createEvent(formData, community._id, navigate))
+        dispatch(createEvent(formData, community_id, navigate))
     }
 
     const onChange = e => {
@@ -35,6 +35,7 @@ const RequestEvent = ({ community }) => {
         e.preventDefault()
         navigate(-1)
     }
+
     return (
         <Layout header footer>
 
@@ -57,10 +58,10 @@ const RequestEvent = ({ community }) => {
                         <input
                             type="number"
                             placeholder="Enter your community name"
-                            value={RPoint}
+                            value={Rpoint}
                             required
                             onChange={onChange}
-                            name='RPoint'
+                            name='Rpoint'
                         />
                     </div>
 

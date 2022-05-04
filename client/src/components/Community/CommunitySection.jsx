@@ -20,7 +20,7 @@ const CommunitySection = ({ community }) => {
         <span onClick={onClick} className='community'>
           <Link to='/community'>
             {" "}
-            {/* <img src={logo1} alt='Community logo' className='community-logo' /> */}
+            <img src={community && community.avatar} alt='Community logo' className='community-logo' />
           </Link>
         </span>
       </div>
