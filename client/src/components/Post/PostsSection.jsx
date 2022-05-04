@@ -174,7 +174,7 @@ const PostsSection = ({ post }) => {
         <div className="comment-section">
           {
             post.comments.map(comment =>
-              <Comment post={post} comment={comment} />
+              <Comment key={comment._id} post={post} comment={comment} />
             )
           }
           <CommentForm postId={post._id} />
