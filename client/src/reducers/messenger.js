@@ -86,7 +86,7 @@ const messengerReducer = (state = messengerState, action) => {
 
      if (type === UPDATE) {
           const index = state.friends.findIndex(f => f.fndInfo._id === payload.id);
-          if (state.friends[index].msgInfo) {
+          if ((state.friends[index] && state.friends[index].msgInfo)) {
                state.friends[index].msgInfo.status = 'seen';
           }
           return {

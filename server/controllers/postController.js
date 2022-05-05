@@ -15,8 +15,9 @@ const checkWord =(text) =>{
 }
 
 const getPosts = asyncHandler(async (req, res) => {
+    const query = [{ path: 'profile' }, { path: 'community' }]
     try {
-        const posts = await Post.find().sort({ date: -1 });
+        const posts = await Post.find().sort({ date: -1 }).populate(query)
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -37,7 +38,7 @@ const searchPost = asyncHandler(async (req, res) => {
 
 const getPostById = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id)
         res.status(200).json(post)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -62,10 +63,10 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
     try {
 
         if (filter === 'top') {
-            posts = await Post.find().sort({ upvotesCount: -1 })
+            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community', ['communityName'])
         }
         else if (filter === 'trending') {
-            posts = await Post.find().sort({ commentsCount: -1 })
+            posts = await Post.find().sort({ commentsCount: -1 }).populate('community', ['communityName'])
 
         }
         res.status(200).json(posts)
@@ -77,10 +78,12 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
 const createPost = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
+        const profile = await Profile.findOne({ user: req.user.id })
         const newPost = new Post({
             text: checkWord(req.body.text),
             name: user.usernameOrEmail,
-            user: req.user.id
+            user: req.user.id,
+            profile: profile._id,
         })
          
         const post = await newPost.save()
@@ -117,7 +120,7 @@ const createCommunityPost = asyncHandler(async (req, res) => {
 const getCommunityPosts = asyncHandler(async (req, res) => {
     const communityId = mongoose.Types.ObjectId(req.params.community_id)
     try {
-        const posts = await Post.find({ community: communityId }).sort({ date: -1 });
+        const posts = await Post.find({ community: communityId }).sort({ date: -1 }).populate('community', ['communityName'])
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -126,11 +129,16 @@ const getCommunityPosts = asyncHandler(async (req, res) => {
 
 const createEvent = asyncHandler(async (req, res) => {
     try {
-        const community = await Community.findById(req.params.community_id)
+        const community = await Community.findOne({ _id: req.params.community_id })
+        const user = await User.findOne({ _id: req.user.id })
+        const profile = await Profile.findOne({ user: req.user.id })
         const newEvent = new Post({
             text: req.body.text,
+            name: user.usernameOrEmail,
             Rpoint: req.body.Rpoint,
-            community: community,
+            user: req.user.id,
+            community: req.params.community_id,
+            profile: profile._id
         })
 
         const event = await newEvent.save()
@@ -277,12 +285,14 @@ const createComment = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
-        const profile = await Profile.findOne({user: req.user.id})
+        const profile = await Profile.findOne({ user: req.user._id })
+
         const newComment = {
             text: checkWord(req.body.text),
             name: user.usernameOrEmail,
             avatar: profile.avatar,
-            user: req.user.id
+            user: req.user.id,
+            profile: profile._id
         };
 
         post.comments.unshift(newComment);

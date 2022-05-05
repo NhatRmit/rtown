@@ -18,8 +18,7 @@ const Messenger = () => {
 
      const { friends, message, mesageSendSuccess, message_get_success, themeMood, new_user_add } = useSelector(state => state.messenger);
      const auth = useSelector(state => state.auth);
-     console.log(auth)
-     // const profile = useSelector(state => state.profile.profile);
+     //console.log(auth)
      const [currentfriend, setCurrentFriend] = useState('');
      const [newMessage, setNewMessage] = useState('');
 
@@ -62,7 +61,6 @@ const Messenger = () => {
                     payload: data
                })
           })
-
      }, [dispatch]);
 
 
@@ -88,8 +86,6 @@ const Messenger = () => {
           }
           setSocketMessage('')
      }, [socketMessage, currentfriend, auth._id, dispatch]);
-
-
 
      useEffect(() => {
           socket.current.emit('addUser', auth._id, auth)
@@ -127,9 +123,6 @@ const Messenger = () => {
           }
      }, [socketMessage, currentfriend._id, dispatch, auth._id]);
 
-
-
-
      const inputHendle = (e) => {
           setNewMessage(e.target.value);
 
@@ -148,18 +141,14 @@ const Messenger = () => {
                receiverId: currentfriend._id,
                message: newMessage ? newMessage : '❤'
           }
-
-
           socket.current.emit('typingMessage', {
                senderId: auth._id,
                receiverId: currentfriend._id,
                msg: ''
           })
-
           dispatch(messageSend(data));
           setNewMessage('')
      }
-
 
      useEffect(() => {
           if (mesageSendSuccess) {
@@ -355,17 +344,12 @@ const Messenger = () => {
 
                                    <div className='friends'>
                                         {
-                                             friends && friends.length > 0 ? friends.map((fd) => <div onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
+                                             friends && friends.length > 0 ? friends.map((fd, index) => <div key={index} onClick={() => setCurrentFriend(fd.fndInfo)} className={currentfriend._id === fd.fndInfo._id ? 'hover-friend active' : 'hover-friend'}>
                                                   <Friends activeUser={activeUser} auth={auth._id} friend={fd} />
                                              </div>) : 'No Friend'
                                         }
-
-
-
                                    </div>
-
                               </div>
-
                          </div>
 
                          {
@@ -382,8 +366,6 @@ const Messenger = () => {
                                    typingMessage={typingMessage}
                               /> : 'Please Select your Friend'
                          }
-
-
                     </div>
 
                </div>

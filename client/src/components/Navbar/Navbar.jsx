@@ -27,14 +27,17 @@ const Navbar = () => {
     }
 
     const onProfile = (e) => {
+        e.preventDefault()
         navigate(`/profiles/${auth._id}`)
     }
 
     const onChat = e => {
+        e.preventDefault()
         navigate('/chat')
     }
 
     const onShop = (e) => {
+        e.preventDefault()
         navigate('/rshop')
     }
 

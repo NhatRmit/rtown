@@ -43,7 +43,7 @@ const getFriends = async (req, res) => {
                let lmsg = await getLastMessage(req.user.id, friendGet[i].id);
                fnd_msg = [...fnd_msg, {
                     fndInfo: friendGet[i],
-                    // msgInfo: lmsg
+                    msgInfo: lmsg
                }]
 
           }

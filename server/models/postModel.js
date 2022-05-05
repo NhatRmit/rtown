@@ -5,6 +5,10 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    profile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'profileStudent'
+    },
     text: {
         type: String,
         required: true
@@ -47,6 +51,9 @@ const postSchema = mongoose.Schema({
                 required: true
             },
             name: {
+                type: String
+            },
+            avatar: {
                 type: String
             },
             image: {

@@ -36,27 +36,28 @@ const getCommunityById = asyncHandler(async (req, res) => {
 const createCommunity = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
-        const profile = await Profile.findById(req.user.id)
+        const profile = await Profile.findOne({user: req.user.id})
         const newCommunity = new Community({
             communityName: req.body.communityName,
             description: req.body.description,
             name: user.usernameOrEmail,
             user: req.user.id
+            
         })
 
-        const community = await newCommunity.save()
         profile.community.unshift({
-            communityId: req.params.community_id,
-            communityName: community.communityName
+            communityId: newCommunity._id,
+            communityName: newCommunity.communityName
         })
-        community.members.unshift({
+
+        newCommunity.members.unshift({
             memberId: req.user.id,
             memberName: user.usernameOrEmail
         })
 
         await profile.save()
-        await community.save()
-        res.status(200).json(community)
+        await newCommunity.save()
+        res.status(200).json(newCommunity)
 
     } catch (err) {
         console.error(err.message)

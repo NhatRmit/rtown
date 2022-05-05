@@ -9,5 +9,4 @@ router.post('/send-message', auth, messageUploadDB);
 router.get('/get-message/:id', auth, messageGet);
 router.post('/delivered-message', auth, deliveredMessage);
 
-
 module.exports = router;

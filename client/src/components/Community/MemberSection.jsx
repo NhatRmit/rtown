@@ -2,42 +2,32 @@ import "./MemberList.css";
 import { Link } from "react-router-dom";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
+import { useNavigate } from "react-router-dom";
 
 const MemberSection = ({ community }) => {
-
+  const navigate = useNavigate()
   return (
     <div className='member-container'>
       <h1 className='title'>Members</h1>
       {/*I WILL USE MAP LATER*/}
       <div className="member-list">
-        <div className='member'>
-          <Link to='/profile'>
+        {community && community.members && community.members.map((member) => (
+          <div
+            onClick={
+              e => {
+                e.preventDefault()
+                navigate(`/profiles/${member.memberId}`)
+              }}
+            key={member.memberId} className='member'>
             <span className='user-icon'>
               {/*CHANGE ICON FOR ME*/}
               <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
                 <BsFillChatDotsFill />
               </IconContext.Provider>
             </span>
-          </Link>
-          <Link to='/profile' className='link'>
-            <p>{(community && community.name) || 'Admin'}</p>
-          </Link>
-        </div>
-      </div>
-      <div className="member-list">
-        {community && community.members && community.members.map((member) => (
-          <div key={member.memberId} className='member'>
-            <Link to='/profile'>
-              <span className='user-icon'>
-                {/*CHANGE ICON FOR ME*/}
-                <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
-                  <BsFillChatDotsFill />
-                </IconContext.Provider>
-              </span>
-            </Link>
-            <Link to='/profile' className='link'>
+            <div className='link'>
               <p>{member.memberName}</p>
-            </Link>
+            </div>
           </div>
         ))}
       </div>

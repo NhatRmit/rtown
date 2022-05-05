@@ -17,10 +17,10 @@ import CommentForm from '../../post/CommentForm'
 
 const PostsSection = ({ post }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const auth = useSelector(state => state.auth)
     const profiles = useSelector(state => state.profile.profiles)
     const [edit, setEdit] = useState(false)
-
     const onEdit = e => {
         e.preventDefault()
         setEdit(true)
@@ -38,29 +38,29 @@ const PostsSection = ({ post }) => {
     }
     const onUpvote = (e) => {
         e.preventDefault()
-        e.target.style.color='blue'
+        e.target.style.color = 'blue'
         dispatch(addUpvote(post._id))
     }
     const unUpvote = (e) => {
         e.preventDefault()
-        e.target.style.color='red'
+        e.target.style.color = 'red'
         dispatch(removeUpvote(post._id))
     }
 
     const handleUpvote = (e) => {
         e.preventDefault()
-        post.upvotes.length === 0 ?  onUpvote(e)  :  unUpvote(e)
+        post.upvotes.length === 0 ? onUpvote(e) : unUpvote(e)
     }
     const handleDownvote = (e) => {
         e.preventDefault()
-        post.upvotes.length === 1 ?  unUpvote(e)  :  unUpvote(e)
+        post.upvotes.length === 1 ? unUpvote(e) : unUpvote(e)
     }
 
     return (
         <div className='posts-container'>
             <div className='post-section'>
                 <div className='vote-section'>
-                    <span className='icon' onClick={ handleUpvote } >
+                    <span className='icon' onClick={handleUpvote} >
                         {/*CHANGE ICONS FOR ME */}
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiUpvote />
@@ -68,7 +68,7 @@ const PostsSection = ({ post }) => {
 
                     </span>
                     <p className='vote-total'>{post.upvotes.length}</p>
-                    <span className='icon' onClick={ handleDownvote }>
+                    <span className='icon' onClick={handleDownvote}>
                         <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                             <BiDownvote />
                         </IconContext.Provider>
@@ -94,10 +94,15 @@ const PostsSection = ({ post }) => {
                     <div className='post-content'>
                         <div>
                             {
-                                !edit ? post.text :
+                                !edit ?
+                                    <>
+                                        post.text
+
+                                    </> :
                                     <EditPost singlePost={post} />
                             }
                         </div>
+
                     </div>
                     <div className='content-section-footer'>
                         <span className='icon'>
