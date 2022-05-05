@@ -5,6 +5,15 @@ const Community = require('../models/communityModel')
 const Profile = require('../models/profileModel')
 const mongoose = require('mongoose')
 
+const checkWord =(text) =>{
+    const blackList = ["stupid","fucking","shit","bitch"]
+    for (let i = 0; i< blackList.length; i++){
+        text= text.replace(blackList[i], "****")
+    }
+
+    return text
+}
+
 const getPosts = asyncHandler(async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
@@ -69,12 +78,14 @@ const createPost = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
         const newPost = new Post({
-            text: req.body.text,
+            text: checkWord(req.body.text),
             name: user.usernameOrEmail,
             user: req.user.id
         })
-
+         
         const post = await newPost.save()
+        
+
         res.json(post)
 
     } catch (error) {
@@ -268,7 +279,7 @@ const createComment = asyncHandler(async (req, res) => {
         const post = await Post.findById(req.params.id);
         const profile = await Profile.findOne({user: req.user.id})
         const newComment = {
-            text: req.body.text,
+            text: checkWord(req.body.text),
             name: user.usernameOrEmail,
             avatar: profile.avatar,
             user: req.user.id
@@ -298,6 +309,7 @@ const editComment = asyncHandler(async (req, res) => {
         const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
 
         update(post.comments, removeIndex, req.body)
+ 
         comment(post.comments, removeIndex)
 
         await post.save()
