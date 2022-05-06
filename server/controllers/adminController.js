@@ -71,6 +71,35 @@ const getAllCommunityRequest = asyncHandler(async (req, res) => {
     }
 })
 
+const editCommunity = asyncHandler(async (req, res) =>{
+    const {
+        communityName,
+        description,
+    } = req.body
+
+    const communityFields = {
+        communityName,
+        description
+    }
+    communityFields._id = req.params.community_id
+    if (communityName) communityFields.communityName = communityName
+    if (description) communityFields.description = description
+
+    let communityEdit = await Community.findById(req.params.community_id)
+    try {
+        if(communityEdit) {
+            communityEdit = await Community.findOneAndUpdate(
+                { _id: req.params.community_id },
+                { $set: communityFields },
+                { new: true }
+            ) 
+        }
+        res.status(200).json(communityEdit)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
+    }
+} )
 
 const acceptCommunity = asyncHandler(async (req, res) => {
     try {
@@ -124,5 +153,6 @@ module.exports= {
     getAllCommunityRequest,
     acceptCommunity,
     deleteCommunity,
-    editMemberProfile
+    editMemberProfile,
+    editCommunity
 }
