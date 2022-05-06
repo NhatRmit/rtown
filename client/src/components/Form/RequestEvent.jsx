@@ -12,38 +12,27 @@ const RequestEvent = () => {
     const { community_id } = useParams()
 
     const [formData, setFormData] = useState({
-        // name: community.communityName,
         text: '',
-        RPoint: 0,
+        Rpoint: 0,
     })
 
     const [endTime, setEndTime] = useState(null)
+    const [uploadFile, setUploadFile] = useState(null)
 
     const {
-        // name,
         text,
         Rpoint,
     } = formData
-    console.log(new Date(endTime))
-    console.log(text)
-    console.log(Rpoint)
 
     const onEvent = e => {
-        let formdata = new FormData();
         e.preventDefault()
-
-        // formdata.append("file", uploadFile);
+        let formdata = new FormData();
+        formdata.append("file", uploadFile);
         formdata.append("text", text);
         formdata.append("Rpoint", Rpoint);
         formdata.append("endTime", endTime);
         dispatch(createEvent(formdata, community_id, navigate))
     }
-
-    const onSubmit = e => {
-        e.preventDefault()
-        dispatch(createEvent(formData, community_id, navigate))
-    }
-
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -54,6 +43,10 @@ const RequestEvent = () => {
         // setDate(endTime)
     }
 
+    const onChangeImage = e => {
+        setUploadFile(e.target.files[0])
+    }
+
     const onGoBack = e => {
         e.preventDefault()
         navigate(-1)
@@ -61,7 +54,6 @@ const RequestEvent = () => {
 
     return (
         <Layout header footer>
-
             <div className="requestform-container">
                 <h1 className="title">Event Request</h1>
                 <form className="form" onSubmit={onEvent} >
@@ -69,7 +61,7 @@ const RequestEvent = () => {
                         <label className="label">Event Content</label>
                         <input
                             type="text"
-                            placeholder="Enter your community name"
+                            placeholder="Enter name of event"
                             value={text}
                             required
                             onChange={onChange}
@@ -79,8 +71,8 @@ const RequestEvent = () => {
                     <div className='communityName'>
                         <label className="label">Event RPoint</label>
                         <input
-                            type="number"
-                            placeholder="Enter your community name"
+                            type="text"
+                            placeholder="Enter Rpoint"
                             value={Rpoint}
                             required
                             onChange={onChange}
@@ -100,6 +92,7 @@ const RequestEvent = () => {
                             }
                         />
                     </div>
+                    <input type="file" onChange={onChangeImage}/>
 
                     {/* <div className='communityPurpose'>
                     <label for="purposes" className="label">Purpose of Community</label>

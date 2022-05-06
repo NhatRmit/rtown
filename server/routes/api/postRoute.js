@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut, getCommunityPosts, createCommunityPost} = require('../../controllers/postController')
+const { getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut, getCommunityPosts, createCommunityPost } = require('../../controllers/postController')
 
-const {auth} = require('../../middlewares/authMiddleware')
+const { auth } = require('../../middlewares/authMiddleware')
 const upload = require('../../middlewares/upload')
 
 router.get('/', getPosts)
@@ -33,7 +33,7 @@ router.put('/removeupvote/:id', auth, removeupvotePost)
 
 router.put('/downvote/:id', auth, downvotePost)
 
-router.delete('/:id',auth ,deletePost)
+router.delete('/:id', auth, deletePost)
 
 router.post('/comment/:id', upload.single("file"), auth, createComment)
 

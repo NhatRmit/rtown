@@ -66,6 +66,13 @@ const PostsSection = ({ post }) => {
     .map(item => item.user)
     .indexOf(auth._id)
 
+  const [time, setTime] = useState(null)
+  useEffect(() => {
+    setInterval(() => {
+       setTime(new Date())
+    }, 1000)
+  }, [])
+
   return (
     <>
       <div className='post-container'>
@@ -111,7 +118,7 @@ const PostsSection = ({ post }) => {
               </p>
             </div>
             {
-              (post && post.Rpoint !== 0) ?
+              (post && post.Rpoint !== 0) && (post.endTime && (new Date(post.endTime)) <= time) ?
                 <div className="content-right-header">
                   {
                     (checkoutIndex === -1) ?
@@ -124,7 +131,6 @@ const PostsSection = ({ post }) => {
                 </div> : <></>
             }
           </div>
-
           <div className='post-content'>
             <img src={post.image} alt="" style={{ width: "30%" }} />
             <p>
@@ -150,7 +156,6 @@ const PostsSection = ({ post }) => {
                 </p>
               </span>
             </div>
-
             <div className="content-right-footer">
               {/*Edit post icon*/}
               {
@@ -177,7 +182,6 @@ const PostsSection = ({ post }) => {
                     </p>
                   </span>
                 </>
-
               }
             </div>
           </div>

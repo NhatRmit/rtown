@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //components
@@ -26,6 +26,8 @@ Modal.setAppElement('#root');
 
 const App = () => {
   const dispatch = useDispatch()
+  const [time, setTime] = useState(new Date())
+
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token)
@@ -34,8 +36,11 @@ const App = () => {
     }
     dispatch(getAllProfiles())
     dispatch(loadUser())
+    setInterval(
+      () => {
+        setTime(new Date())
+      }, 1000)
   }, [dispatch])
-
 
   return (
     <>
@@ -59,11 +64,11 @@ const App = () => {
             exact path='/chat'
             element={<PrivateRoute element={Messenger} />}
           />
+          
           <Route
             exact path='/communities/event-request/:community_id'
             element={<PrivateRoute element={RequestEvent} />}
           />
-
 
           <Route
             exact path='/newsfeed'

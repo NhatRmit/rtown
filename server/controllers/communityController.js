@@ -132,15 +132,6 @@ const getMyCommunities = asyncHandler(async (req, res) => {
     }
 })
 
-const createEventCommunity = asyncHandler(async (req, res) => {
-    try {
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
-
 const getCommunityMember = asyncHandler(async (req, res) => {
     try {
         const community = await Community.findOne({ _id: req.params.community_id })
@@ -165,6 +156,5 @@ module.exports = {
     updateCommunity,
     deleteCommunity,
     getMyCommunities,
-    createEventCommunity,
     getCommunityMember,
 }
