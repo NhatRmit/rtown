@@ -2,10 +2,6 @@ const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose')
 const Grid = require('gridfs-stream');
 const Profile = require('../models/profileModel');
-const Community = require('../models/communityModel');
-const Post = require('../models/postModel');
-const User = require('../models/userModel')
-
 
 const conn = mongoose.connection;
 conn.once("open", function () {
@@ -29,16 +25,7 @@ const selectImage = asyncHandler(async (req, res) => {
     return res.send(imgUrl);
 })
 
-const getFilename = asyncHandler(async (req, res) => {
-    try {
-        const file = await gfs.files.findOne({ filename: req.params.filename });
-        res.send(file)
-    } catch (error) {
-        res.send("not found");
-    }
-})
-
-const selectProfileImage = asyncHandler( async (req, res) => {
+const selectProfileImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
     let profile = await Profile.findOne({ user: req.user.id })
@@ -59,28 +46,6 @@ const selectProfileImage = asyncHandler( async (req, res) => {
     }
 });
 
-// const selectCommunityImage = asyncHandler(async (req, res) => {
-//     if (req.file === undefined) return res.send("you must select a file.");
-//     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
-//     let community = await Community.findOne({ _id: req.params.communityId })
-//     try {
-//         if (community) {
-//             community = await Community.findOneAndUpdate(
-//                 { _id: req.params.communityId },
-//                 { $set: { avatar: imgUrl } },
-//                 { new: true }
-//             )
-//         }
-//         await community.save()
-//         res.status(200).json(community)
-
-//     } catch (err) {
-//         console.error(err.message)
-//         res.status(500).json({ msg: 'Server Error' })
-//     }
-
-// })
-
 const deleteImage = asyncHandler(async (req, res) => {
     try {
         await gfs.files.deleteOne({ filename: req.params.filename });
@@ -91,10 +56,11 @@ const deleteImage = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = {
+const image = {
     getImage,
     selectImage,
     deleteImage,
-    getFilename,
     selectProfileImage,
-} 
+}
+
+module.exports = { image } 

@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel')
 const Profile = require('../models/profileModel');
+
 const getItems = asyncHandler(async (req, res) => {
     try {
         const items = await Item.find().sort({ Rpoint: -1 });
@@ -75,10 +76,12 @@ const getItemByProfile = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {
+const item = {
     getItems,
     createItem,
     buyItem,
     usedItem,
     getItemByProfile,
 }
+
+module.exports = { item }

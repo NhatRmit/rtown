@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { addComment, getPostById, editComment, editPost, getCommentById } from "../actions/post";
-import { connect, useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { getPostById, editComment, getCommentById } from "../../actions/post";
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
     text: ''

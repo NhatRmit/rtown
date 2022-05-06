@@ -136,7 +136,6 @@ const messageGet = async (req, res) => {
 
 }
 
-
 const deliveredMessage = async (req, res) => {
      const messageId = req.body._id;
 
@@ -156,9 +155,11 @@ const deliveredMessage = async (req, res) => {
           })
 }
 
-module.exports = {
+const message = {
      getFriends,
      messageUploadDB,
      messageGet,
      deliveredMessage
 }
+
+module.exports = { message }

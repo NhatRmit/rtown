@@ -22,7 +22,6 @@ const Navbar = () => {
 
     const onLogout = (e) => {
         dispatch(logoutUser())
-        // localStorage.removeItem('isJoined')
         navigate('/')
     }
 
@@ -53,13 +52,10 @@ const Navbar = () => {
 
     return (
         <header className='header'>
-            {/*Logo section*/}
             <div className="logo-container">
                 <Link to='/newsfeed'><img src={logo} alt="RTown logo" className="logo" /></Link>
                 <Link to='/newsfeed'> RTown </Link>
             </div>
-
-            {/*Search bar*/}
             <section className="search-bar-section">
                 <form onSubmit={onSubmit}>
                     <div className="search-bar">

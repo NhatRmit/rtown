@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import Filter from '../components/Filter/Filter'
 import { useNavigate } from "react-router-dom";
-import { uploadCommentImage } from "../actions/image";
-// import { addComment } from "../../actions/post";
-import { addComment } from "../actions/post";
-import Comment from "../components/Comment/Comment";
+import { addComment } from "../../actions/post";
 
 const CommentForm = ({ postId, post, comment }) => {
   const dispatch = useDispatch()

@@ -1,31 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const { auth } = require('../../middlewares/authMiddleware')
-const upload = require('../../middlewares/upload')
+const upload = require('../../middlewares/uploadMiddleware')
 
 const {
-    getAllCommunity,
-    getCommunityById,
-    createCommunity,
-    updateCommunity,
-    deleteCommunity,
-    getMyCommunities,
-    getCommunityMember,
+    community
 } = require('../../controllers/communityController')
 
-router.get('/', getAllCommunity)
 
-router.post('/', upload.single("file"), auth, createCommunity)
+router.post('/', upload.single("file"), auth, community.createCommunity)
 
-router.get('/myCommunities/:user_id', auth, getMyCommunities)
+router.get('/', auth, community.getAllCommunity)
+router.get('/myCommunities/:user_id', auth, community.getMyCommunities)
+router.get('/member/:community_id', auth, community.getCommunityMember)
+router.get('/:community_id', auth, community.getCommunityById)
 
-router.get('/member/:community_id', auth, getCommunityMember)
+router.put('/update', auth, community.updateCommunity)
 
-router.get('/:community_id', auth, getCommunityById)
-
-router.put('/update', auth, updateCommunity)
-
-router.delete('/:community_id', auth, deleteCommunity)
+router.delete('/:community_id', auth, community.deleteCommunity)
 
 
 module.exports = router

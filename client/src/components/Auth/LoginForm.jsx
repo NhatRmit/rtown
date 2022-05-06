@@ -13,7 +13,6 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // alert("Form submitted");
         dispatch(loginUser(usernameOrEmail, password))
     }
 
@@ -21,25 +20,10 @@ const LoginForm = () => {
         return <Navigate replace to='/newsfeed' />
     }
 
-    // const data = {
-    //     usernameOrEmail: this.usernameOrEmail,
-    //     password: this.password
-    // }
-
-    // axios.post('localhost:3000/login', data)
-    //     .then(res => {
-    //         console.log(res)
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-
-
     return (
         <div className={style["loginform-container"]}>
             <h1 className={style["h1"]}>Welcome to RMIT Town!</h1>
             <p className={style["intro"]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin dictum nulla eu hendrerit. Donec commodo fringilla sollicitudin. Duis sit amet ligula quis tellus scelerisque pulvinar ut vitae ligula. Phasellus lectus felis, convallis sit amet consequat quis, interdum eu lectus. Suspendisse potenti.</p>
-            {/* <form className={style["form"]} onSubmit={handleSubmit} action="/login" method="POST"> */}
             <form className={style["form"]} onSubmit={handleSubmit} >
                 <label className={style["label"]}>RMIT ID or Email address</label>
                 <input
@@ -60,10 +44,8 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className={style["input"]}
                 />
-                {/* <input type='submit' /> */}
                 <p className={style["p"]}>By signing in, you accept <Link to={'/'} className={style["a"]}>the rules of use of RMIT systems.</Link></p>
                 <div className={style["button-wrapper"]}>
-                    {/* <button type='submit' className={style["register-btn"]}>Sign in</button> */}
                     <button type='submit' className={style["login-btn"]}>Sign in</button>
                 </div>
             </form>

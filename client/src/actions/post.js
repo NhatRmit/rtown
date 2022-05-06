@@ -73,7 +73,7 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
         }
     };
     try {
-        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData, config);
+        const res = await axios.put(`/api/posts/comment/edit/${postId}/${commentId}`, formData, config);
         dispatch({
             type: EDIT_COMMENT,
             payload: res.data

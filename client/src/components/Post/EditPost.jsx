@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { addPost, editPost, getPostById } from "../../actions/post";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { editPost, getPostById } from "../../actions/post";
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
     text: '',
@@ -26,14 +24,11 @@ const EditPost = ({ singlePost }) => {
         if (!singlePost) {
             dispatch(getPostById(singlePost._id));
         }
-        // if we finished loading and we do have a profile
-        // then build our profileData
         if (singlePost) {
             const textData = { ...initialState };
             for (const key in singlePost) {
                 if (key in textData) textData[key] = singlePost[key];
             }
-            // setUploadFile(singlePost.image)
             setFormData(textData);
         }
     }, [singlePost, dispatch])
@@ -69,12 +64,5 @@ const EditPost = ({ singlePost }) => {
     )
 
 }
-EditPost.propTypes = {
-    addPost: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
-}
-const mapStateToProps = state => ({
-    post: state.post
-})
 
-export default connect(mapStateToProps, { addPost })(EditPost)
+export default EditPost

@@ -1,5 +1,5 @@
 import "./PostsSection.css";
-import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
+import { BiUpvote, BiDownvote } from 'react-icons/bi'
 import { BsPatchCheckFill } from 'react-icons/bs'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
@@ -10,11 +10,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, checkOut, } from '../../actions/post'
-import EditPost from '../Posts/EditPost'
-import { getProfileById } from '../../actions/profile'
+import { deletePost, clearPost, addUpvote, removeUpvote, checkOut, } from '../../actions/post'
+import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
-import CommentForm from "../../post/CommentForm";
+import CommentForm from '../Comment/CommentForm'
 
 const PostsSection = ({ post }) => {
   const navigate = useNavigate()
@@ -25,8 +24,6 @@ const PostsSection = ({ post }) => {
   const onEdit = e => {
     e.preventDefault()
     setEdit(true)
-    // navigate(`/posts/${post._id}`)
-    // dispatch(getPostById(post._id))
     dispatch(clearPost())
   }
   const onDelete = (e) => {
@@ -67,10 +64,20 @@ const PostsSection = ({ post }) => {
     .indexOf(auth._id)
 
   const [time, setTime] = useState(null)
+
   useEffect(() => {
-    setInterval(() => {
-       setTime(new Date())
-    }, 1000)
+    let count = 0
+    let timer = setInterval(() => {
+      count++
+      if (count === 1) {
+        clearInterval(timer);
+      }
+      setTime(new Date())
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    }
   }, [])
 
   return (
@@ -78,14 +85,12 @@ const PostsSection = ({ post }) => {
       <div className='post-container'>
         <div className='vote-container'>
           <span className='upvote-icon' onClick={handleUpvote}>
-            {/*CHANGE ICONS FOR ME */}
             <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
               <BiUpvote />
             </IconContext.Provider>
           </span>
           <p>{post.upvotes.length}</p>
           <span className='downvote-icon' onClick={handleDownvote}>
-            {/*CHANGE ICONS FOR ME */}
             <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
               <BiDownvote />
             </IconContext.Provider>
@@ -94,7 +99,6 @@ const PostsSection = ({ post }) => {
 
         <div className='content-container'>
           <div className='content-section-header'>
-            {/*CHANGE ICONS FOR ME */}
             <div className="content-left-header">
               <span className="users-icon" onClick={onProfile}>
                 <label htmlFor='username'>
@@ -142,7 +146,6 @@ const PostsSection = ({ post }) => {
           </div>
           <div className='content-section-footer'>
             <div className="content-left-footer">
-              {/*Report icon*/}
               <span className='icon'>
                 <Link to='/'>
                   <label htmlFor='report'>
@@ -157,7 +160,6 @@ const PostsSection = ({ post }) => {
               </span>
             </div>
             <div className="content-right-footer">
-              {/*Edit post icon*/}
               {
                 auth._id === post.user._id &&
                 <>

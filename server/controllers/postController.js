@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
-const Community = require('../models/communityModel')
 const Profile = require('../models/profileModel')
 const mongoose = require('mongoose')
 
@@ -38,7 +37,7 @@ const searchPost = asyncHandler(async (req, res) => {
 
 const getPostById = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id)
+        const post = await Post.findById(req.params.post_id)
         res.status(200).json(post)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -57,7 +56,7 @@ const getCommentById = asyncHandler(async (req, res) => {
     }
 })
 
-const filterTrendingPost = asyncHandler(async (req, res) => {
+const filterPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
     let posts;
     try {
@@ -79,7 +78,6 @@ const createPost = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
         const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
-        const user = await User.findById(req.user.id).select('-password')
         const profile = await Profile.findOne({ user: req.user.id })
 
         const newPost = new Post({
@@ -189,7 +187,7 @@ const editPost = asyncHandler(async (req, res) => {
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
         if (post) {
-            //UPDATE
+            
             post = await Post.findOneAndUpdate(
                 { _id: req.params.post_id },
                 { $set: postFields },
@@ -203,10 +201,9 @@ const editPost = asyncHandler(async (req, res) => {
     }
 })
 
-// UPVOTE POST 
 const upvotePost = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
 
         if (post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length > 0) {
             return res.status(400).json({ msg: 'Post already upvoted' })
@@ -223,16 +220,14 @@ const upvotePost = asyncHandler(async (req, res) => {
     }
 })
 
-// REMOVE UPVOTE POST
 const removeupvotePost = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
 
         if (post.upvotes.filter(upvote => upvote.user.toString() === req.user.id).length === 0) {
             return res.status(400).json({ msg: 'Post have not yet been upvoted' })
         }
 
-        // Get remove index
         const removeIndex = post.upvotes.map(upvote => upvote.user.toString()).indexOf(req.user.id);
 
         post.upvotes.splice(removeIndex, 1);
@@ -246,10 +241,10 @@ const removeupvotePost = asyncHandler(async (req, res) => {
         res.status(500).send('Server error')
     }
 })
-// Down vote
+
 const downvotePost = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
 
         if (post.downvotes.filter(downvote => downvote.user.toString() === req.user.id).length > 0) {
             return res.status(400).json({ msg: 'Post already downvoted' })
@@ -266,11 +261,9 @@ const downvotePost = asyncHandler(async (req, res) => {
     }
 })
 
-
-//Delete Post
 const deletePost = asyncHandler(async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
 
         if (!post) {
             return res.status(404).json({ msg: 'Post not found' })
@@ -288,13 +281,12 @@ const deletePost = asyncHandler(async (req, res) => {
     }
 });
 
-//Create Comment
 const createComment = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
         const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password');
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
         const profile = await Profile.findOne({ user: req.user._id })
 
         const newComment = {
@@ -318,13 +310,12 @@ const createComment = asyncHandler(async (req, res) => {
     }
 });
 
-//Edit Comment
 const editComment = asyncHandler(async (req, res) => {
     let image
-    let commentImage = await Post.findOne({ 'comments._id': req.params.comment_id })   
-    if (req.file) 
+    let commentImage = await Post.findOne({ 'comments._id': req.params.comment_id })
+    if (req.file)
         image = `http://localhost:8000/api/images/${req.file.filename}`
-    else 
+    else
         image = commentImage.image
 
     try {
@@ -338,57 +329,21 @@ const editComment = asyncHandler(async (req, res) => {
             }
         )
 
-        // console.log(post)
-
         return res.status(200).json(post)
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
     }
-
-    // const commentFields = {}
-    // const { text } = req.body
-    // commentFields.user = req.user.id
-    // if (text) commentFields.text = text
-    // if (req.file) commentFields.image = `http://localhost:8000/api/images/${req.file.filename}`
-
-    // try {
-    //     const commentIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
-    //     const update = (array, index, newValue) => {
-    //         array[index] = newValue
-    //     }
-    //     const comment = (array, index) => {
-    //         return array[index]
-    //     }
-
-    //     let post = await Post.findOne({ _id: req.params.post_id })
-    //     if (post) {
-    //         //UPDATE
-    //         post = await Post.findOneAndUpdate(
-    //             { _id: req.params.post_id },
-    //             { $set: postFields },
-    //             { new: true }
-    //         )
-    //         return res.json(post)
-    //     }
-    // } catch (error) {
-    //     console.error(error.message)
-    //     res.status(500).send('Server Error')
-    // }
 })
 
-// Delete Comment
 const deleteComment = asyncHandler(async (req, res) => {
     try {
-        //get the post
-        const post = await Post.findById(req.params.id)
+        const post = await Post.findById(req.params.post_id)
 
-        //get the comment from post
         const comment = post.comments.find(
             (comment) => comment.id === req.params.comment_id
         )
 
-        //check if comment exist
         if (!comment) {
             res.status(404).json({ msg: 'Comment does not exist' })
         }
@@ -412,7 +367,7 @@ const getMyPosts = asyncHandler(async (req, res) => {
     const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
 
     try {
-        const posts = await Post.find({ user: req.user.id }).sort({ date: -1 }).ppopulate(query)
+        const posts = await Post.find({ user: req.user.id }).sort({ date: -1 }).populate(query)
         res.status(200).json(posts)
 
     } catch (err) {
@@ -421,7 +376,26 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {
-    getPosts, getMyPosts, searchPost, filterTrendingPost, createPost, editPost, upvotePost, downvotePost, deletePost,
-    createComment, deleteComment, removeupvotePost, getPostById, editComment, createEvent, getCommentById, checkOut, createCommunityPost, getCommunityPosts
+const post = {
+    getPosts,
+    getMyPosts,
+    searchPost,
+    filterPost,
+    createPost,
+    editPost,
+    upvotePost,
+    downvotePost,
+    deletePost,
+    createComment,
+    deleteComment,
+    removeupvotePost,
+    getPostById,
+    editComment,
+    createEvent,
+    getCommentById,
+    checkOut,
+    createCommunityPost,
+    getCommunityPosts
 }
+
+module.exports = { post } 

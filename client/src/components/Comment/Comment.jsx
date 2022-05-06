@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import "./Comment.css";
 import { useDispatch, useSelector, } from 'react-redux'
-import EditComment from "../../post/EditComment";
+import EditComment from "./EditComment";
 import Moment from "react-moment";
 import { deleteComment, getCommentById } from "../../actions/post";
 import { loadUser } from "../../actions/auth";

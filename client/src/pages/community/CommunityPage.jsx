@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getCommunityById } from '../../actions/community'
-import EditCommunity from '../../components/Form/EditCommunity'
 import Layout from "../../components/Layout";
 import MemberSection from "../../components/Community/MemberSection";
 
@@ -15,7 +14,6 @@ import { getCommunityPosts } from '../../actions/post'
 
 const CommunityPage = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const { community_id } = useParams()
   const [isJoined, setIsJoined] = useState(localStorage.getItem('isJoined'))
 
@@ -50,7 +48,7 @@ const CommunityPage = () => {
             <span ></span>
           </div>
           <div className='right-community-container'>
-            <AboutCommunity key={community_id} community_id={community_id} community={community} />
+            <AboutCommunity community_id={community_id} community={community} />
           </div>
         </div>
       </Layout>

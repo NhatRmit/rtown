@@ -39,9 +39,6 @@ const EditCommunity = () => {
 
     useEffect(() => {
         if (!community) dispatch(getCommunityById(community_id))
-
-        // if we finished loading and we do have a profile
-        // then build our profileData
         if (community) {
             const textData = { ...initialState };
             for (const key in community) {

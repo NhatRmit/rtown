@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const upload = require("../../middlewares/upload");
+const upload = require("../../middlewares/uploadMiddleware");
 const { auth } = require("../../middlewares/authMiddleware")
-const { getImage, selectImage, deleteImage, getFilename, } = require("../../controllers/imageController");
+const { image } = require("../../controllers/imageController");
 
-router.post('/upload', upload.single("file"), selectImage);
-// router.post('/uploadCommunity/:communityId', upload.single("file"), auth, selectCommunityImage);
-router.get('/:filename', getImage);
-router.delete('/delete/:filename', deleteImage);
-router.get('/getOne/:filename', getFilename);
+router.post('/upload', upload.single("file"), auth, image.selectImage);
+router.get('/:filename', image.getImage);
+router.delete('/delete/:filename', auth, image.deleteImage);
 
 module.exports = router

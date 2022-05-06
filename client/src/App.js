@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-//components
+
 import NewsfeedPage from './pages/NewsfeedPage'
 import LoginPage from './pages/auth/LoginPage'
-import Profile from './components/Profile/Profile'
 import UserProfile from './components/Profile/UserProfile'
 import PrivateRoute from './PrivateRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
-import EditPost from './components/Posts/EditPost'
 import CommunityRequest from './pages/community/CommunityRequestPage'
 import CommunityEditPage from './pages/community/CommunityEditPage'
 import CommunityPage from './pages/community/CommunityPage'
 import Messenger from './components/Chat/Messenger'
-// import EditCommunity from './components/Form/EditCommunity'
 import RequestEvent from './components/Form/RequestEvent'
-import Image from './components/Image/Image'
 import RShopPage from './pages/RShopPage'
 import Modal from 'react-modal'
 import { getAllProfiles } from './actions/profile'
@@ -79,10 +75,6 @@ const App = () => {
           <Route
             exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
-          />
-          <Route
-            exact path='/image'
-            element={<PrivateRoute element={Image} />}
           />
           <Route
             exact path='/rshop'

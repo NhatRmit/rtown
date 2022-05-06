@@ -123,7 +123,7 @@ const deleteCommunity = asyncHandler(async (req, res) => {
 
 const getMyCommunities = asyncHandler(async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.params.user_id })
+        const profile = await Profile.findOne({ user: req.params.user_id }).populate('community.communityId')
         res.status(200).json(profile.community)
 
     } catch (err) {
@@ -149,7 +149,7 @@ const getCommunityMember = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {
+const community = {
     getAllCommunity,
     getCommunityById,
     createCommunity,
@@ -158,3 +158,5 @@ module.exports = {
     getMyCommunities,
     getCommunityMember,
 }
+
+module.exports = { community }

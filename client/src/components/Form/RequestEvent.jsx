@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState } from 'react'
 import Layout from '../Layout'
-// import Filter from '../components/Filter/Filter'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createEvent } from '../../actions/post'
@@ -38,9 +37,7 @@ const RequestEvent = () => {
     }
 
     const onChangeTime = (e, time) => {
-        // setEndTime({ [e.target.name]: e.target.value })
         setEndTime(time)
-        // setDate(endTime)
     }
 
     const onChangeImage = e => {
@@ -79,7 +76,6 @@ const RequestEvent = () => {
                             name='Rpoint'
                         />
                     </div>
-                    {/* <input type="text" value={date} name="date" /> */}
                     <div>
                         <Flatpickr
                             data-enable-time
@@ -93,28 +89,6 @@ const RequestEvent = () => {
                         />
                     </div>
                     <input type="file" onChange={onChangeImage}/>
-
-                    {/* <div className='communityPurpose'>
-                    <label for="purposes" className="label">Purpose of Community</label>
-                    <select 
-                    onChange={e => handlePurposeChange(e)}
-                    className="purposeList">
-                    {
-                        Add.map((address, key) => <option value={key}>{address}</option>)
-                    }
-                    </select>
-                </div> */}
-                    {/* 
-                    <div className='communityDescription'>
-                        <label className="label">Community Description</label>
-                        <textarea
-                            placeholder="Describe your community"
-                            value={description}
-                            required
-                            onChange={onChange}
-                            name='description'
-                        />
-                    </div> */}
                     <div className="btn-wrapper">
                         <button type='submit' className="submit-btn">Submit</button>
                         <button onClick={onGoBack} className="cancel-btn">Cancel</button>

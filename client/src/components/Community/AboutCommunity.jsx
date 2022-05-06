@@ -1,19 +1,17 @@
 import "./AboutCommunity.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateEvent from "../Buttons/CreateEventButton"
 import LeaveCommunity from "../Buttons/LeaveButton"
 import EditCommunity from "../Buttons/EditButton"
 import JoinCommunity from "../Buttons/JoinButton"
 import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
-import { getProfileById } from "../../actions/profile";
 
 const AboutCommunity = ({ community_id, community }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const [isJoined, setIsJoined] = useState('false')
 
   const auth = useSelector(state => state.auth._id)
 
@@ -24,13 +22,11 @@ const AboutCommunity = ({ community_id, community }) => {
 
   const onLeave = e => {
     e.preventDefault()
-    // setIsJoined(localStorage.setItem('isJoined', false))
     dispatch(leaveCommunity(community_id, navigate))
   }
 
   const onJoin = e => {
     e.preventDefault()
-    // setIsJoined(localStorage.setItem('isJoined', true))
     dispatch(joinCommunity(community_id, auth, navigate))
   }
 
@@ -41,7 +37,6 @@ const AboutCommunity = ({ community_id, community }) => {
 
 
   useEffect(() => {
-    // setIsJoined(localStorage.getItem('isJoined'))
     dispatch(loadUser())
     dispatch(getCommunityById(community_id))
 
@@ -52,7 +47,6 @@ const AboutCommunity = ({ community_id, community }) => {
     .map(item => item.memberId)
     .indexOf(user._id)
 
-  // const community = useSelector(state => state.community.community)
   return (
     <div className='about-container'>
       <h1 className='title'>{community && community.communityName}</h1>
@@ -64,7 +58,7 @@ const AboutCommunity = ({ community_id, community }) => {
           community &&
           community.members.map(
             member => member.memberId === auth ?
-              <div onClick={onCreateEvent}><CreateEvent /></div> :
+              <div key={member._id} onClick={onCreateEvent}><CreateEvent /></div> :
               <></>
           )
         }
