@@ -4,6 +4,8 @@ const User = require('../models/userModel')
 const Community = require('../models/communityModel')
 const asyncHandler = require('express-async-handler')
 
+
+
 const getProfile = asyncHandler(async (req, res) => {
     try {
         const profile = await Profile
@@ -61,6 +63,7 @@ const createProfile = asyncHandler(async (req, res) => {
     let profile = await Profile.findOne({ user: req.user.id })
     try {
         profile = new Profile(profileFields)
+
         await profile.save()
 
         res.status(200).json(profile)

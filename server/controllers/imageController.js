@@ -7,6 +7,14 @@ const Post = require('../models/postModel');
 const User = require('../models/userModel')
 
 
+const checkWord =(text) =>{
+    const blackList = ["stupid","fucking","shit","bitch"]
+    for (let i = 0; i< blackList.length; i++){
+        text= text.replace(blackList[i], "****")
+    }
+
+    return text
+}
 const conn = mongoose.connection;
 conn.once("open", function () {
     gfs = Grid(conn.db, mongoose.mongo);
@@ -130,7 +138,7 @@ const selectPostImage = asyncHandler(async (req, res) => {
     try {
         const newPost = new Post({
             image: imgUrl,
-            text: req.body.text,
+            text: checkWord(req.body.text),
             name: user.usernameOrEmail,
             user: req.user.id,
             profile: profile._id,
@@ -154,7 +162,7 @@ const selectCommentImage = asyncHandler(async (req, res) => {
     try {
         const newComment = {
             image: imgUrl,
-            text: req.body.text,
+            text: checkWord(req.body.text),
             name: user.usernameOrEmail,
             avatar: profile.avatar,
             user: req.user.id,

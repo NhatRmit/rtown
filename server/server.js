@@ -19,7 +19,7 @@ app.use('/api/communities', require('./routes/api/communityRoute'))
 app.use('/api/items', require('./routes/api/itemRoute'))
 app.use('/api/messengers', require('./routes/api/messengerRoute'))
 app.use('/api/images', require('./routes/api/imageRoute'))
-
+app.use('/api/admins', require('./routes/api/adminRoute'))
 
 //////////////////////////TEST
 // const bodyParser = require('body-parser');

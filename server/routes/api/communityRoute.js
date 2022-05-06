@@ -9,6 +9,7 @@ const {
     deleteCommunity,
     getMyCommunities,
     getCommunityMember,
+    createCommunityRequest
 } = require('../../controllers/communityController')
 
 router.get('/', getAllCommunity)
@@ -22,6 +23,8 @@ router.get('/member/:community_id', auth, getCommunityMember)
 router.get('/:community_id', auth, getCommunityById)
 
 router.put('/update', auth, updateCommunity)
+
+router.post('/requestCreateCommunity', auth, createCommunityRequest)
 
 router.delete('/:community_id', auth, deleteCommunity)
 
