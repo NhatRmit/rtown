@@ -16,7 +16,7 @@ const MemberSection = ({ community }) => {
                 e.preventDefault()
                 navigate(`/profiles/${member.memberId}`)
               }}
-            key={member.memberId} className='member'>
+            key={member._id} className='member'>
             <span className='user-icon'>
               {/*CHANGE ICON FOR ME*/}
               <IconContext.Provider value={{ color: "#676767", size: "1em" }}>

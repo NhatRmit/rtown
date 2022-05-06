@@ -46,7 +46,7 @@ const RItemsSection = ({ items, myItems }) => {
                 }>
                 {
                   items && items.map(item =>
-                    <div className='displayedItems'>
+                    <div key={item._id} className='displayedItems'>
                       <RItem item={item} isMyItem={false}/>
                       <RedeemButton item={item}/>
                     </div>
@@ -60,7 +60,7 @@ const RItemsSection = ({ items, myItems }) => {
                 }>
                 {
                   myItems && myItems.map(myItem =>
-                    <div className='displayedItems'>
+                    <div key={myItem._id} className='displayedItems'>
                       <RItem myItem={myItem} isMyItem={true}/>
                       <RedeemedButton />
                     </div>

@@ -38,8 +38,7 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                         </div>
                     </div>
                     {communities.map(community => {
-                        return (
-                            
+                        return (                            
                             <CommunitySection key={community._id} community={community} />
                         )
                     }

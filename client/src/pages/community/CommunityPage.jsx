@@ -5,7 +5,6 @@ import { getCommunityById } from '../../actions/community'
 import Layout from "../../components/Layout";
 import MemberSection from "../../components/Community/MemberSection";
 
-// import Filter from '../components/Filter/Filter'
 import CreatePost from "../../components/Post/CreatePost";
 import PostsSection from "../../components/Post/PostsSection";
 import AboutCommunity from "../../components/Community/AboutCommunity";

@@ -70,6 +70,7 @@ const createCommunity = asyncHandler(async (req, res) => {
 })
 
 const updateCommunity = asyncHandler(async (req, res) => {
+
     const {
         communityName,
         description,
@@ -84,14 +85,16 @@ const updateCommunity = asyncHandler(async (req, res) => {
 
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
+    if (req.file) 
+        communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
 
+    
     let community = await Community.findOne({ user: req.user.id })
     try {
         if (community) {
             community = await Community.findOneAndUpdate(
-                { user: req.user.id },
+                { _id: req.params.community_id },
                 { $set: communityFields },
-                { new: true }
             )
         }
 

@@ -35,7 +35,6 @@ const AboutCommunity = ({ community_id, community }) => {
     navigate(`/communities/event-request/${community_id}`)
   }
 
-
   useEffect(() => {
     dispatch(loadUser())
     dispatch(getCommunityById(community_id))
@@ -55,10 +54,11 @@ const AboutCommunity = ({ community_id, community }) => {
       </p>
       <div className="buttons">
         {
-          community &&
-          community.members.map(
-            member => member.memberId === auth ?
-              <div key={member._id} onClick={onCreateEvent}><CreateEvent /></div> :
+          community && community.members.map(
+            (member, index) => member.memberId === auth ?
+              <div key={index} onClick={onCreateEvent}>
+                <CreateEvent />
+              </div> :
               <></>
           )
         }
@@ -66,7 +66,7 @@ const AboutCommunity = ({ community_id, community }) => {
           community && community.user._id === auth ? <div onClick={onEdit}><EditCommunity /></div> : <></>
         }
         {
-          community && community.members && community.members.length === 0 ?
+          community && community.members.length === 0 ?
             <div onClick={onJoin}><JoinCommunity /></div> :
             memberIndex !== -1 ?
               <div onClick={onLeave}><LeaveCommunity /></div> :

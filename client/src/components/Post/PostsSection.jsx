@@ -32,7 +32,7 @@ const PostsSection = ({ post }) => {
   }
   const onProfile = (e) => {
     e.preventDefault()
-    navigate(`/profiles/${post.user}`)
+    navigate(`/profiles/${post.user._id}`)
   }
   const onUpvote = (e) => {
     e.preventDefault()
