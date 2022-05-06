@@ -12,6 +12,7 @@ import PostsSection from "../../components/Post/PostsSection";
 import AboutCommunity from "../../components/Community/AboutCommunity";
 import "./CommunityPage.css";
 import { getCommunityPosts } from '../../actions/post'
+import { addImageToComunity } from '../../actions/image'
 
 const CommunityPage = () => {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const CommunityPage = () => {
 
   const posts = useSelector(state => state.post.posts)
   const community = useSelector(state => state.community.community)
+
 
   return (
     <>
@@ -45,6 +47,8 @@ const CommunityPage = () => {
               {posts.map(post => <PostsSection key={post._id} post={post} />
               )}
             </div>
+
+            <span ></span>
           </div>
           <div className='right-community-container'>
             <AboutCommunity key={community_id} community_id={community_id} community={community} />

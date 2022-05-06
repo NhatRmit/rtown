@@ -38,7 +38,7 @@ const getFilename = asyncHandler(async (req, res) => {
     }
 })
 
-const selectProfileImage = asyncHandler(async (req, res) => {
+const selectProfileImage = asyncHandler( async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
     let profile = await Profile.findOne({ user: req.user.id })

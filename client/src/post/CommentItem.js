@@ -16,7 +16,6 @@ const CommentItem = ({ post, comment }) => {
     const [edit, setEdit] = useState(false)
 
     return (
-        // post.comments.map(comment => (
         <div>
             <div>
                 <div>{post.name}</div>
