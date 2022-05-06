@@ -54,10 +54,10 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
     try {
 
         if (filter === 'top') {
-            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community', ['communityName'])
+            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community.communityId')
         }
         else if (filter === 'trending') {
-            posts = await Post.find().sort({ commentsCount: -1 }).populate('community', ['communityName'])
+            posts = await Post.find().sort({ commentsCount: -1 }).populate('community.communityId')
 
         }
         res.status(200).json(posts)
@@ -109,7 +109,7 @@ const createCommunityPost = asyncHandler(async (req, res) => {
 const getCommunityPosts = asyncHandler(async (req, res) => {
     const communityId = mongoose.Types.ObjectId(req.params.community_id)
     try {
-        const posts = await Post.find({ community: communityId }).sort({ date: -1 }).populate('community', ['communityName'])
+        const posts = await Post.find({ community: communityId }).sort({ date: -1 }).populate('community.communityId')
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -123,6 +123,7 @@ const createEvent = asyncHandler(async (req, res) => {
         const profile = await Profile.findOne({ user: req.user.id })
         const newEvent = new Post({
             text: req.body.text,
+            endTime: req.body.endTime,
             name: user.usernameOrEmail,
             Rpoint: req.body.Rpoint,
             user: req.user.id,

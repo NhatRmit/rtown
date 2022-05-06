@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Layout from '../Layout'
 // import Filter from '../components/Filter/Filter'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createEvent } from '../../actions/post'
+import Flatpickr from "react-flatpickr";
 
 const RequestEvent = () => {
     const dispatch = useDispatch()
@@ -16,12 +17,28 @@ const RequestEvent = () => {
         RPoint: 0,
     })
 
+    const [endTime, setEndTime] = useState(null)
+
     const {
         // name,
         text,
-        Rpoint
+        Rpoint,
     } = formData
- 
+    console.log(new Date(endTime))
+    console.log(text)
+    console.log(Rpoint)
+
+    const onEvent = e => {
+        let formdata = new FormData();
+        e.preventDefault()
+
+        // formdata.append("file", uploadFile);
+        formdata.append("text", text);
+        formdata.append("Rpoint", Rpoint);
+        formdata.append("endTime", endTime);
+        dispatch(createEvent(formdata, community_id, navigate))
+    }
+
     const onSubmit = e => {
         e.preventDefault()
         dispatch(createEvent(formData, community_id, navigate))
@@ -29,6 +46,12 @@ const RequestEvent = () => {
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    const onChangeTime = (e, time) => {
+        // setEndTime({ [e.target.name]: e.target.value })
+        setEndTime(time)
+        // setDate(endTime)
     }
 
     const onGoBack = e => {
@@ -41,7 +64,7 @@ const RequestEvent = () => {
 
             <div className="requestform-container">
                 <h1 className="title">Event Request</h1>
-                <form className="form" onSubmit={onSubmit} >
+                <form className="form" onSubmit={onEvent} >
                     <div className='communityName'>
                         <label className="label">Event Content</label>
                         <input
@@ -62,6 +85,19 @@ const RequestEvent = () => {
                             required
                             onChange={onChange}
                             name='Rpoint'
+                        />
+                    </div>
+                    {/* <input type="text" value={date} name="date" /> */}
+                    <div>
+                        <Flatpickr
+                            data-enable-time
+                            value={endTime}
+                            onChange={onChangeTime}
+                            options={
+                                {
+                                    minDate: 'today'
+                                }
+                            }
                         />
                     </div>
 

@@ -1,5 +1,6 @@
 import "./PostsSection.css";
 import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
+import { BsPatchCheckFill } from 'react-icons/bs'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
 import { MdReportGmailerrorred } from 'react-icons/md'
@@ -61,6 +62,11 @@ const PostsSection = ({ post }) => {
     dispatch(checkOut(post._id, auth._id, navigate))
   }
 
+  const checkoutIndex = post && post.checkouts
+    .map(item => item.user)
+    .indexOf(auth._id)
+
+  console.log(checkoutIndex)
   return (
     <>
       <div className='post-container'>
@@ -108,13 +114,18 @@ const PostsSection = ({ post }) => {
               </p>
             </div>
             {
-              post && post.Rpoint !== 0 ?
+              (post && post.Rpoint !== 0) ?
                 <div className="content-right-header">
-                  <button onClick={onCheckout}>Check Out</button>
+                  {
+                    (checkoutIndex === -1) ?
+                      <button className="checkout" onClick={onCheckout}>Check Out</button>
+                      :
+                      <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                        <BsPatchCheckFill />
+                      </IconContext.Provider>
+                  }
                 </div> : <></>
             }
-
-
           </div>
 
           <div className='post-content'>

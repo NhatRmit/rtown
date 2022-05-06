@@ -331,7 +331,7 @@ export const clearPost = () => async dispatch => {
 export const createEvent = (formData, communityId, navigate) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     }
     try {
