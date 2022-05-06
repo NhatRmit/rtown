@@ -356,7 +356,7 @@ export const createEvent = (formData, communityId, navigate) => async dispatch =
             payload: res.data
 
         })
-        navigate(`communities/${communityId}`)
+        navigate(`/communities/${communityId}`)
     } catch (error) {
         dispatch({
             type: POST_ERROR,

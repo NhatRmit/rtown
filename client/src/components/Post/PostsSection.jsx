@@ -66,13 +66,13 @@ const PostsSection = ({ post }) => {
   const [time, setTime] = useState(null)
 
   useEffect(() => {
-    let count = 0
     let timer = setInterval(() => {
+      let count = 0
       count++
-      if (count === 1) {
+      setTime(new Date())
+      if (count === 10) {
         clearInterval(timer);
       }
-      setTime(new Date())
     }, 1000);
 
     return () => {
