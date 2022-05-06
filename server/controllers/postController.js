@@ -5,17 +5,17 @@ const Community = require('../models/communityModel')
 const Profile = require('../models/profileModel')
 const mongoose = require('mongoose')
 
-const checkWord =(text) =>{
-    const blackList = ["stupid","fucking","shit","bitch"]
-    for (let i = 0; i< blackList.length; i++){
-        text= text.replace(blackList[i], "****")
+const checkWord = (text) => {
+    const blackList = ["stupid", "fucking", "shit", "bitch"]
+    for (let i = 0; i < blackList.length; i++) {
+        text = text.replace(blackList[i], "****")
     }
 
     return text
 }
 
 const getPosts = asyncHandler(async (req, res) => {
-    const query = [{ path: 'profile' }, { path: 'community' }]
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
     try {
         const posts = await Post.find().sort({ date: -1 }).populate(query)
         res.status(200).json(posts)
@@ -77,19 +77,21 @@ const filterTrendingPost = asyncHandler(async (req, res) => {
 
 const createPost = asyncHandler(async (req, res) => {
     try {
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password')
         const profile = await Profile.findOne({ user: req.user.id })
+
         const newPost = new Post({
             text: checkWord(req.body.text),
-            name: user.usernameOrEmail,
             user: req.user.id,
             profile: profile._id,
+            image: imgUrl,
         })
-         
-        const post = await newPost.save()
-        
 
-        res.json(post)
+        const post = await newPost.save()
+
+        res.status(200).json(post)
 
     } catch (error) {
         console.error(error.message)
@@ -99,17 +101,19 @@ const createPost = asyncHandler(async (req, res) => {
 
 const createCommunityPost = asyncHandler(async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password')
-        // const community = await Community.findOne({ _id: req.params.community_id })
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const profile = await Profile.findOne({ user: req.user.id })
         const newPost = new Post({
             text: req.body.text,
-            name: user.usernameOrEmail,
             user: req.user.id,
             community: req.params.community_id,
+            profile: profile._id,
+            image: imgUrl,
         })
 
         const post = await newPost.save()
-        res.json(post)
+        res.status(200).json(post)
 
     } catch (error) {
         console.error(error.message)
@@ -119,8 +123,10 @@ const createCommunityPost = asyncHandler(async (req, res) => {
 
 const getCommunityPosts = asyncHandler(async (req, res) => {
     const communityId = mongoose.Types.ObjectId(req.params.community_id)
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
+
     try {
-        const posts = await Post.find({ community: communityId }).sort({ date: -1 }).populate('community.communityId')
+        const posts = await Post.find({ community: communityId }).sort({ date: -1 }).populate(query)
         res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -129,21 +135,22 @@ const getCommunityPosts = asyncHandler(async (req, res) => {
 
 const createEvent = asyncHandler(async (req, res) => {
     try {
-        const community = await Community.findOne({ _id: req.params.community_id })
-        const user = await User.findOne({ _id: req.user.id })
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({ user: req.user.id })
+
         const newEvent = new Post({
             text: req.body.text,
             endTime: req.body.endTime,
-            name: user.usernameOrEmail,
             Rpoint: req.body.Rpoint,
             user: req.user.id,
             community: req.params.community_id,
-            profile: profile._id
+            profile: profile._id,
+            image: imgUrl,
         })
 
         const event = await newEvent.save()
-        res.json(event)
+        res.status(200).json(event)
 
     } catch (error) {
         console.error(error.message)
@@ -177,6 +184,7 @@ const editPost = asyncHandler(async (req, res) => {
     const { text } = req.body
     postFields.user = req.user.id
     if (text) postFields.text = text
+    if (req.file) postFields.image = `http://localhost:8000/api/images/${req.file.filename}`
 
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
@@ -280,10 +288,11 @@ const deletePost = asyncHandler(async (req, res) => {
     }
 });
 
-
 //Create Comment
 const createComment = asyncHandler(async (req, res) => {
     try {
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
         const profile = await Profile.findOne({ user: req.user._id })
@@ -293,7 +302,8 @@ const createComment = asyncHandler(async (req, res) => {
             name: user.usernameOrEmail,
             avatar: profile.avatar,
             user: req.user.id,
-            profile: profile._id
+            profile: profile._id,
+            image: imgUrl,
         };
 
         post.comments.unshift(newComment);
@@ -307,30 +317,66 @@ const createComment = asyncHandler(async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
 //Edit Comment
 const editComment = asyncHandler(async (req, res) => {
-    const update = (array, index, newValue) => {
-        array[index] = newValue
-    }
-    const comment = (array, index) => {
-        return array[index]
-    }
+    let image
+    let commentImage = await Post.findOne({ 'comments._id': req.params.comment_id })   
+    if (req.file) 
+        image = `http://localhost:8000/api/images/${req.file.filename}`
+    else 
+        image = commentImage.image
+
     try {
-        let post = await Post.findOne({ _id: req.params.post_id })
-        const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
+        let post = await Post.findOneAndUpdate(
+            { 'comments._id': req.params.comment_id },
+            {
+                $set: {
+                    'comments.$.text': req.body.text,
+                    'comments.$.image': image
+                }
+            }
+        )
 
-        update(post.comments, removeIndex, req.body)
- 
-        comment(post.comments, removeIndex)
+        // console.log(post)
 
-        await post.save()
-
-        return res.status(200).json(comment(post.comments, removeIndex))
+        return res.status(200).json(post)
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')
     }
+
+    // const commentFields = {}
+    // const { text } = req.body
+    // commentFields.user = req.user.id
+    // if (text) commentFields.text = text
+    // if (req.file) commentFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+
+    // try {
+    //     const commentIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
+    //     const update = (array, index, newValue) => {
+    //         array[index] = newValue
+    //     }
+    //     const comment = (array, index) => {
+    //         return array[index]
+    //     }
+
+    //     let post = await Post.findOne({ _id: req.params.post_id })
+    //     if (post) {
+    //         //UPDATE
+    //         post = await Post.findOneAndUpdate(
+    //             { _id: req.params.post_id },
+    //             { $set: postFields },
+    //             { new: true }
+    //         )
+    //         return res.json(post)
+    //     }
+    // } catch (error) {
+    //     console.error(error.message)
+    //     res.status(500).send('Server Error')
+    // }
 })
+
 // Delete Comment
 const deleteComment = asyncHandler(async (req, res) => {
     try {
@@ -363,8 +409,10 @@ const deleteComment = asyncHandler(async (req, res) => {
 })
 
 const getMyPosts = asyncHandler(async (req, res) => {
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
+
     try {
-        const posts = await Post.find({ user: req.user.id }).sort({ date: -1 })
+        const posts = await Post.find({ user: req.user.id }).sort({ date: -1 }).ppopulate(query)
         res.status(200).json(posts)
 
     } catch (err) {

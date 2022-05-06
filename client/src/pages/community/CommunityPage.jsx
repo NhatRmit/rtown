@@ -12,7 +12,6 @@ import PostsSection from "../../components/Post/PostsSection";
 import AboutCommunity from "../../components/Community/AboutCommunity";
 import "./CommunityPage.css";
 import { getCommunityPosts } from '../../actions/post'
-import { addImageToComunity } from '../../actions/image'
 
 const CommunityPage = () => {
   const dispatch = useDispatch()

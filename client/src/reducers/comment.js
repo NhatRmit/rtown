@@ -1,7 +1,8 @@
 import { GET_COMMENT, EDIT_COMMENT } from "../actions/types";
 
 const initialState = {
-    comment: null
+    comment: null,
+    comments: []
 };
 
 function commentReducer(state = initialState, action) {
@@ -14,6 +15,11 @@ function commentReducer(state = initialState, action) {
                 ...state,
                 comment: payload
             }
+        // case GET_COMMENTS: 
+        //     return {
+        //         ...state,
+        //         comments: payload
+        //     }
         default:
             return state;
     }

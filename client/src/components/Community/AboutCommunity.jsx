@@ -69,7 +69,7 @@ const AboutCommunity = ({ community_id, community }) => {
           )
         }
         {
-          community && community.user === auth ? <div onClick={onEdit}><EditCommunity /></div> : <></>
+          community && community.user._id === auth ? <div onClick={onEdit}><EditCommunity /></div> : <></>
         }
         {
           community && community.members && community.members.length === 0 ?

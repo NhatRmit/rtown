@@ -27,7 +27,7 @@ const selectImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
     const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
     return res.send(imgUrl);
-});
+})
 
 const getFilename = asyncHandler(async (req, res) => {
     try {
@@ -80,98 +80,6 @@ const selectProfileImage = asyncHandler( async (req, res) => {
 //     }
 
 // })
-const selectCommunityImage = asyncHandler(async (req, res) => {
-    if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
-    // let community = await Community.findOne({ _id: req.params.communityId })
-    const user = await User.findById(req.user.id).select('-password')
-    const profile = await Profile.findOne({ user: req.user.id })
-    try {
-
-        const newCommunity = new Community({
-            communityName: req.body.communityName,
-            description: req.body.description,
-            name: user.usernameOrEmail,
-            user: req.user.id,
-            avatar: imgUrl
-        })
-
-        profile.community.unshift({
-            communityId: newCommunity._id,
-            communityName: newCommunity.communityName
-        })
-
-        newCommunity.members.unshift({
-            memberId: req.user.id,
-            memberName: user.usernameOrEmail
-        })
-
-        await profile.save()
-        await newCommunity.save()
-        res.status(200).json(newCommunity)
-
-
-
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-
-})
-
-
-
-const selectPostImage = asyncHandler(async (req, res) => {
-    if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
-    const user = await User.findById(req.user.id).select('-password')
-    const profile = await Profile.findOne({ user: req.user.id })
-
-    try {
-        const newPost = new Post({
-            image: imgUrl,
-            text: req.body.text,
-            name: user.usernameOrEmail,
-            user: req.user.id,
-            profile: profile._id,
-        })
-        await newPost.save()
-        res.status(200).json(newPost)
-
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
-
-const selectCommentImage = asyncHandler(async (req, res) => {
-    if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
-    const user = await User.findById(req.user.id).select('-password')
-    const profile = await Profile.findOne({ user: req.user.id })
-    const post = await Post.findById(req.params.post_id);
-
-    try {
-        const newComment = {
-            image: imgUrl,
-            text: req.body.text,
-            name: user.usernameOrEmail,
-            avatar: profile.avatar,
-            user: req.user.id,
-            profile: profile._id
-        };
-
-        post.comments.unshift(newComment);
-        post.commentsCount++;
-
-        await post.save();
-
-        res.status(200).json(post.comments)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
 
 const deleteImage = asyncHandler(async (req, res) => {
     try {
@@ -189,7 +97,4 @@ module.exports = {
     deleteImage,
     getFilename,
     selectProfileImage,
-    selectCommunityImage,
-    selectPostImage,
-    selectCommentImage,
 } 

@@ -5,24 +5,22 @@ import { IconContext } from 'react-icons/lib'
 import { useState } from 'react'
 import { addPost, addCommunityPost } from '../../actions/post'
 import { useDispatch, useSelector } from 'react-redux'
-import { uploadPostImage } from '../../actions/image'
+import { useParams } from 'react-router-dom'
 
 const CreatePost = ({ isCommunity }) => {
     const dispatch = useDispatch()
     const [text, setText] = useState('')
     const [uploadFile, setUploadFile] = useState(null)
+    const { community_id } = useParams()
 
-    const onCreate = e => {
+    const onSubmit = e => {
         e.preventDefault();
         let formdata = new FormData();
         formdata.append("file", uploadFile);
         formdata.append("text", text);
-        dispatch(uploadPostImage(formdata))
-    }
 
-    const onSubmit = e => {
-        e.preventDefault()
-        !isCommunity ? dispatch(addPost({ text })) : dispatch(addCommunityPost({ text }))
+        !isCommunity ? dispatch(addPost(formdata)) : dispatch(addCommunityPost(formdata, community_id))
+
         setText('')
     }
 
@@ -37,7 +35,7 @@ const CreatePost = ({ isCommunity }) => {
     return (
         <>
             <h1 className="title">Create post</h1>
-            <form onSubmit={onCreate} className="textarea-container">
+            <form onSubmit={onSubmit} className="textarea-container">
                 <textarea
                     name='text'
                     cols="30"

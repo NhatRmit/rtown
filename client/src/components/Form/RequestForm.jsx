@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addCommunity } from '../../actions/community';
-import { uploadCommunityImage } from '../../actions/image';
 
 const RequestForm = () => {
     // const [communityName, setCommunityName] = useState("");
@@ -53,7 +52,7 @@ const RequestForm = () => {
         formdata.append("file", uploadFile);
         formdata.append("communityName", communityName);
         formdata.append("description", description);
-        dispatch(uploadCommunityImage(formdata))
+        dispatch(addCommunity(formdata, navigate))
     }
 
 

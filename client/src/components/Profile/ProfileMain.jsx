@@ -68,7 +68,7 @@ const ProfileMain = ({ profile, loading }) => {
                                         }>
                                         {
                                             posts.map(post =>
-                                                post.user === userId &&
+                                                post.user._id === userId &&
                                                 <div>
                                                     <PostsSection key={post._id} post={post} />
                                                 </div>

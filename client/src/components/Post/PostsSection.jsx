@@ -66,7 +66,6 @@ const PostsSection = ({ post }) => {
     .map(item => item.user)
     .indexOf(auth._id)
 
-  console.log(checkoutIndex)
   return (
     <>
       <div className='post-container'>
@@ -98,12 +97,10 @@ const PostsSection = ({ post }) => {
                         <FaUserCircle />
                       </IconContext.Provider> :
                       <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem", borderRadius: "50%" }} />
-
                   }
-
                 </label>
                 <p id='username' className='username'>
-                  {post.name && post.name}
+                  {post && post.user.usernameOrEmail}
                 </p>
               </span>
 
@@ -157,31 +154,30 @@ const PostsSection = ({ post }) => {
             <div className="content-right-footer">
               {/*Edit post icon*/}
               {
-                auth._id === post.user &&
-                <span className='icon' onClick={onEdit}>
-                  <label htmlFor='edit-post'>
-                    <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                      <AiFillEdit />
-                    </IconContext.Provider>
-                  </label>
-                  <p id='edit-post' className='icon-label'>
-                    Edit
-                  </p>
-                </span>
-              }
-              {/*Delete post icon*/}
-              {
-                auth._id === post.user &&
-                <span className='icon' onClick={onDelete}>
-                  <label htmlFor='delete-post'>
-                    <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                      <AiFillDelete />
-                    </IconContext.Provider>
-                  </label>
-                  <p id='delete-post' className='icon-label'>
-                    Delete
-                  </p>
-                </span>
+                auth._id === post.user._id &&
+                <>
+                  <span className='icon' onClick={onEdit}>
+                    <label htmlFor='edit-post'>
+                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                        <AiFillEdit />
+                      </IconContext.Provider>
+                    </label>
+                    <p id='edit-post' className='icon-label'>
+                      Edit
+                    </p>
+                  </span>
+                  <span className='icon' onClick={onDelete}>
+                    <label htmlFor='delete-post'>
+                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                        <AiFillDelete />
+                      </IconContext.Provider>
+                    </label>
+                    <p id='delete-post' className='icon-label'>
+                      Delete
+                    </p>
+                  </span>
+                </>
+
               }
             </div>
           </div>

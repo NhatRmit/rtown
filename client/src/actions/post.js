@@ -40,12 +40,11 @@ export const getCommunityPosts = (community_id) => async dispatch => {
     }
 }
 
-
 //Add comment
 export const addComment = (postId, formData, navigate) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     };
 
@@ -68,8 +67,13 @@ export const addComment = (postId, formData, navigate) => async dispatch => {
 
 // //Edit comment
 export const editComment = (postId, commentId, formData, navigate) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    };
     try {
-        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData);
+        const res = await axios.put(`/api/posts/editcomment/${postId}/${commentId}`, formData, config);
         dispatch({
             type: EDIT_COMMENT,
             payload: res.data
@@ -105,10 +109,16 @@ export const deleteComment = (postId, commentId, navigate) => async dispatch => 
         });
     }
 };
+
 // Add post
 export const addPost = formData => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
     try {
-        const res = await axios.post('/api/posts', formData)
+        const res = await axios.post('/api/posts', formData, config)
         dispatch({
             type: ADD_POST,
             payload: res.data
@@ -121,9 +131,14 @@ export const addPost = formData => async dispatch => {
         })
     }
 }
-export const addCommunityPost = formData => async dispatch => {
+export const addCommunityPost = (formData, communityId) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
     try {
-        const res = await axios.post('/api/posts', formData)
+        const res = await axios.post(`/api/posts/postCommunity/${communityId}`, formData, config)
         dispatch({
             type: ADD_POST,
             payload: res.data
@@ -157,7 +172,7 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
     try {
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
         const res = await axios.put(`/api/posts/update/${postId}`, formData, config)
@@ -185,7 +200,7 @@ export const addUpvote = id => async dispatch => {
         const res = await axios.put(`/api/posts//upvote/${id}`)
         dispatch({
             type: UPDATE_UPVOTE,
-            payload: { id, upvotes : res.data }
+            payload: { id, upvotes: res.data }
         })
     } catch (error) {
         dispatch({
@@ -217,7 +232,7 @@ export const addDownvote = id => async dispatch => {
         const res = await axios.put(`/api/posts//downvote/${id}`)
         dispatch({
             type: UPDATE_DOWNVOTE,
-            payload: { id, upvotes : res.data }
+            payload: { id, upvotes: res.data }
         })
     } catch (error) {
         dispatch({

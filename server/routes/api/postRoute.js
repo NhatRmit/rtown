@@ -3,6 +3,7 @@ const router = express.Router()
 const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut, getCommunityPosts, createCommunityPost} = require('../../controllers/postController')
 
 const {auth} = require('../../middlewares/authMiddleware')
+const upload = require('../../middlewares/upload')
 
 router.get('/', getPosts)
 
@@ -18,13 +19,13 @@ router.get('/:id', auth, getPostById)
 
 router.get('/:post_id/:comment_id', auth, getCommentById)
 
-router.post('/', auth, createPost)
+router.post('/', upload.single("file"), auth, createPost)
 
-router.post('/postCommunity/:community_id', auth, createCommunityPost)
+router.post('/postCommunity/:community_id', upload.single("file"), auth, createCommunityPost)
 
-router.put('/update/:post_id', auth, editPost)
+router.put('/update/:post_id', upload.single("file"), auth, editPost)
 
-router.put('/editcomment/:post_id/:comment_id', auth, editComment)
+router.put('/editcomment/:post_id/:comment_id', upload.single('file'), auth, editComment)
 
 router.put('/upvote/:id', auth, upvotePost)
 
@@ -34,11 +35,11 @@ router.put('/downvote/:id', auth, downvotePost)
 
 router.delete('/:id',auth ,deletePost)
 
-router.post('/comment/:id', auth, createComment)
+router.post('/comment/:id', upload.single("file"), auth, createComment)
 
 router.delete('/comment/:id/:comment_id', auth, deleteComment)
 
-router.post('/event/:community_id', auth, createEvent)
+router.post('/event/:community_id', upload.single("file"), auth, createEvent)
 
 router.put('/event/checkout/:post_id', auth, checkOut)
 

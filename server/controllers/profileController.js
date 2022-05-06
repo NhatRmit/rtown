@@ -39,9 +39,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 const getAllProfiles = asyncHandler(async (req, res) => {
+    const query = [{path: 'itemList.item'}, {path: 'user'}]
     try {
         const profiles = await Profile
-            .find().populate('itemList.item')
+            .find().populate(query)
 
         res.status(200).json(profiles)
     } catch (err) {

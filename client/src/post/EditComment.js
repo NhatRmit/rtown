@@ -17,6 +17,8 @@ const EditComment = ({ singlePost, singleComment }) => {
         text
     } = formData
 
+    const [uploadFile, setUploadFile] = useState(null)
+
     // const comment = useSelector(state => state.comment.comment)
     // console.log(comment && comment.text)
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -35,9 +37,16 @@ const EditComment = ({ singlePost, singleComment }) => {
         }
     }, [singleComment, singlePost._id, dispatch])
 
+    const onChangeImage = e => {
+        setUploadFile(e.target.files[0])
+    }
+
     const onUpdate = (e) => {
-        e.preventDefault()
-        dispatch(editComment(singlePost._id, singleComment._id, formData, navigate))
+        e.preventDefault() 
+        let formdata = new FormData();
+        formdata.append("text", text);
+        formdata.append("file", uploadFile);
+        dispatch(editComment(singlePost._id, singleComment._id, formdata, navigate))
     }
 
     return (
@@ -51,6 +60,7 @@ const EditComment = ({ singlePost, singleComment }) => {
                         value={text}
                         onChange={onChange}
                     />
+                    <input type="file" onChange={onChangeImage}/>
                     <input type="submit" className="btn btn-primary my-1" />
                 </div>
             </form>

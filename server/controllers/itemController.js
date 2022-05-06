@@ -12,9 +12,12 @@ const getItems = asyncHandler(async (req, res) => {
 
 const createItem = asyncHandler(async (req, res) => {
     try {
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const newItem = new Item({
             name: req.body.name,
-            Rpoint: req.body.Rpoint
+            Rpoint: req.body.Rpoint,
+            image: imgUrl,
         })
 
         const item = await newItem.save()
