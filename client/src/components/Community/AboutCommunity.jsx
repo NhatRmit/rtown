@@ -55,15 +55,14 @@ const AboutCommunity = ({ community_id, community }) => {
       <div className="buttons">
         {
           community && community.members.map(
-            (member, index) => member.memberId === auth ?
+            (member, index) => member.memberId === auth &&
               <div key={index} onClick={onCreateEvent}>
                 <CreateEvent />
-              </div> :
-              <></>
+              </div>
           )
         }
         {
-          community && community.user._id === auth ? <div onClick={onEdit}><EditCommunity /></div> : <></>
+          community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
         }
         {
           community && community.members.length === 0 ?
