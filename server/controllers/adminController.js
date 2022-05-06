@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler')
 const Profile = require('../models/profileModel')
 const User = require('../models/userModel')
 const Community = require('../models/communityModel')
+const Post = require('../models/postModel')
+const Item = require('../models/itemModel')
 
 const getAllUserProfile = asyncHandler(async (req, res) => {
     try {
@@ -66,8 +68,68 @@ const acceptCommunity = asyncHandler(async (req, res) => {
 const deniedCommunity = asyncHandler( async (req, res)=>{
     
 })
+
+//POSTS
+const getPosts = asyncHandler(async (req, res) => {
+    const query = [{ path: 'profile' }, { path: 'community' }]
+    try {
+        const posts = await Post.find().sort({ date: -1 }).populate(query)
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(404).json({ msg: error.message })
+    }
+})
+
+//Edit Post
+const editPost = asyncHandler(async (req, res) => {
+    const postFields = {}
+    const { text } = req.body
+    postFields.user = req.user.id
+    if (text) postFields.text = text
+
+    try {
+        let post = await Post.findOne({ _id: req.params.post_id })
+        if (post) {
+            //UPDATE
+            post = await Post.findOneAndUpdate(
+                { _id: req.params.post_id },
+                { $set: postFields },
+                { new: true }
+            )
+            return res.json(post)
+        }
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+//Delete Post
+const deletePost = asyncHandler(async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found' })
+        }
+
+        await post.remove();
+
+        res.json({ msg: 'Post removed' })
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind == 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports= {
     getAllUserProfile,
     getAllCommunityRequest,
-    acceptCommunity
+    acceptCommunity,
+    deletePost,
+    editPost,
+    getPosts
 }
