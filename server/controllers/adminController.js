@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Profile = require('../models/profileModel')
 const User = require('../models/userModel')
 const Community = require('../models/communityModel')
-
+// PROFILE
 const getAllUserProfile = asyncHandler(async (req, res) => {
     try {
         const profile = await Profile
@@ -15,6 +15,48 @@ const getAllUserProfile = asyncHandler(async (req, res) => {
         res.status(500).json({ msg: 'Server Error' })
     }
 })
+
+const editMemberProfile = asyncHandler(async (req, res)=>{
+    const {
+        bio,
+        Rpoint,
+        avatar,
+        // itemList,
+        // community,
+        admin
+    } = req.body
+    const profileFields = {
+        bio,
+        Rpoint,
+        avatar,
+        // itemList,
+        // community,
+        admin
+    }
+    profileFields.user = req.user.id
+    if (bio) profileFields.bio = bio
+    if (Rpoint) profileFields.Rpoint = Rpoint
+    if (avatar) profileFields.avatar = avatar
+    // if (itemList) profileFields.itemList = itemList
+    // if (community) profileFields.community = community
+    if (admin) profileFields.admin = admin
+    let editMemberprofile = await Profile.findOne(req.params._id)
+    try {  
+        if(editMemberprofile){
+           editMemberprofile = await Profile.findOneAndUpdate(
+               {user: req.user.id},
+               {$set: profileFields},
+               {new: true}
+           ) 
+        }
+        res.status(200).json(editMemberprofile)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
+
 // COMMUNITY 
 const getAllCommunityRequest = asyncHandler(async (req, res) => {
     try {
@@ -63,11 +105,24 @@ const acceptCommunity = asyncHandler(async (req, res) => {
 
 })
 
-const deniedCommunity = asyncHandler( async (req, res)=>{
-    
+const deleteCommunity = asyncHandler( async (req, res)=>{
+    try {
+        const community = await Community.findById(req.params.community_id)
+
+        await community.remove()
+
+        res.status(200).json({ msg: 'Community Deleted' })
+
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
+    }
 })
+
 module.exports= {
     getAllUserProfile,
     getAllCommunityRequest,
-    acceptCommunity
+    acceptCommunity,
+    deleteCommunity,
+    editMemberProfile
 }
