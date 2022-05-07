@@ -137,7 +137,7 @@ const getPosts = asyncHandler(async (req, res) => {
 const editPost = asyncHandler(async (req, res) => {
     const postFields = {}
     const { text } = req.body
-    postFields.user = req.user.id
+    //postFields.user = req.user.id
     if (text) postFields.text = text
 
     try {
