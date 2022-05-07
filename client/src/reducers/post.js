@@ -12,6 +12,7 @@ import {
   CLEAR_POST,
   CHECK_OUT,
   DISPLAY_IMAGE,
+  CLEAR_COMMENT,
 } from '../actions/types';
 
 const initialState = {
@@ -47,6 +48,7 @@ function postReducer(state = initialState, action) {
         loading: false
       };
     case EDIT_POST:
+    // case EDIT_COMMENT:
       return {
         ...state,
         post: payload,
@@ -81,10 +83,7 @@ function postReducer(state = initialState, action) {
     case REMOVE_COMMENT:
       return {
         ...state,
-        post: {
-          ...state.posts,
-          comments: state.post.comments.filter(comment => comment._id !== payload)
-        }
+        post: payload
       }
     case CLEAR_POST:
       return {
@@ -92,7 +91,6 @@ function postReducer(state = initialState, action) {
         loading: false,
         post: null,
       }
-
     default:
       return state;
   }

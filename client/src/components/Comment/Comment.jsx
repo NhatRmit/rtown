@@ -7,7 +7,7 @@ import "./Comment.css";
 import { useDispatch, useSelector, } from 'react-redux'
 import EditComment from "./EditComment";
 import Moment from "react-moment";
-import { deleteComment, getCommentById } from "../../actions/post";
+import { deleteComment, getCommentById, } from "../../actions/post";
 import { loadUser } from "../../actions/auth";
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 
@@ -53,12 +53,12 @@ const Comment = ({ post, comment }) => {
         </div>
         <div className='comment-content'>
           <img src={comment.image} alt="" style={{ width: "30%" }} />
-          <p>
+          <div>
             {
               !edit ? comment.text :
                 <EditComment singlePost={post} singleComment={comment} />
             }
-          </p>
+          </div>
           <p className="comment-time">
             <Moment format='DD/MM/YYYY  HH:mm '>{comment.date}</Moment>
           </p>

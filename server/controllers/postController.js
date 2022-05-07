@@ -187,7 +187,7 @@ const editPost = asyncHandler(async (req, res) => {
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
         if (post) {
-            
+
             post = await Post.findOneAndUpdate(
                 { _id: req.params.post_id },
                 { $set: postFields },
@@ -311,25 +311,31 @@ const createComment = asyncHandler(async (req, res) => {
 });
 
 const editComment = asyncHandler(async (req, res) => {
-    let image
-    let commentImage = await Post.findOne({ 'comments._id': req.params.comment_id })
-    if (req.file)
-        image = `http://localhost:8000/api/images/${req.file.filename}`
+    let img
+    let postFound = await Post.findOne({ _id: req.params.post_id })
+    let commentIndex = await postFound.comments.map(comment => comment._id === req.params.comment_id).indexOf(req.params.comment_id)
+    const comment = postFound.comments.slice(commentIndex, 1)
+
+    const commentFields = {}
+    if (req.file) 
+        commentFields.image = `http://localhost:8000/api/images/${req.file.filename}`
     else
-        image = commentImage.image
+        commentFields.image = comment.image
 
     try {
-        let post = await Post.findOneAndUpdate(
+        await Post.findOneAndUpdate(
             { 'comments._id': req.params.comment_id },
             {
                 $set: {
+                    'comments.$.image': commentFields.image,
                     'comments.$.text': req.body.text,
-                    'comments.$.image': image
                 }
-            }
+            },
         )
 
-        return res.status(200).json(post)
+        const post = await Post.findOne({ 'comments._id': req.params.comment_id })
+
+        return res.status(200).json(post.comments)
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Server Error')

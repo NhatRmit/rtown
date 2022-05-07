@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, addUpvote, removeUpvote, checkOut, } from '../../actions/post'
+import { getPosts, deletePost, clearPost, addUpvote, removeUpvote, checkOut, } from '../../actions/post'
 import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
 import CommentForm from '../Comment/CommentForm'
@@ -66,6 +66,7 @@ const PostsSection = ({ post }) => {
   const [time, setTime] = useState(null)
 
   useEffect(() => {
+    // dispatch(getPosts())
     let timer = setInterval(() => {
       let count = 0
       count++

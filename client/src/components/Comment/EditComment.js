@@ -40,29 +40,29 @@ const EditComment = ({ singlePost, singleComment }) => {
     }
 
     const onUpdate = (e) => {
-        e.preventDefault() 
+        e.preventDefault()
         let formdata = new FormData();
-        formdata.append("text", text);
         formdata.append("file", uploadFile);
+        formdata.append("text", text);
         dispatch(editComment(singlePost._id, singleComment._id, formdata, navigate))
     }
 
     return (
-        <div>
-            <form className="form" onSubmit={onUpdate}>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Content"
-                        name="text"
-                        value={text}
-                        onChange={onChange}
-                    />
-                    <input type="file" onChange={onChangeImage}/>
-                    <input type="submit" className="btn btn-primary my-1" />
-                </div>
-            </form>
-        </div>
+
+        <form className="form" onSubmit={onUpdate}>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Content"
+                    name="text"
+                    value={text}
+                    onChange={onChange}
+                />
+                <input type="file" onChange={onChangeImage} />
+                <input type="submit" className="btn btn-primary my-1" />
+            </div>
+        </form>
+
     )
 
 }

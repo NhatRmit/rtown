@@ -13,7 +13,7 @@ function commentReducer(state = initialState, action) {
         case EDIT_COMMENT:
             return {
                 ...state,
-                comment: payload
+                comments: payload
             }
         // case GET_COMMENTS: 
         //     return {

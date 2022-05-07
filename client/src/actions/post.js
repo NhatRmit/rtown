@@ -55,7 +55,8 @@ export const addComment = (postId, formData, navigate) => async dispatch => {
             type: ADD_COMMENT,
             payload: res.data
         });
-        navigate('/')
+        dispatch(getPosts())
+        // navigate('/')
         // dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
         dispatch({
@@ -78,7 +79,8 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
             type: EDIT_COMMENT,
             payload: res.data
         })
-        navigate('/')
+        dispatch(getPosts())
+        // navigate('/')
 
     } catch (err) {
         dispatch({
@@ -98,9 +100,10 @@ export const deleteComment = (postId, commentId, navigate) => async dispatch => 
 
         dispatch({
             type: REMOVE_COMMENT,
-            payload: commentId
+            payload: res.data
         });
-        navigate('/')
+        dispatch(getPosts())
+        // navigate('/')
         // dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
         dispatch({
@@ -290,7 +293,7 @@ export const getPostById = (postId) => async dispatch => {
 
 export const getCommentById = (postId, commentId) => async dispatch => {
     try {
-        const res = await axios.get(`/api/posts/${postId}/${commentId}`)
+        const res = await axios.get(`/api/posts/comment/${postId}/${commentId}`)
         dispatch({
             type: GET_COMMENT,
             payload: res.data

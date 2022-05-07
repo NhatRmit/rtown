@@ -27,7 +27,7 @@ router.get('/postCommunity/:community_id', auth, post.getCommunityPosts)
 
 router.post('/comment/:post_id', upload.single("file"), auth, post.createComment)
 router.get('/comment/:post_id/:comment_id', auth, post.getCommentById)
-router.put('/comment/edit/:comment_id', upload.single('file'), auth, post.editComment)
+router.put('/comment/edit/:post_id/:comment_id', upload.single('file'), auth, post.editComment)
 router.delete('/comment/:post_id/:comment_id', auth, post.deleteComment)
 
 router.post('/event/:community_id', upload.single("file"), auth, post.createEvent)
