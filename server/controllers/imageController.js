@@ -3,6 +3,14 @@ const mongoose = require('mongoose')
 const Grid = require('gridfs-stream');
 const Profile = require('../models/profileModel');
 
+const checkWord =(text) =>{
+    const blackList = ["stupid","fucking","shit","bitch"]
+    for (let i = 0; i< blackList.length; i++){
+        text= text.replace(blackList[i], "****")
+    }
+
+    return text
+}
 const conn = mongoose.connection;
 conn.once("open", function () {
     gfs = Grid(conn.db, mongoose.mongo);

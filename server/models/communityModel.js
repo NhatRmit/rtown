@@ -39,6 +39,10 @@ const communitySchema = mongoose.Schema({
     ],
     membersCount: {
         type: Number
+    },
+    requested: {
+        type: Boolean,
+        default: false
     }
 })
 

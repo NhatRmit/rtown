@@ -31,6 +31,10 @@ const profileStudentSchema = mongoose.Schema({
             },
         }
     ],
+    admin: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model('profileStudent', profileStudentSchema)

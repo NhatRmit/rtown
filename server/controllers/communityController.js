@@ -35,6 +35,26 @@ const getCommunityById = asyncHandler(async (req, res) => {
     }
 })
 
+const createCommunityRequest = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password')
+        const profile = await Profile.findOne({user: req.user.id})
+        const newCommunityRequest = new Community({
+            communityName: req.body.communityName,
+            description: req.body.description,
+            name: user.usernameOrEmail,
+            user: req.user.id
+            
+        })
+        await newCommunityRequest.save()
+        res.status(200).json(newCommunityRequest)
+        
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
 const createCommunity = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
@@ -160,6 +180,7 @@ const community = {
     deleteCommunity,
     getMyCommunities,
     getCommunityMember,
+    createCommunityRequest,
 }
 
 module.exports = { community }
