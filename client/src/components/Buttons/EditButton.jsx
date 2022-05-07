@@ -1,7 +1,9 @@
+import "./Buttons.css"
+
 const EditButton = () => {
     return (
     <button type="submit" className="edit-btn">
-        Edit Community
+        Edit
     </button>
     )
 }

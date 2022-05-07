@@ -3,11 +3,10 @@ import Layout from "../components/Layout";
 // import Filter from '../components/Filter/Filter'
 import CommunitySection from "../components/Community/CommunitySection";
 import CreatePost from "../components/Post/CreatePost";
-import PostsSection from "../components/Post/PostsSection";
-import CommentSection from "../components/Comment/CommentSection";
+import Newsfeed from "../components/Newsfeed/Newsfeed";
 import "./NewsfeedPage.css";
 
-const Newsfeed = () => {
+const NewsfeedPage = () => {
   return (
     <>
       <Layout header footer>
@@ -17,13 +16,7 @@ const Newsfeed = () => {
           </div>
           <div className='right-container'>
             <CreatePost />
-            <div className='post-types'>
-              <span className="post-type"><h1 className="type-title">New</h1></span>
-              <span className="post-type"><h1 className="type-title">Trending</h1></span>
-              <span className="post-type"><h1 className="type-title">Top</h1></span>
-            </div>
-            <PostsSection />
-            <CommentSection />
+            <Newsfeed />
           </div>
         </div>
       </Layout>
@@ -31,4 +24,4 @@ const Newsfeed = () => {
   );
 };
 
-export default Newsfeed;
+export default NewsfeedPage;

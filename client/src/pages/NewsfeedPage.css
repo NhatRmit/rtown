@@ -16,23 +16,3 @@
     width: 70%;
     margin-right: 4rem;
 }
-
-.post-types {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-}
-
-.type-title {
-    font-family: var(--heading-font);
-    font-size: 1.5em;
-    margin-right: 1rem;
-    padding-bottom: 0;
-    color: var(--darker-grey);
-}
-
-.post-type:first-of-type .type-title{
-    color: var(--red);
-    padding-bottom: 10px;
-    border-bottom: 5px solid var(--red);
-}
