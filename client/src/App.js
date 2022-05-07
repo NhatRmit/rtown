@@ -16,14 +16,13 @@ import RequestEvent from './components/Form/RequestEvent'
 import RShopPage from './pages/RShopPage'
 import AdminProfilePage from './pages/profile/AdminProfilePage'
 import Modal from 'react-modal'
-import { getAllProfiles, getProfile } from './actions/profile'
-import { getItemByProfile } from './actions/item'
+import { getAllProfiles } from './actions/profile'
 
 Modal.setAppElement('#root');
 
 const App = () => {
   const dispatch = useDispatch()
-  const admin = useSelector(state => state.auth.admin)
+  // const admin = useSelector(state => state.auth.admin)
   const [time, setTime] = useState(new Date())
 
   useEffect(() => {
@@ -34,7 +33,6 @@ const App = () => {
     }
     dispatch(getAllProfiles())
     dispatch(loadUser())
-    // dispatch(getProfile())
     setInterval(
       () => {
         setTime(new Date())
@@ -68,10 +66,10 @@ const App = () => {
             exact path='/communities/event-request/:community_id'
             element={<PrivateRoute element={RequestEvent} />}
           />
-          <Route
+          {/* <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
-          />
+          /> */}
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
             exact path='profiles/:userId'
@@ -82,16 +80,16 @@ const App = () => {
             element={<PrivateRoute element={RShopPage} />}
           />
 
-          {
-            admin ? <Route
+          <Route
             exact path='/admin-profile'
             element={<PrivateRoute element={AdminProfilePage} />}
-          /> : <Route
-          exact path='/newsfeed'
-          element={<PrivateRoute element={NewsfeedPage} />}
-        />
-            
-          }
+          />
+
+          <Route
+            exact path='/newsfeed'
+            element={<PrivateRoute element={NewsfeedPage} />}
+          />
+
           {/* <Route
             exact path='/admin-profile'
             element={<PrivateRoute element={AdminProfilePage} />}

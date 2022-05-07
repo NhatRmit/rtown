@@ -3,7 +3,8 @@ import style from "./LoginForm.module.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { loginUser } from "../../actions/auth";
+import { loadUser, loginUser } from "../../actions/auth";
+import { FaBullseye } from "react-icons/fa";
 
 const LoginForm = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -17,12 +18,11 @@ const LoginForm = () => {
         dispatch(loginUser(usernameOrEmail, password))
     }
 
-    if (isAuthenticated && !admin) {
+    if (!admin && isAuthenticated)
         return <Navigate replace to='/newsfeed' />
-    }
-    else if (isAuthenticated && admin){
+
+    if (admin && isAuthenticated)
         return <Navigate replace to='/admin-profile' />
-    }
 
     return (
         <div className={style["loginform-container"]}>
