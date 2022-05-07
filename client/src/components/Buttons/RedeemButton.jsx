@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
-import { buyItem } from '../../actions/item'
+import { buyItem, getItemByProfile } from '../../actions/item'
 import Modal from 'react-modal'
 import "./Buttons.css"
 
@@ -16,6 +16,8 @@ const RedeemButton = ({ item }) => {
         dispatch(buyItem(item._id))
         setIsOpenModal(false)
         navigate(`/profiles/${auth}`)
+        dispatch(getItemByProfile())
+
     }
 
     const openModal = e => {

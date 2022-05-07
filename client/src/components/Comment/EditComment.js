@@ -7,7 +7,7 @@ const initialState = {
     text: ''
 }
 
-const EditComment = ({ singlePost, singleComment }) => {
+const EditComment = ({ singlePost, singleComment, pullData }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState)
@@ -45,6 +45,7 @@ const EditComment = ({ singlePost, singleComment }) => {
         formdata.append("file", uploadFile);
         formdata.append("text", text);
         dispatch(editComment(singlePost._id, singleComment._id, formdata, navigate))
+        pullData(false)
     }
 
     return (

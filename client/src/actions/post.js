@@ -125,8 +125,8 @@ export const addPost = formData => async dispatch => {
         dispatch({
             type: ADD_POST,
             payload: res.data
-
         })
+        dispatch(getPosts())
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -185,9 +185,10 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
             payload: res.data
         })
 
+        dispatch(getPosts())
         // dispatch(setAlert('Post Updated', 'success'))
 
-        navigate('/')
+        // navigate('/')
     } catch (error) {
         dispatch({
             type: POST_ERROR,

@@ -14,11 +14,12 @@ import CommunityPage from './pages/community/CommunityPage'
 import Messenger from './components/Chat/Messenger'
 import RequestEvent from './components/Form/RequestEvent'
 import RShopPage from './pages/RShopPage'
+import AdminProfilePage from './pages/profile/AdminProfilePage'
 import Modal from 'react-modal'
-import { getAllProfiles } from './actions/profile'
+import { getAllProfiles, getProfile } from './actions/profile'
+import { getItemByProfile } from './actions/item'
 
 Modal.setAppElement('#root');
-
 
 const App = () => {
   const dispatch = useDispatch()
@@ -32,6 +33,7 @@ const App = () => {
     }
     dispatch(getAllProfiles())
     dispatch(loadUser())
+    // dispatch(getProfile())
     setInterval(
       () => {
         setTime(new Date())
@@ -60,17 +62,15 @@ const App = () => {
             exact path='/chat'
             element={<PrivateRoute element={Messenger} />}
           />
-          
+
           <Route
             exact path='/communities/event-request/:community_id'
             element={<PrivateRoute element={RequestEvent} />}
           />
-
           <Route
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
           />
-
           {/* <Route exact path='/comment' element={<CommentForm />} /> */}
           <Route
             exact path='profiles/:userId'
@@ -80,6 +80,12 @@ const App = () => {
             exact path='/rshop'
             element={<PrivateRoute element={RShopPage} />}
           />
+
+          <Route
+            exact path='/admin-profile'
+            element={<PrivateRoute element={AdminProfilePage} />}
+          />
+
 
         </Routes>
       </Router>

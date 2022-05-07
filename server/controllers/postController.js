@@ -311,16 +311,15 @@ const createComment = asyncHandler(async (req, res) => {
 });
 
 const editComment = asyncHandler(async (req, res) => {
-    let img
     let postFound = await Post.findOne({ _id: req.params.post_id })
-    let commentIndex = await postFound.comments.map(comment => comment._id === req.params.comment_id).indexOf(req.params.comment_id)
-    const comment = postFound.comments.slice(commentIndex, 1)
+    let commentIndex = await postFound.comments.find(comment => comment.id === req.params.comment_id)
 
     const commentFields = {}
-    if (req.file) 
+    if (req.file)
         commentFields.image = `http://localhost:8000/api/images/${req.file.filename}`
     else
-        commentFields.image = comment.image
+        commentFields.image = commentIndex.image
+
 
     try {
         await Post.findOneAndUpdate(

@@ -21,6 +21,10 @@ const PostsSection = ({ post }) => {
   const auth = useSelector(state => state.auth)
   const [edit, setEdit] = useState(false)
 
+  const pullData = (data) => {
+    setEdit(data)
+  }
+
   const onEdit = e => {
     e.preventDefault()
     setEdit(true)
@@ -138,12 +142,12 @@ const PostsSection = ({ post }) => {
           </div>
           <div className='post-content'>
             <img src={post.image} alt="" style={{ width: "30%" }} />
-            <p>
+            <div>
               {
                 !edit ? post.text :
-                  <EditPost singlePost={post} />
+                  <EditPost singlePost={post} pullData={pullData}/>
               }
-            </p>
+            </div>
           </div>
           <div className='content-section-footer'>
             <div className="content-left-footer">

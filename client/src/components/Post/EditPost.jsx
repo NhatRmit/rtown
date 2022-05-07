@@ -7,11 +7,11 @@ const initialState = {
     text: '',
 }
 
-const EditPost = ({ singlePost }) => {
+const EditPost = ({ singlePost, pullData }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState)
- 
+
     const {
         text,
     } = formData
@@ -39,6 +39,7 @@ const EditPost = ({ singlePost }) => {
         formdata.append("file", uploadFile);
         formdata.append("text", text);
         dispatch(editPost(singlePost._id, formdata, navigate))
+        pullData(false)
     }
 
     const onChangeImage = e => {
@@ -46,7 +47,7 @@ const EditPost = ({ singlePost }) => {
     }
 
     return (
-        <div>
+        <>
             <form className="form" onSubmit={onUpdate}>
                 <div>
                     <input
@@ -60,7 +61,7 @@ const EditPost = ({ singlePost }) => {
                     <input type="submit" className="btn btn-primary my-1" />
                 </div>
             </form>
-        </div>
+        </>
     )
 
 }

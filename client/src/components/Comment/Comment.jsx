@@ -15,6 +15,11 @@ const Comment = ({ post, comment }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
+  
+  const pullData = (data) => {
+    setEdit(data)
+  }
+  
   const onDelete = e => {
     e.preventDefault()
     dispatch(deleteComment(post._id, comment._id, navigate))
@@ -56,7 +61,7 @@ const Comment = ({ post, comment }) => {
           <div>
             {
               !edit ? comment.text :
-                <EditComment singlePost={post} singleComment={comment} />
+                <EditComment singlePost={post} singleComment={comment} pullData={pullData}/>
             }
           </div>
           <p className="comment-time">

@@ -2,13 +2,13 @@ import "./AboutCommunity.css";
 import { useNavigate } from "react-router-dom";
 import CreateEvent from "../Buttons/CreateEventButton"
 import LeaveCommunity from "../Buttons/LeaveButton"
-import EditCommunity from "../Buttons/EditButton"
+// import EditCommunity from "../Buttons/EditButton"
 import JoinCommunity from "../Buttons/JoinButton"
 import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
 import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
-// import EditCommunity from "../Buttons/EditCommunityButton"
+import EditCommunity from "../Buttons/EditCommunityButton"
 
 
 const AboutCommunity = ({ community_id, community }) => {

@@ -1,7 +1,7 @@
 import './CreatePost.css'
 import { BsFillCloudUploadFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { addPost, addCommunityPost } from '../../actions/post'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -11,6 +11,7 @@ const CreatePost = ({ isCommunity }) => {
     const [text, setText] = useState('')
     const [uploadFile, setUploadFile] = useState(null)
     const { community_id } = useParams()
+    const [reset, setReset] = useState(true)
 
     const onSubmit = e => {
         e.preventDefault();
@@ -21,6 +22,7 @@ const CreatePost = ({ isCommunity }) => {
         !isCommunity ? dispatch(addPost(formdata)) : dispatch(addCommunityPost(formdata, community_id))
 
         setText('')
+        setReset(false)
     }
 
     const onChangeImage = e => {
@@ -30,6 +32,10 @@ const CreatePost = ({ isCommunity }) => {
     const onChange = e => {
         setText(e.target.value)
     }
+
+    useEffect(() => {
+        !reset && setReset(true)
+      }, [reset])
 
     return (
         <>
@@ -52,7 +58,10 @@ const CreatePost = ({ isCommunity }) => {
                                     <BsFillCloudUploadFill />
                                 </IconContext.Provider>
                             </label >
-                            <input onChange={onChangeImage} id="img-input" type="file" />
+                            {
+                                reset &&
+                                    <input onChange={onChangeImage} id="img-input" type="file" />
+                            }
                         </span >
                     </div >
                     <button type="submit">Post</button>
