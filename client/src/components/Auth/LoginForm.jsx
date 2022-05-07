@@ -9,6 +9,7 @@ const LoginForm = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch()
+    const admin = useSelector(state => state.auth.admin)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
     const handleSubmit = (e) => {
@@ -16,8 +17,11 @@ const LoginForm = () => {
         dispatch(loginUser(usernameOrEmail, password))
     }
 
-    if (isAuthenticated) {
+    if (isAuthenticated && !admin) {
         return <Navigate replace to='/newsfeed' />
+    }
+    else if (isAuthenticated && admin){
+        return <Navigate replace to='/admin-profile' />
     }
 
     return (
