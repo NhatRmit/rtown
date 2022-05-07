@@ -145,8 +145,8 @@ export const addCommunityPost = (formData, communityId) => async dispatch => {
         dispatch({
             type: ADD_POST,
             payload: res.data
-
         })
+        dispatch(getCommunityPosts(communityId))
     } catch (error) {
         dispatch({
             type: POST_ERROR,
