@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import NewsfeedPage from './pages/NewsfeedPage'
@@ -23,6 +23,7 @@ Modal.setAppElement('#root');
 
 const App = () => {
   const dispatch = useDispatch()
+  const admin = useSelector(state => state.auth.admin)
   const [time, setTime] = useState(new Date())
 
   useEffect(() => {
@@ -81,10 +82,20 @@ const App = () => {
             element={<PrivateRoute element={RShopPage} />}
           />
 
-          <Route
+          {
+            admin ? <Route
             exact path='/admin-profile'
             element={<PrivateRoute element={AdminProfilePage} />}
-          />
+          /> : <Route
+          exact path='/newsfeed'
+          element={<PrivateRoute element={NewsfeedPage} />}
+        />
+            
+          }
+          {/* <Route
+            exact path='/admin-profile'
+            element={<PrivateRoute element={AdminProfilePage} />}
+          /> */}
 
 
         </Routes>
