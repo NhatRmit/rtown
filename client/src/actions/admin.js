@@ -2,7 +2,6 @@ import {
     EDIT_POST,
     DELETE_POST
 } from "./types"
-
 // Edit post
 export const adminEditPost = (postId, formData, navigate) => async dispatch => {
     try {
@@ -13,7 +12,6 @@ export const adminEditPost = (postId, formData, navigate) => async dispatch => {
         }
         const res = await axios.put(`/api/posts/update/${postId}`, formData, config)
 
-        
         dispatch({
             type: EDIT_POST,
             payload: res.data

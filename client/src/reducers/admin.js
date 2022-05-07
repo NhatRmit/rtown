@@ -1,4 +1,7 @@
 import {
+    GET_POSTS,
+    GET_POST,
+    POST_ERROR,
     EDIT_POST,
     DELETE_POST
 } from '../actions/types';
@@ -21,12 +24,6 @@ function postReducer(state = initialState, action) {
                 loading: false
             };
         case GET_POST:
-        case CHECK_OUT:
-            return {
-                ...state,
-                post: payload,
-                loading: false
-            }
         case POST_ERROR:
             return {
                 ...state,
