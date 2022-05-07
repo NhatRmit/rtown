@@ -1,6 +1,7 @@
 .leave-btn,
 .edit-btn,
 .join-btn,
+.editCommunity-btn,
 .createEvent-btn,
 .redeemed-btn,
 .redeem-btn {
@@ -16,13 +17,39 @@
     cursor: pointer;
 }
 
+.edit-btn,
+.delete-btn {
+    margin: auto;
+    width: 40%;
+    border: none;
+    height: 2.5em;
+    border-radius: 10px;
+    font-family: var(--body-font);
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #1AD222;
+    border: none;
+    color: var(--white);
+}
+
+.delete-btn {
+    background-color: var(--red);
+    border: none;
+    color: var(--white);
+}
+
 .createEvent-btn {
     background-color: var(--background);
     border: 3px solid var(--red);
     color: var(--red);
 }
 
-.edit-btn {
+.editCommunity-btn {
     background-color: var(--background);
     border: 3px solid var(--navy);
     color: var(--navy);
@@ -45,7 +72,7 @@
     color: var(--white);
 }
 
-.edit-btn:hover {
+.editCommunity-btn:hover {
     background-color: var(--navy);
     color: var(--white);
 }

@@ -1,0 +1,146 @@
+.admin-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.admin-tabs-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+  
+.admin-bloc-tabs {
+    display: flex;
+    margin: 0;
+    
+
+}
+
+.admin-bloc-tabs button {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+}
+
+.admin-tabs {
+    padding: 10px 0;
+    text-align: center;
+    width: fit-content;
+    background: var(--background);
+    cursor: pointer;
+    border-bottom: 2px solid var(--grey);
+    box-sizing: content-box;
+    position: relative;
+    outline: none;
+    border: none;
+    color: var(--dark-grey);
+    margin-right: 2rem;
+    letter-spacing: 1px;
+}
+
+.admin-active-tabs  {
+    background: white;
+    border-bottom: 1px solid transparent;
+    color: var(--red);
+    font-weight: 600;
+}
+  
+.admin-active-tabs::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% + 2px);
+    height: 5px;
+    background: var(--red);
+}
+  
+.admin-content-tabs {
+    flex-grow : 1;
+    width: 100%;
+}
+
+.admin-content {
+    display: flex;
+    flex-wrap: wrap;
+    background: white;
+    width: 100%;
+    height: 100%;
+    display: none;
+    margin-top: 2rem;
+}
+
+.admin-content h2 {
+    padding: 0px 0 5px 0px;
+}
+
+.admin-content hr {
+    width: 100px;
+    height: 2px;
+    background: #222;
+    margin-bottom: 5px;
+}
+
+.admin-content p {
+    width: 100%;
+}
+
+.admin-active-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.adminProfile-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.admin-pic {
+    background-color: var(--dark-grey);
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.admin-profile {
+    padding-left: 3rem;
+}
+
+.adminInfo-label {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+    color: var(--navy);
+    padding-bottom: 0.5rem;
+}
+
+.adminInfo {
+    font-family: var(--body-font);
+    padding-bottom: 1rem;
+}
+
+.table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90vw;
+}
+  
+td, th {
+    border: 1px solid var(--grey);
+    text-align: left;
+    height: 3rem;
+    padding-left:15px;
+}
+
+td {
+    margin: auto;
+}
+  
+tr:first-child {
+    background-color: var(--light-grey);
+}
+

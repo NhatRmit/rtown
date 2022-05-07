@@ -1,0 +1,6 @@
+.admin-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 8em 4em 0 4em;
+}

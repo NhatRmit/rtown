@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
 import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
+// import EditCommunity from "../Buttons/EditCommunityButton"
+
 
 const AboutCommunity = ({ community_id, community }) => {
   const navigate = useNavigate()
