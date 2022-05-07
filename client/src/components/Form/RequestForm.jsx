@@ -1,43 +1,14 @@
 
 import './RequestForm.css';
 import { useState } from "react";
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addCommunity } from '../../actions/community';
-import { uploadCommunityImage } from '../../actions/image';
 
 const RequestForm = () => {
-    // const [communityName, setCommunityName] = useState("");
-    // const [communityPurpose, setCommunityPurpose] = useState(["Entertainment", "Club", "Studying", "Hobbies"]);
-    // const [communityDescription, setCommunityDescription] = useState("");
-
-    // const Add = communityPurpose.map(Add => Add)
-    // const handlePurposeChange = (e) => console.log((communityPurpose[e.target.value]))
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     const data = {
-    //         communityName: this.communityName,
-    //         communityPurpose: this.communityPurpose,
-    //         communityDescription: this.communityDescription
-    //     }
-
-    //     axios.post('localhost:3000/community-request', data)
-    //         .then(res => {
-    //             console.log(res)
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [uploadFile, setUploadFile] = useState(null)
-    // const [communityName, setCommunityName] = useState('')
-    // const [description, setDescription] = useState('')
     const [formData, setFormData] = useState({
         communityName: '',
         description: ''
@@ -53,14 +24,8 @@ const RequestForm = () => {
         formdata.append("file", uploadFile);
         formdata.append("communityName", communityName);
         formdata.append("description", description);
-        dispatch(uploadCommunityImage(formdata))
+        dispatch(addCommunity(formdata, navigate))
     }
-
-
-    // const onSubmit = e => {
-    //     e.preventDefault()
-    //     dispatch(addCommunity(formData, navigate))
-    // }
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -90,17 +55,6 @@ const RequestForm = () => {
                         name='communityName'
                     />
                 </div>
-
-                {/* <div className='communityPurpose'>
-                    <label for="purposes" className="label">Purpose of Community</label>
-                    <select 
-                    onChange={e => handlePurposeChange(e)}
-                    className="purposeList">
-                    {
-                        Add.map((address, key) => <option value={key}>{address}</option>)
-                    }
-                    </select>
-                </div> */}
 
                 <div className='communityDescription'>
                     <label className="label">Community Description</label>

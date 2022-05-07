@@ -48,7 +48,7 @@ export const getCommunityById = (community_id) => async dispatch => {
 export const addCommunity = (formData, navigate) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     }
     try {
@@ -71,11 +71,11 @@ export const addCommunity = (formData, navigate) => async dispatch => {
 export const updateCommunity = (community_id, formData, navigate) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     }
     try {
-        const res = await axios.put(`/api/communities/update/`, formData, config)
+        const res = await axios.put(`/api/communities/update/${community_id}`, formData, config)
 
         dispatch({
             type: UPDATE_COMMUNITY,

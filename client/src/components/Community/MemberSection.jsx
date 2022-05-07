@@ -1,5 +1,4 @@
 import "./MemberList.css";
-import { Link } from "react-router-dom";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,6 @@ const MemberSection = ({ community }) => {
   return (
     <div className='member-container'>
       <h1 className='title'>Members</h1>
-      {/*I WILL USE MAP LATER*/}
       <div className="member-list">
         {community && community.members && community.members.map((member) => (
           <div
@@ -18,7 +16,7 @@ const MemberSection = ({ community }) => {
                 e.preventDefault()
                 navigate(`/profiles/${member.memberId}`)
               }}
-            key={member.memberId} className='member'>
+            key={member._id} className='member'>
             <span className='user-icon'>
               {/*CHANGE ICON FOR ME*/}
               <IconContext.Provider value={{ color: "#676767", size: "1em" }}>

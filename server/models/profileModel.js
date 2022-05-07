@@ -21,10 +21,6 @@ const profileStudentSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'item'
             },
-            itemName: {
-                type: mongoose.Schema.Types.String,
-                ref: 'item'
-            },
         }
     ],
     community: [
@@ -33,10 +29,6 @@ const profileStudentSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'community'
             },
-            communityName: {
-                type: mongoose.Schema.Types.String,
-                ref: 'community'
-            }
         }
     ],
     admin: {

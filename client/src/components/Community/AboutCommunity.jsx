@@ -1,19 +1,19 @@
 import "./AboutCommunity.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateEvent from "../Buttons/CreateEventButton"
 import LeaveCommunity from "../Buttons/LeaveButton"
-import EditCommunity from "../Buttons/EditButton"
+// import EditCommunity from "../Buttons/EditButton"
 import JoinCommunity from "../Buttons/JoinButton"
 import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
-import { getProfileById } from "../../actions/profile";
+import EditCommunity from "../Buttons/EditCommunityButton"
+
 
 const AboutCommunity = ({ community_id, community }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const [isJoined, setIsJoined] = useState('false')
 
   const auth = useSelector(state => state.auth._id)
 
@@ -24,13 +24,11 @@ const AboutCommunity = ({ community_id, community }) => {
 
   const onLeave = e => {
     e.preventDefault()
-    // setIsJoined(localStorage.setItem('isJoined', false))
     dispatch(leaveCommunity(community_id, navigate))
   }
 
   const onJoin = e => {
     e.preventDefault()
-    // setIsJoined(localStorage.setItem('isJoined', true))
     dispatch(joinCommunity(community_id, auth, navigate))
   }
 
@@ -39,9 +37,7 @@ const AboutCommunity = ({ community_id, community }) => {
     navigate(`/communities/event-request/${community_id}`)
   }
 
-
   useEffect(() => {
-    // setIsJoined(localStorage.getItem('isJoined'))
     dispatch(loadUser())
     dispatch(getCommunityById(community_id))
 
@@ -52,7 +48,6 @@ const AboutCommunity = ({ community_id, community }) => {
     .map(item => item.memberId)
     .indexOf(user._id)
 
-  // const community = useSelector(state => state.community.community)
   return (
     <div className='about-container'>
       <h1 className='title'>{community && community.communityName}</h1>
@@ -61,18 +56,18 @@ const AboutCommunity = ({ community_id, community }) => {
       </p>
       <div className="buttons">
         {
-          community &&
-          community.members.map(
-            member => member.memberId === auth ?
-              <div onClick={onCreateEvent}><CreateEvent /></div> :
-              <></>
+          community && community.members.map(
+            (member, index) => member.memberId === auth &&
+              <div key={index} onClick={onCreateEvent}>
+                <CreateEvent />
+              </div>
           )
         }
         {
-          community && community.user === auth ? <div onClick={onEdit}><EditCommunity /></div> : <></>
+          community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
         }
         {
-          community && community.members && community.members.length === 0 ?
+          community && community.members.length === 0 ?
             <div onClick={onJoin}><JoinCommunity /></div> :
             memberIndex !== -1 ?
               <div onClick={onLeave}><LeaveCommunity /></div> :

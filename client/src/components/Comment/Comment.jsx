@@ -5,9 +5,9 @@ import { FaUserCircle } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import "./Comment.css";
 import { useDispatch, useSelector, } from 'react-redux'
-import EditComment from "../../post/EditComment";
+import EditComment from "./EditComment";
 import Moment from "react-moment";
-import { deleteComment, getCommentById } from "../../actions/post";
+import { deleteComment, getCommentById, } from "../../actions/post";
 import { loadUser } from "../../actions/auth";
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 
@@ -15,10 +15,16 @@ const Comment = ({ post, comment }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
+  
+  const pullData = (data) => {
+    setEdit(data)
+  }
+  
   const onDelete = e => {
     e.preventDefault()
     dispatch(deleteComment(post._id, comment._id, navigate))
   }
+
   const onEdit = e => {
     e.preventDefault()
     setEdit(true)
@@ -27,7 +33,7 @@ const Comment = ({ post, comment }) => {
 
   const onProfile = (e) => {
     e.preventDefault()
-    navigate(`/profiles/${comment.user}`)
+    navigate(`/profiles/${comment && comment.user}`)
   }
 
 
@@ -48,26 +54,20 @@ const Comment = ({ post, comment }) => {
             </IconContext.Provider> */}
             <img src={comment && comment.avatar} alt="" style={{ width: "1.5rem", borderRadius: "50%" }} />
           </span>
-          <p>{comment.name}</p>
+          <p>{comment && comment.name}</p>
         </div>
         <div className='comment-content'>
           <img src={comment.image} alt="" style={{ width: "30%" }} />
-          <p>
+          <div>
             {
               !edit ? comment.text :
-                <EditComment singlePost={post} singleComment={comment} />
+                <EditComment singlePost={post} singleComment={comment} pullData={pullData}/>
             }
-          </p>
+          </div>
           <p className="comment-time">
             <Moment format='DD/MM/YYYY  HH:mm '>{comment.date}</Moment>
           </p>
         </div>
-        {/* <button onClick={onEdit} type='submit'>
-            Edit
-          </button>
-          <button onClick={onDelete} type='submit'>
-            Delete
-          </button> */}
         <div className="content-right-footer">
           {/*Edit post icon*/}
           {

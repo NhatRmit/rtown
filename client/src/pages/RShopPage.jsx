@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import Layout from "../components/Layout";
-import RItemsSection from "../components/RShop/RItemsSection";
 import RPointsSection from "../components/RShop/RPointsSection";
 
 import "./RShopPage.css";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../actions/profile";
-import { getItems, getItemByProfile } from "../actions/item";
+import { getItems } from "../actions/item";
 import RItem from '../components/RShop/RItem'
 
 const RShopPage = () => {
@@ -30,7 +28,7 @@ const RShopPage = () => {
               {
                 items && items.map(
                   item =>
-                    <div className="content-tabs">
+                    <div key={item._id} className="content-tabs">
                       <RItem item={item} isMyItem={false}/>
                     </div>
                 )

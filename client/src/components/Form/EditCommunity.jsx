@@ -17,6 +17,7 @@ const EditCommunity = () => {
     const community = useSelector(state => state.community.community)
 
     const [formData, setFormData] = useState(initialState)
+    const [uploadFile, setUploadFile] = useState(null)
 
     const {
         communityName,
@@ -25,11 +26,19 @@ const EditCommunity = () => {
 
     const onSubmit = e => {
         e.preventDefault()
-        dispatch(updateCommunity(community_id, formData, navigate))
+        let formdata = new FormData()
+        formdata.append('communityName', communityName)
+        formdata.append('description', description)
+        formdata.append('file', uploadFile)
+        dispatch(updateCommunity(community_id, formdata, navigate))
     }
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    const onChangeImage = e => {
+        setUploadFile(e.target.files[0])
     }
 
     const onGoBack = e => {
@@ -39,9 +48,6 @@ const EditCommunity = () => {
 
     useEffect(() => {
         if (!community) dispatch(getCommunityById(community_id))
-
-        // if we finished loading and we do have a profile
-        // then build our profileData
         if (community) {
             const textData = { ...initialState };
             for (const key in community) {
@@ -76,6 +82,9 @@ const EditCommunity = () => {
                         onChange={onChange}
                         name='description'
                     />
+                </div>
+                <div className='communityDescription'>
+                    <input type="file" onChange={onChangeImage} />
                 </div>
                 <div className="btn-wrapper">
                     <button type='submit' className="submit-btn">Submit</button>

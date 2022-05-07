@@ -14,10 +14,6 @@ const ActiveFriend = ({ user, setCurrentFriend }) => {
                          <img src={`./image/${user.userInfo.image}`} alt='' />
                          <div className='active-icon'></div>
                     </div>
-
-
-
-
                </div>
 
           </div>

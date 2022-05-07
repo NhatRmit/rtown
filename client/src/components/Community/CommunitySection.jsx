@@ -1,11 +1,5 @@
 import "./CommunitySection.css";
-import { Link, useNavigate } from "react-router-dom";
-import { GrAddCircle } from "react-icons/gr";
-import { IconContext } from "react-icons/lib";
-import logo1 from "../Newsfeed/media/badminton-club-logo.jpg";
-import logo2 from "../Newsfeed/media/fintech-club-logo.jpg";
-import logo3 from "../Newsfeed/media/mass-media-club-logo.jpg";
-import logo4 from "../Newsfeed/media/mobi-logo.jpg";
+import { useNavigate, useMatch } from "react-router-dom";
 
 const CommunitySection = ({ community }) => {
   const navigate = useNavigate()
@@ -13,18 +7,28 @@ const CommunitySection = ({ community }) => {
     e.preventDefault()
     navigate(`/communities/${community._id}`)
   }
+  const newsfeed = useMatch('/newsfeed')
   return (
-    <div className='community-list-container'>
 
-      <div className='joined-community'>
-        <span onClick={onClick} className='community'>
-          <Link to='/community'>
+    newsfeed ?
+      <div className='community-list-container' >
+        <div className='joined-community' >
+          <span onClick={onClick} className='community'>
             {" "}
-            <img src={community && community.avatar} alt='Community logo' className='community-logo' />
-          </Link>
-        </span>
+            <img src={(community && community.avatar)} alt='Community logo' className='community-logo' />
+          </span>
+        </div>
       </div>
-    </div>
+      :
+      <div className="community-item-container">
+        <div onClick={onClick} className='community-item-joined-community'>
+          <span className='community-item-community'>
+            {" "}
+            <img src={community.communityId && community.communityId.avatar} alt='Community logo' className='community-logo' />
+          </span>
+        </div>
+      </div>
+
   );
 };
 

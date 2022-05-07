@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-const { getFriends, messageUploadDB, messageGet, deliveredMessage } = require('../../controllers/messengerController');
 const { auth } = require('../../middlewares/authMiddleware');
+const { message } = require('../../controllers/messengerController');
 
-router.get('/get-friends', auth, getFriends);
-router.post('/send-message', auth, messageUploadDB);
-router.get('/get-message/:id', auth, messageGet);
-router.post('/delivered-message', auth, deliveredMessage);
+
+router.post('/send-message', auth, message.messageUploadDB);
+router.post('/delivered-message', auth, message.deliveredMessage);
+
+router.get('/get-friends', auth, message.getFriends);
+router.get('/get-message/:id', auth, message.messageGet);
 
 module.exports = router;

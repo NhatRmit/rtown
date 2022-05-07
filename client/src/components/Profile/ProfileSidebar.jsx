@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Spinner from '../Layout/Spinner'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import CommunityItem from '../Communities/CommunityItem'
+import { useDispatch } from 'react-redux'
+import CommunitySection from '../Community/CommunitySection'
 import ProfileAvatar from './ProfileAvatar'
-import { getAllCommunities, getCommunityById, getMyCommunities } from '../../actions/community'
+import { getMyCommunities } from '../../actions/community'
 import { BsFillChatDotsFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 const ProfileSidebar = ({ profile, loading, communities }) => {
@@ -38,9 +38,8 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                         </div>
                     </div>
                     {communities.map(community => {
-                        return (
-                            
-                            <CommunityItem key={community._id} community={community} />
+                        return (                            
+                            <CommunitySection key={community._id} community={community} />
                         )
                     }
                     )}

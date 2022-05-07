@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getPosts } from '../../actions/post'
 import { getProfile } from '../../actions/profile'
 import Spinner from '../Layout/Spinner'
 import PostsSection from '../Post/PostsSection'
@@ -11,8 +10,6 @@ import { getMyPosts } from "../../actions/post";
 
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
-    // const profile = useSelector(state => state.profile.profile)
-    const items = useSelector(state => state.item.items)
     const auth = useSelector(state => state.auth)
     const { userId } = useParams()
     const dispatch = useDispatch()
@@ -28,9 +25,8 @@ const ProfileMain = ({ profile, loading }) => {
         dispatch(getMyPosts())
     }
     useEffect(() => {
-        dispatch(getPosts())
+        dispatch(getMyPosts())
         dispatch(getProfile())
-        // dispatch(getItems())
     }, [dispatch])
 
     return (
@@ -62,15 +58,12 @@ const ProfileMain = ({ profile, loading }) => {
                                 </div>
 
                                 <div className='content-tabs'>
-                                    <div
-                                        className={
-                                            toggleState === 1 ? "content  active-content" : "content"
-                                        }>
+                                    <div className={toggleState === 1 ? "content  active-content" : "content"}>
                                         {
                                             posts.map(post =>
-                                                post.user === userId &&
-                                                <div>
-                                                    <PostsSection key={post._id} post={post} />
+                                                post.user._id === userId &&
+                                                <div key={post._id}>
+                                                    <PostsSection post={post} />
                                                 </div>
                                             )
                                         }
@@ -81,8 +74,8 @@ const ProfileMain = ({ profile, loading }) => {
                                             toggleState === 2 ? "content  active-content" : "content"
                                         }>
                                         {
-                                            profile && profile.itemList.map(myItem =>
-                                                <div className='displayedItems'>
+                                            profile && profile.itemList.map((myItem) =>
+                                                <div key={myItem._id} className='displayedItems'>
                                                     <RItem myItem={myItem} isMyItem={true} />
                                                     <RedeemedButton />
                                                 </div>

@@ -8,6 +8,7 @@ import RPointsPolicyPage from "./pages/legal/PrivacyPolicyPage";
 import CommunityRequestPage from "./pages/community/CommunityRequestPage";
 import CommunityPage from "./pages/community/CommunityPage"
 import RShopPage from "./pages/RShopPage"
+import AdminProfilePage from "./pages/profile/AdminProfilePage"
 
 const pages = {
   newsfeed: {
@@ -59,6 +60,11 @@ const pages = {
     name: "R-Shop Page",
     link: "/rshop",
     component: <RShopPage/>
+  },
+  AdminProfilePage: {
+    name: "Admin Profile Page",
+    link: "/admin-profile",
+    component: <AdminProfilePage/>
   }
 };
 

@@ -82,3 +82,7 @@
     padding: 0.5rem 0;
 }
 
+.comment-section>h3 {
+    font-family: var(--body-font);
+    padding-bottom: 0.5rem;
+}

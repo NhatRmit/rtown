@@ -13,9 +13,6 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
-        type: String
-    },
     image: {
         type: String
     },
@@ -44,7 +41,6 @@ const postSchema = mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'user'
-
             },
             text: {
                 type: String,
@@ -58,7 +54,6 @@ const postSchema = mongoose.Schema({
             },
             image: {
                 type: String, 
-                default: ''
             },
             date: {
                 type: Date,

@@ -1,45 +1,36 @@
 const express = require('express')
 const router = express.Router()
-const {getPosts, editComment, searchPost, getMyPosts, filterTrendingPost, createPost, editPost, upvotePost, removeupvotePost, downvotePost, deletePost, createComment, deleteComment, getPostById, createEvent, getCommentById, checkOut, getCommunityPosts, createCommunityPost} = require('../../controllers/postController')
+const {
+    post
+} = require('../../controllers/postController')
 
-const {auth} = require('../../middlewares/authMiddleware')
+const { auth } = require('../../middlewares/authMiddleware')
+const upload = require('../../middlewares/uploadMiddleware')
 
-router.get('/', getPosts)
+router.post('/', upload.single("file"), auth, post.createPost)
 
-router.get('/postCommunity/:community_id', getCommunityPosts)
+router.get('/', auth, post.getPosts)
+router.get('/filter', auth, post.filterPost)
+router.get('/search', auth, post.searchPost)
+router.get('/myPosts', auth, post.getMyPosts)
+router.get('/:post_id', auth, post.getPostById)
 
-router.get('/myPosts', auth, getMyPosts)
+router.put('/update/:post_id', upload.single("file"), auth, post.editPost)
+router.put('/upvote/:post_id', auth, post.upvotePost)
+router.put('/removeupvote/:post_id', auth, post.removeupvotePost)
+router.put('/downvote/:post_id', auth, post.downvotePost)
 
-router.get('/filter', filterTrendingPost)
+router.delete('/:post_id', auth, post.deletePost)
 
-router.get('/search', searchPost)
+router.post('/postCommunity/:community_id', upload.single("file"), auth, post.createCommunityPost)
+router.get('/postCommunity/:community_id', auth, post.getCommunityPosts)
 
-router.get('/:id', auth, getPostById)
+router.post('/comment/:post_id', upload.single("file"), auth, post.createComment)
+router.get('/comment/:post_id/:comment_id', auth, post.getCommentById)
+router.put('/comment/edit/:post_id/:comment_id', upload.single('file'), auth, post.editComment)
+router.delete('/comment/:post_id/:comment_id', auth, post.deleteComment)
 
-router.get('/:post_id/:comment_id', auth, getCommentById)
-
-router.post('/', auth, createPost)
-
-router.post('/postCommunity/:community_id', auth, createCommunityPost)
-
-router.put('/update/:post_id', auth, editPost)
-
-router.put('/editcomment/:post_id/:comment_id', auth, editComment)
-
-router.put('/upvote/:id', auth, upvotePost)
-
-router.put('/removeupvote/:id', auth, removeupvotePost)
-
-router.put('/downvote/:id', auth, downvotePost)
-
-router.delete('/:id',auth ,deletePost)
-
-router.post('/comment/:id', auth, createComment)
-
-router.delete('/comment/:id/:comment_id', auth, deleteComment)
-
-router.post('/event/:community_id', auth, createEvent)
-
-router.put('/event/checkout/:post_id', auth, checkOut)
+router.post('/event/:community_id', upload.single("file"), auth, post.createEvent)
+router.put('/event/checkout/:post_id', auth, post.checkOut)
 
 module.exports = router

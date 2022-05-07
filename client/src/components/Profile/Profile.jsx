@@ -20,19 +20,6 @@ const Profile = () => {
 
     return (
         <Layout header footer>
-            {/* <section>
-                <div className='blank-profile'></div>
-
-                <div className='main-container-profile'>
-                    <ProfileMain loading={loading} profile={profile} />
-                </div>
-
-                <div className='side-container-profile'>
-                    <ProfileSidebar loading={loading} profile={profile} />
-                </div>
-
-                <div className='blank-profile'></div>
-            </section> */}
             <div className='profile-container'>
                 <div className='profile-left-container'>
                     <ProfileMain loading={loading} profile={profile} communities={communities}/>

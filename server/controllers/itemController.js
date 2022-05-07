@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Item = require('../models/itemModel')
 const Profile = require('../models/profileModel');
+
 const getItems = asyncHandler(async (req, res) => {
     try {
         const items = await Item.find().sort({ Rpoint: -1 });
@@ -12,9 +13,12 @@ const getItems = asyncHandler(async (req, res) => {
 
 const createItem = asyncHandler(async (req, res) => {
     try {
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const newItem = new Item({
             name: req.body.name,
-            Rpoint: req.body.Rpoint
+            Rpoint: req.body.Rpoint,
+            image: imgUrl,
         })
 
         const item = await newItem.save()
@@ -72,10 +76,12 @@ const getItemByProfile = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {
+const item = {
     getItems,
     createItem,
     buyItem,
     usedItem,
     getItemByProfile,
 }
+
+module.exports = { item }

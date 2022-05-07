@@ -8,8 +8,10 @@ const getAllCommunity = asyncHandler(async (req, res) => {
         const communities = await Community
             .aggregate([
                 { "$addFields": { "membersCount": { "$size": "$members" } } },
-                { "$sort": { "membersCount": -1 } }
+                { "$sort": { "membersCount": -1 } },
             ])
+
+        await Community.populate(communities, { path: 'user' })
 
         res.status(200).json(communities)
     } catch (err) {
@@ -20,7 +22,7 @@ const getAllCommunity = asyncHandler(async (req, res) => {
 
 const getCommunityById = asyncHandler(async (req, res) => {
     try {
-        const community = await Community.findById(req.params.community_id)
+        const community = await Community.findById(req.params.community_id).populate({ path: 'user' })
 
         if (!community) {
             res.status(400).json({ msg: 'Community Not Found' })
@@ -55,14 +57,16 @@ const createCommunityRequest = asyncHandler(async (req, res) => {
 
 const createCommunity = asyncHandler(async (req, res) => {
     try {
+        if (req.file === undefined) return res.send("you must select a file.");
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password')
-        const profile = await Profile.findOne({user: req.user.id})
+        const profile = await Profile.findOne({ user: req.user.id })
+
         const newCommunity = new Community({
             communityName: req.body.communityName,
             description: req.body.description,
-            name: user.usernameOrEmail,
-            user: req.user.id
-            
+            user: req.user.id,
+            avatar: imgUrl
         })
 
         profile.community.unshift({
@@ -86,6 +90,7 @@ const createCommunity = asyncHandler(async (req, res) => {
 })
 
 const updateCommunity = asyncHandler(async (req, res) => {
+
     const {
         communityName,
         description,
@@ -100,14 +105,16 @@ const updateCommunity = asyncHandler(async (req, res) => {
 
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
+    if (req.file) 
+        communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
 
+    
     let community = await Community.findOne({ user: req.user.id })
     try {
         if (community) {
             community = await Community.findOneAndUpdate(
-                { user: req.user.id },
+                { _id: req.params.community_id },
                 { $set: communityFields },
-                { new: true }
             )
         }
 
@@ -139,17 +146,8 @@ const deleteCommunity = asyncHandler(async (req, res) => {
 
 const getMyCommunities = asyncHandler(async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.params.user_id })
+        const profile = await Profile.findOne({ user: req.params.user_id }).populate('community.communityId')
         res.status(200).json(profile.community)
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
-
-const createEventCommunity = asyncHandler(async (req, res) => {
-    try {
 
     } catch (err) {
         console.error(err.message);
@@ -174,14 +172,15 @@ const getCommunityMember = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = {
+const community = {
     getAllCommunity,
     getCommunityById,
     createCommunity,
     updateCommunity,
     deleteCommunity,
     getMyCommunities,
-    createEventCommunity,
     getCommunityMember,
-    createCommunityRequest
+    createCommunityRequest,
 }
+
+module.exports = { community }

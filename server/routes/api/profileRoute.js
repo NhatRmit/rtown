@@ -1,36 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const {auth} = require('../../middlewares/authMiddleware')
-const { 
-    getUserProfile, 
-    getProfile, 
-    getAllProfiles, 
-    createProfile,
-    updateProfile, 
-    joinCommunity, 
-    leaveCommunity,
-    increaseRpoint,
+const { auth } = require('../../middlewares/authMiddleware')
+const { profile } = require('../../controllers/profileController')
 
-} = require('../../controllers/profileController')
 
-router.get('/myProfile', auth, getProfile)
+router.post('/', auth, profile.createProfile)
 
-router.get('/:user_id', auth, getUserProfile)
+router.get('/', auth, profile.getAllProfiles)
+router.get('/myProfile', auth, profile.getProfile)
+router.get('/:user_id', auth, profile.getUserProfile)
 
-router.get('/', getAllProfiles)
-
-router.post('/', auth, createProfile)
-
-router.put('/update', auth, updateProfile)
-
-router.put('/join/:community_id', auth, joinCommunity)
-
-router.put('/leave/:community_id', auth, leaveCommunity)
-
-router.put('/rpoint/increase/:profile_id/:post_id', increaseRpoint)
-
-// router.put('/rpoint/buy/:item_id', auth, buyItem)
-
-// router.put('/rpoint/used/:item_id', auth, usedItem)
+router.put('/update', auth, profile.updateProfile)
+router.put('/join/:community_id', auth, profile.joinCommunity)
+router.put('/leave/:community_id', auth, profile.leaveCommunity)
 
 module.exports = router

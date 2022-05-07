@@ -1,5 +1,6 @@
 import "./PostsSection.css";
-import { BiUpvote, BiDownvote, BiUserCircle } from 'react-icons/bi'
+import { BiUpvote, BiDownvote } from 'react-icons/bi'
+import { BsPatchCheckFill } from 'react-icons/bs'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
 import { MdReportGmailerrorred } from 'react-icons/md'
@@ -9,11 +10,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { deletePost, clearPost, getPostById, addUpvote, addDownvote, removeUpvote, checkOut, } from '../../actions/post'
-import EditPost from '../Posts/EditPost'
-import { getProfileById } from '../../actions/profile'
+import { getPosts, deletePost, clearPost, addUpvote, removeUpvote, checkOut, } from '../../actions/post'
+import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
-import CommentForm from "../../post/CommentForm";
+import CommentForm from '../Comment/CommentForm'
 
 const PostsSection = ({ post }) => {
   const navigate = useNavigate()
@@ -21,11 +21,13 @@ const PostsSection = ({ post }) => {
   const auth = useSelector(state => state.auth)
   const [edit, setEdit] = useState(false)
 
+  const pullData = (data) => {
+    setEdit(data)
+  }
+
   const onEdit = e => {
     e.preventDefault()
     setEdit(true)
-    // navigate(`/posts/${post._id}`)
-    // dispatch(getPostById(post._id))
     dispatch(clearPost())
   }
   const onDelete = (e) => {
@@ -34,7 +36,7 @@ const PostsSection = ({ post }) => {
   }
   const onProfile = (e) => {
     e.preventDefault()
-    navigate(`/profiles/${post.user}`)
+    navigate(`/profiles/${post.user._id}`)
   }
   const onUpvote = (e) => {
     e.preventDefault()
@@ -61,19 +63,39 @@ const PostsSection = ({ post }) => {
     dispatch(checkOut(post._id, auth._id, navigate))
   }
 
+  const checkoutIndex = post && post.checkouts
+    .map(item => item.user)
+    .indexOf(auth._id)
+
+  const [time, setTime] = useState(null)
+
+  useEffect(() => {
+    // dispatch(getPosts())
+    let timer = setInterval(() => {
+      let count = 0
+      count++
+      setTime(new Date())
+      if (count === 10) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    }
+  }, [])
+
   return (
     <>
       <div className='post-container'>
         <div className='vote-container'>
           <span className='upvote-icon' onClick={handleUpvote}>
-            {/*CHANGE ICONS FOR ME */}
             <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
               <BiUpvote />
             </IconContext.Provider>
           </span>
           <p>{post.upvotes.length}</p>
           <span className='downvote-icon' onClick={handleDownvote}>
-            {/*CHANGE ICONS FOR ME */}
             <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
               <BiDownvote />
             </IconContext.Provider>
@@ -82,7 +104,6 @@ const PostsSection = ({ post }) => {
 
         <div className='content-container'>
           <div className='content-section-header'>
-            {/*CHANGE ICONS FOR ME */}
             <div className="content-left-header">
               <span className="users-icon" onClick={onProfile}>
                 <label htmlFor='username'>
@@ -92,12 +113,10 @@ const PostsSection = ({ post }) => {
                         <FaUserCircle />
                       </IconContext.Provider> :
                       <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem", borderRadius: "50%" }} />
-
                   }
-
                 </label>
                 <p id='username' className='username'>
-                  {post.name && post.name}
+                  {post && post.user.usernameOrEmail}
                 </p>
               </span>
 
@@ -108,27 +127,30 @@ const PostsSection = ({ post }) => {
               </p>
             </div>
             {
-              post && post.Rpoint !== 0 ?
+              (post && post.Rpoint !== 0) && (post.endTime && (new Date(post.endTime)) <= time) ?
                 <div className="content-right-header">
-                  <button onClick={onCheckout}>Check Out</button>
+                  {
+                    (checkoutIndex === -1) ?
+                      <button className="checkout" onClick={onCheckout}>Check Out</button>
+                      :
+                      <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                        <BsPatchCheckFill />
+                      </IconContext.Provider>
+                  }
                 </div> : <></>
             }
-
-
           </div>
-
           <div className='post-content'>
             <img src={post.image} alt="" style={{ width: "30%" }} />
-            <p>
+            <div>
               {
                 !edit ? post.text :
-                  <EditPost singlePost={post} />
+                  <EditPost singlePost={post} pullData={pullData}/>
               }
-            </p>
+            </div>
           </div>
           <div className='content-section-footer'>
             <div className="content-left-footer">
-              {/*Report icon*/}
               <span className='icon'>
                 <Link to='/'>
                   <label htmlFor='report'>
@@ -142,35 +164,31 @@ const PostsSection = ({ post }) => {
                 </p>
               </span>
             </div>
-
             <div className="content-right-footer">
-              {/*Edit post icon*/}
               {
-                auth._id === post.user &&
-                <span className='icon' onClick={onEdit}>
-                  <label htmlFor='edit-post'>
-                    <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                      <AiFillEdit />
-                    </IconContext.Provider>
-                  </label>
-                  <p id='edit-post' className='icon-label'>
-                    Edit
-                  </p>
-                </span>
-              }
-              {/*Delete post icon*/}
-              {
-                auth._id === post.user &&
-                <span className='icon' onClick={onDelete}>
-                  <label htmlFor='delete-post'>
-                    <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                      <AiFillDelete />
-                    </IconContext.Provider>
-                  </label>
-                  <p id='delete-post' className='icon-label'>
-                    Delete
-                  </p>
-                </span>
+                auth._id === post.user._id &&
+                <>
+                  <span className='icon' onClick={onEdit}>
+                    <label htmlFor='edit-post'>
+                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                        <AiFillEdit />
+                      </IconContext.Provider>
+                    </label>
+                    <p id='edit-post' className='icon-label'>
+                      Edit
+                    </p>
+                  </span>
+                  <span className='icon' onClick={onDelete}>
+                    <label htmlFor='delete-post'>
+                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
+                        <AiFillDelete />
+                      </IconContext.Provider>
+                    </label>
+                    <p id='delete-post' className='icon-label'>
+                      Delete
+                    </p>
+                  </span>
+                </>
               }
             </div>
           </div>

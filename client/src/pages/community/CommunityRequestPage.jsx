@@ -1,6 +1,5 @@
 import React from 'react'
 import Layout from '../../components/Layout'
-// import Filter from '../components/Filter/Filter'
 import RequestForm from '../../components/Form/RequestForm'
 
 
