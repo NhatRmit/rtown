@@ -6,7 +6,7 @@ const AdminProfile = () => {
     <>
       <div className='adminProfile-section'>
         <div className='admin-pic'></div>
-        <div class='admin-profile'>
+        <div className='admin-profile'>
           <p className='adminInfo-label'>Full Name</p>
           <p className="adminInfo">ABC</p>
 

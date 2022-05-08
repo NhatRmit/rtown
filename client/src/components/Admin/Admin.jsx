@@ -3,7 +3,7 @@ import {useState} from "react";
 import "./Admin.css";
 import AddAdmin from "./AddAdmin";
 import AdminProfile from "./AdminProfile";
-
+import PostsSection from "../Post/PostsSection";
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
 
@@ -33,6 +33,15 @@ const Admin = () => {
                 onClick={() => toggleTab(2)}>
                 Add Admin Profile
               </button>
+              <button
+                className={
+                  toggleState === 3
+                    ? "admin-tabs admin-active-tabs"
+                    : "newsfeed-tabs"
+                }
+                onClick={() => toggleTab(3)}>
+                Posts
+              </button>
             </div>
 
             <div className='admin-content-tabs'>
@@ -52,6 +61,14 @@ const Admin = () => {
                     : "admin-content"
                 }>
                 <AddAdmin />
+              </div>
+              <div
+                className={
+                  toggleState === 3
+                    ? "admin-content  admin-active-content"
+                    : "admin-content"
+                }>
+                <PostsSection />
               </div>
             </div>
           </div>
