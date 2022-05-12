@@ -45,7 +45,6 @@ const AdminItem = () => {
                             </tr>
                         )
                     }
-
                 </table>
             </div>
         </>

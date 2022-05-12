@@ -6,7 +6,7 @@ import Spinner from '../Layout/Spinner'
 import PostsSection from '../Post/PostsSection'
 import RItem from "../../components/RShop/RItem";
 import RedeemedButton from "../Buttons/RedeemedButton";
-import { getMyPosts } from "../../actions/post";
+import { getMyPosts, getUserPosts } from "../../actions/post";
 
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
@@ -14,6 +14,7 @@ const ProfileMain = ({ profile, loading }) => {
     const { userId } = useParams()
     const dispatch = useDispatch()
     const [toggleState, setToggleState] = useState(1);
+
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -26,8 +27,9 @@ const ProfileMain = ({ profile, loading }) => {
     }
     useEffect(() => {
         dispatch(getMyPosts())
+        dispatch(getUserPosts(userId))
         dispatch(getProfile())
-    }, [dispatch])
+    }, [dispatch, userId])
 
     return (
         <>

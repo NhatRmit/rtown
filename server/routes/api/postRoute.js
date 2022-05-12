@@ -13,6 +13,7 @@ router.get('/', auth, post.getPosts)
 router.get('/filter', auth, post.filterPost)
 router.get('/search', auth, post.searchPost)
 router.get('/myPosts', auth, post.getMyPosts)
+router.get('/userPosts/:user_id', auth, post.getUserPosts)
 router.get('/:post_id', auth, post.getPostById)
 
 router.put('/update/:post_id', upload.single("file"), auth, post.editPost)

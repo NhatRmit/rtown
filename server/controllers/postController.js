@@ -405,6 +405,21 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
+const getUserPosts = asyncHandler(async (req, res) => {
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
+
+    try {
+        const posts = await Post.find({ user: req.params.user_id }).sort({ date: -1 }).populate(query)
+        res.status(200).json(posts)
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
+
+
 const post = {
     getPosts,
     getMyPosts,
@@ -425,7 +440,8 @@ const post = {
     checkIn,
     checkOut,
     createCommunityPost,
-    getCommunityPosts
+    getCommunityPosts,
+    getUserPosts,
 }
 
 module.exports = { post } 

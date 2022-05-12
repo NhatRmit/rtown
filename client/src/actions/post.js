@@ -400,3 +400,18 @@ export const checkOut = (post_id, profile_id, navigate) => async dispatch => {
         })
     }
 }
+
+export const getUserPosts = (user_id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/posts/userPosts/${user_id}`)
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
