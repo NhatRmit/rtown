@@ -7,6 +7,9 @@ import {
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
     GET_MY_COMMUNITIES,
+    ADMIN_GETALL_COMMUNITY,
+    ADMIN_ACCEPT_COMMUNITY_REQUEST,
+    ADMIN_DELETE_COMMUNITY
 } from '../actions/types'
 
 const initialState = {
@@ -45,7 +48,7 @@ function communityReducer(state = initialState, action) {
                 community: payload,
                 loading: false
             }
-
+        case ADMIN_DELETE_COMMUNITY:
         case DELETE_COMMUNITY:
             return {
                 ...state,
@@ -65,7 +68,20 @@ function communityReducer(state = initialState, action) {
                 error: payload,
                 loading: false,
             }
-
+        case ADMIN_GETALL_COMMUNITY:
+                return{
+                    ...state,
+                    communities: payload,
+                    loading: false,
+                };
+        case ADMIN_ACCEPT_COMMUNITY_REQUEST:
+                return{
+                    ...state,
+                    community: payload,
+                    loading: false
+                }
+        
+            
         default:
             return state
     }
