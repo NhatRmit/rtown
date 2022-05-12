@@ -16,7 +16,7 @@ import RequestEvent from './components/Form/RequestEvent'
 import RShopPage from './pages/RShopPage'
 import AdminProfilePage from './pages/profile/AdminProfilePage'
 import Modal from 'react-modal'
-import { getAllProfiles } from './actions/profile'
+import { getAllProfiles, getProfile } from './actions/profile'
 
 Modal.setAppElement('#root');
 

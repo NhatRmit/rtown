@@ -369,6 +369,22 @@ export const createEvent = (formData, communityId, navigate) => async dispatch =
     }
 }
 
+export const checkIn = (post_id, profile_id, navigate) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/event/checkin/${post_id}`)
+        dispatch({
+            type: CHECK_OUT,
+            payload: res.data
+        })
+        navigate(`/profiles/${profile_id}`)
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
 export const checkOut = (post_id, profile_id, navigate) => async dispatch => {
     try {
         const res = await axios.put(`/api/posts/event/checkout/${post_id}`)

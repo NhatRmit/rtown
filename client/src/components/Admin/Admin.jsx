@@ -1,7 +1,8 @@
 import React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import "./Admin.css";
 import AddAdmin from "./AddAdmin";
+import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
 
 const Admin = () => {
@@ -33,6 +34,15 @@ const Admin = () => {
                 onClick={() => toggleTab(2)}>
                 Add Admin Profile
               </button>
+              <button
+                className={
+                  toggleState === 3
+                    ? "admin-tabs admin-active-tabs"
+                    : "item-tabs"
+                }
+                onClick={() => toggleTab(3)}>
+                Item Dashboard
+              </button>
             </div>
 
             <div className='admin-content-tabs'>
@@ -52,6 +62,14 @@ const Admin = () => {
                     : "admin-content"
                 }>
                 <AddAdmin />
+              </div>
+              <div
+                className={
+                  toggleState === 3
+                    ? "admin-content  admin-active-content"
+                    : "admin-content"
+                }>
+                <AdminItem />
               </div>
             </div>
           </div>

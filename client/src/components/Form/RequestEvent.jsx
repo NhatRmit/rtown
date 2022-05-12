@@ -16,6 +16,7 @@ const RequestEvent = () => {
     })
 
     const [endTime, setEndTime] = useState(null)
+    const [startTime, setStartTime] = useState(null)
     const [uploadFile, setUploadFile] = useState(null)
 
     const {
@@ -29,6 +30,7 @@ const RequestEvent = () => {
         formdata.append("file", uploadFile);
         formdata.append("text", text);
         formdata.append("Rpoint", Rpoint);
+        formdata.append("startTime", startTime);
         formdata.append("endTime", endTime);
         dispatch(createEvent(formdata, community_id, navigate))
     }
@@ -36,8 +38,12 @@ const RequestEvent = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const onChangeTime = (e, time) => {
+    const onChangeEndTime = (e, time) => {
         setEndTime(time)
+    }
+
+    const onChangeStartTime = (e, time) => {
+        setStartTime(time)
     }
 
     const onChangeImage = e => {
@@ -77,10 +83,11 @@ const RequestEvent = () => {
                         />
                     </div>
                     <div>
+                        <label className="label">Start Time</label>
                         <Flatpickr
                             data-enable-time
-                            value={endTime}
-                            onChange={onChangeTime}
+                            value={startTime}
+                            onChange={onChangeStartTime}
                             options={
                                 {
                                     minDate: 'today'
@@ -88,7 +95,23 @@ const RequestEvent = () => {
                             }
                         />
                     </div>
-                    <input type="file" onChange={onChangeImage}/>
+                    <br />
+                    <div>
+                        <label className="label">End Time</label>
+                        <br />
+                        <Flatpickr
+                            data-enable-time
+                            value={endTime}
+                            onChange={onChangeEndTime}
+                            options={
+                                {
+                                    minDate: 'today'
+                                }
+                            }
+                        />
+                    </div>
+                    <br />
+                    <input type="file" onChange={onChangeImage} />
                     <div className="btn-wrapper">
                         <button type='submit' className="submit-btn">Submit</button>
                         <button onClick={onGoBack} className="cancel-btn">Cancel</button>

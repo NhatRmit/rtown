@@ -31,6 +31,7 @@ router.put('/comment/edit/:post_id/:comment_id', upload.single('file'), auth, po
 router.delete('/comment/:post_id/:comment_id', auth, post.deleteComment)
 
 router.post('/event/:community_id', upload.single("file"), auth, post.createEvent)
+router.put('/event/checkin/:post_id', auth, post.checkIn)
 router.put('/event/checkout/:post_id', auth, post.checkOut)
 
 module.exports = router
