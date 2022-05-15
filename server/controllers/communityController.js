@@ -38,13 +38,14 @@ const getCommunityById = asyncHandler(async (req, res) => {
 const createCommunityRequest = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({user: req.user.id})
         const newCommunityRequest = new Community({
             communityName: req.body.communityName,
             description: req.body.description,
             name: user.usernameOrEmail,
-            user: req.user.id
-            
+            user: req.user.id,
+            avatar: imgUrl
         })
         await newCommunityRequest.save()
         res.status(200).json(newCommunityRequest)

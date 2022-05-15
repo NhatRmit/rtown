@@ -3,7 +3,8 @@ import './RequestForm.css';
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addCommunity } from '../../actions/community';
+import { addCommunity, requestCreateCommunity } from '../../actions/community';
+
 
 const RequestForm = () => {
     const dispatch = useDispatch()
@@ -18,13 +19,24 @@ const RequestForm = () => {
         communityName,
         description
     } = formData
-    const onCreate = e => {
+    // const onCreate = e => {
+    //     e.preventDefault();
+    //     let formdata = new FormData();
+    //     formdata.append("file", uploadFile);
+    //     formdata.append("communityName", communityName);
+    //     formdata.append("description", description);
+    //     dispatch(addCommunity(formdata, navigate))
+    // }
+
+    const onRequest = e => {
         e.preventDefault();
         let formdata = new FormData();
         formdata.append("file", uploadFile);
         formdata.append("communityName", communityName);
         formdata.append("description", description);
-        dispatch(addCommunity(formdata, navigate))
+        dispatch(requestCreateCommunity(formdata))
+        alert("Your Community Request Create Send Successfuly!");
+        navigate('/newsfeed')
     }
 
     const onChange = e => {
@@ -43,7 +55,7 @@ const RequestForm = () => {
     return (
         <div className="requestform-container">
             <h1 className="title">Create Community Request</h1>
-            <form className="form" onSubmit={onCreate} >
+            <form className="form" onSubmit={onRequest} >
                 <div className='communityName'>
                     <label className="label">Community Name</label>
                     <input

@@ -8,6 +8,7 @@ import {
     POST_ERROR,
     ADMIN_DELETE_COMMUNITY
 } from "./types"
+import { getAllCommunities } from "./community"
 import axios from 'axios'
 
 // Get all Community Request 
@@ -28,21 +29,16 @@ export const adminGetAllCommunityRequest = () => async dispatch => {
     }
 }
 // Community Request
-export const adminAcceptCommunityRequest = (community_id, formData, navigate) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }
+export const adminAcceptCommunityRequest = (community_id) => async dispatch => {
     try {
-        const res = await axios.put(`/api/admins/communityAccept/${community_id}`, formData, config)
+        const res = await axios.put(`/api/admins/communityAccept/${community_id}`)
 
         dispatch({
             type: ADMIN_ACCEPT_COMMUNITY_REQUEST,
             payload: res.data
         })
-        navigate(`/communities/${community_id}`)
-
+        dispatch(adminGetAllCommunityRequest())
+        dispatch(getAllCommunities())
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,

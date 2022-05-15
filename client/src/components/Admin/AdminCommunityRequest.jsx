@@ -1,13 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {adminGetAllCommunityRequest, deleteCommunityRequest} from "../../actions/admin"
-import EditButton from "../Buttons/EditButton";
-import DeleteButton from "../Buttons/DeleteButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux";
+import {adminGetAllCommunityRequest, deleteCommunityRequest, adminAcceptCommunityRequest} from "../../actions/admin"
+import { setRandomFallback } from "bcryptjs";
+
 
 
 const AdminCommunityRequest = ({community}) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     // const comunities = useSelector(state => state.community.communities)
 
     // useEffect(() => {
@@ -16,7 +18,13 @@ const AdminCommunityRequest = ({community}) => {
 
     const onDelete = e => {
         e.preventDefault()
-        // dispatch(deleteCommunityRequest(id))
+        dispatch(deleteCommunityRequest(community._id))
+        
+    }
+
+    const onAccept = e => {
+        e.preventDefault()
+        dispatch(adminAcceptCommunityRequest(community._id))  
         
     }
 
@@ -28,18 +36,16 @@ const AdminCommunityRequest = ({community}) => {
                                 <td>{community.communityName}</td>
                                 <td>{community.description}</td> 
                                 <td>
-                                    <EditButton />
+                                <button className="delete-btn" onClick={onAccept}>
+                                        ACCEPT
+                                </button>
                                 </td>
                                 <td>
-                                    <DeleteButton onClick ={(e) => {
-                                        e.preventDefault()
-                                        e.deleteCommunityRequest(community._id)
-                                    } } />
+                                <button className="delete-btn" onClick ={onDelete}>
+                                        DELETE
+                                </button>
                                 </td>
                             </tr>
-
-
-
             }
         </>
     )

@@ -7,7 +7,8 @@ import {
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
     GET_MY_COMMUNITIES,
-    GET_PROFILE
+    GET_PROFILE,
+    COMMUNITY_REQUEST_CREATE
 } from './types'
 
 import axios from 'axios'
@@ -154,6 +155,28 @@ export const joinCommunity = (community_id, profile_id, navigate) => async dispa
         // })
         dispatch(getCommunityById(community_id))
         navigate(`/profiles/${profile_id}`)
+
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const requestCreateCommunity = (formData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
+    try {
+        const res = await axios.post('/api/communities/createCommunityRequest', formData, config)
+
+        dispatch({
+            type: COMMUNITY_REQUEST_CREATE,
+            payload: res.data
+        })
 
     } catch (err) {
         dispatch({
