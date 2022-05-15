@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import "./Admin.css";
 import AddAdmin from "./AddAdmin";
+import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
 import EditButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
@@ -71,10 +71,10 @@ const Admin = () => {
                 className={
                   toggleState === 3
                     ? "admin-tabs admin-active-tabs"
-                    : "newsfeed-tabs"
+                    : "item-tabs"
                 }
                 onClick={() => toggleTab(3)}>
-                Posts
+                Item Dashboard
               </button>
             </div>
 
@@ -102,55 +102,7 @@ const Admin = () => {
                     ? "admin-content  admin-active-content"
                     : "admin-content"
                 }>
-                <div className='addAdmin-section'>
-                  <table className="table">
-                    <tr>
-                      <th>Text Content</th>
-                      <th>Images</th>
-
-                      <th>EDIT</th>
-                      <th>DELETE</th>
-                    </tr>
-
-                    {
-                      posts.map(post =>
-                        <tr key={post._id}>
-                          <td>
-                            {
-                              !edit ? post.text :
-                                <EditPost singlePost={post} pullData={pullData} />
-                            }
-                          </td>
-                          <td><img src={post.image} alt="" /></td>
-
-                          <td>
-                            <span className='icon' onClick={onEdit}>
-                              <label htmlFor='edit-post'>
-                                <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                                  <AiFillEdit />
-                                </IconContext.Provider>
-                              </label>
-                              <p id='edit-post' className='icon-label'>
-                                Edit
-                              </p>
-                            </span>
-                          </td>
-                          <td>
-                            <span className='icon' onClick={onDelete}>
-                              <label htmlFor='delete-post'>
-                                <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                                  <AiFillDelete />
-                                </IconContext.Provider>
-                              </label>
-                              <p id='delete-post' className='icon-label'>
-                                Delete
-                              </p>
-                            </span></td>
-                        </tr>
-                      )
-                    }
-                  </table>
-                </div>
+                <AdminItem />
               </div>
             </div>
           </div>

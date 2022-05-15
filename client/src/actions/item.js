@@ -40,7 +40,7 @@ export const getItemByProfile = () => async dispatch => {
 }
 
 
-export const buyItem = (item_id) => async dispatch => {
+export const buyItem = (item_id, navigate, auth) => async dispatch => {
     try {
         const res = await axios.put(`/api/items/buy/${item_id}`)
             
@@ -48,6 +48,9 @@ export const buyItem = (item_id) => async dispatch => {
             type: BUY_ITEM,
             payload: res.data
         })
+        dispatch(getItemByProfile())
+        navigate(`/profiles/${auth}`)
+
     } catch (error) {
         dispatch({
             type: ITEM_ERROR,
