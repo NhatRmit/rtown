@@ -1,16 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Admin.css";
 import AddAdmin from "./AddAdmin";
 import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
-import EditButton from "../Buttons/EditButton";
-import DeleteButton from "../Buttons/DeleteButton";
-
-import EditPost from '../Post/EditPost'
 import { clearPost, getPosts, deletePost } from '../../actions/post'
-import { IconContext } from 'react-icons/lib'
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
   const dispatch = useDispatch()
@@ -39,12 +34,6 @@ const Admin = () => {
     e.preventDefault()
     dispatch(deletePost(posts._id))
   }
-
-
-
-
-
-
   return (
     <>
       <div className='admin-section'>
