@@ -10,19 +10,20 @@ const LoginForm = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch()
-    const admin = useSelector(state => state.auth.admin)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-
+    const admin = useSelector(state => state.auth.admin)
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser(usernameOrEmail, password))
     }
 
-    if (!admin && isAuthenticated)
+    if (!admin && isAuthenticated){
         return <Navigate replace to='/newsfeed' />
+    }
 
-    if (admin && isAuthenticated)
+    if (admin && isAuthenticated){
         return <Navigate replace to='/admin-profile' />
+    }
 
     return (
         <div className={style["loginform-container"]}>

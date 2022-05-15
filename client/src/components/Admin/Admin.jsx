@@ -1,34 +1,52 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import "./Admin.css";
 import AddAdmin from "./AddAdmin";
 import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
 import AdminCommunityRequest from "./AdminCommunityRequest"
 import AdminCommunityList from "./AdminCommunityList"
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "../../actions/item"
 import ItemForm from "../Item/ItemForm"
 import { adminGetAllCommunityRequest } from "../../actions/admin"
 import { getAllCommunities } from "../../actions/community"
+import { clearPost, getPosts, deletePost } from '../../actions/post'
 
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
   const dispatch = useDispatch();
   const comunities = useSelector(state => state.community.communities)
   const items = useSelector(state => state.item.items)
-
+  const posts = useSelector(state => state.post.posts)
 
   useEffect(() => {
     dispatch(getItems());
     dispatch(adminGetAllCommunityRequest());
     dispatch(getAllCommunities());
-  }, [dispatch])
+    dispatch(getPosts())
+  })
+
 
   const toggleTab = (index) => {
     setToggleState(index);
   };
 
+
+  const [edit, setEdit] = useState(false)
+  const pullData = (data) => {
+    setEdit(data)
+  }
+  const onEdit = e => {
+    e.preventDefault()
+    setEdit(true)
+    dispatch(clearPost())
+  }
+
+  const onDelete = (e) => {
+    e.preventDefault()
+    dispatch(deletePost(posts._id))
+  }
   return (
     <>
       <div className='admin-section'>
