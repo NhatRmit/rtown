@@ -9,7 +9,8 @@ import {
     GET_MY_COMMUNITIES,
     ADMIN_GETALL_COMMUNITY,
     ADMIN_ACCEPT_COMMUNITY_REQUEST,
-    ADMIN_DELETE_COMMUNITY
+    ADMIN_DELETE_COMMUNITY,
+    COMMUNITY_REQUEST_CREATE
 } from '../actions/types'
 
 const initialState = {
@@ -80,7 +81,12 @@ function communityReducer(state = initialState, action) {
                     community: payload,
                     loading: false
                 }
-        
+        case COMMUNITY_REQUEST_CREATE:
+                return{
+                    ...state,
+                    community: payload,
+                    loading: false                   
+                }
             
         default:
             return state

@@ -4,11 +4,14 @@ import AddAdmin from "./AddAdmin";
 import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
 import AdminCommunityRequest from "./AdminCommunityRequest"
+import AdminCommunityList from "./AdminCommunityList"
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { adminGetAllCommunityRequest } from "../../actions/admin"
 import { getItems } from "../../actions/item"
 import ItemForm from "../Item/ItemForm"
+import { adminGetAllCommunityRequest } from "../../actions/admin"
+import { getAllCommunities } from "../../actions/community"
+
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
   const dispatch = useDispatch();
@@ -19,6 +22,7 @@ const Admin = () => {
   useEffect(() => {
     dispatch(getItems());
     dispatch(adminGetAllCommunityRequest());
+    dispatch(getAllCommunities());
   }, [dispatch])
 
   const toggleTab = (index) => {
@@ -71,18 +75,10 @@ const Admin = () => {
                     ? "admin-tabs admin-active-tabs"
                     : "item-tabs"
                 }
-                onClick={() => toggleTab(3)}>
+                onClick={() => toggleTab(5)}>
                 Community List
               </button>
-              <button
-                className={
-                  toggleState === 6
-                    ? "admin-tabs admin-active-tabs"
-                    : "item-tabs"
-                }
-                onClick={() => toggleTab(3)}>
-                Edit User Profile
-              </button>
+
             </div>
 
             <div className='admin-content-tabs'>
@@ -139,19 +135,40 @@ const Admin = () => {
                       <th>ACCEPT</th>
                       <th>DELETE</th>
                     </tr>
-
                     {comunities.map(community =>
 
                       <AdminCommunityRequest community={community} />
 
                     )}
-                  </table>
-                </div>
+                  </table> </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+              <div
+                className={
+                  toggleState === 5
+                    ? "admin-content  admin-active-content"
+                    : "admin-content"
+                }>
+                <div className='addAdmin-section'>
+                  <table className="table">
+                    <tr>
+                      <th>Community Name</th>
+                      <th>Community Description</th>
+                      <th>EDIT</th>
+                      <th>DELETE</th>
+                    </tr>
+
+                    {comunities.map(community =>
+
+                      <AdminCommunityList community={community} />
+
+                    )}
+                  </table> </div>
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
     </>
   );
 };
