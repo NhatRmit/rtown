@@ -76,12 +76,25 @@ const getItemByProfile = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteItem = asyncHandler(async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.item_id)
+        await item.remove()
+
+        res.status(200).json({ msg: "delete item successfully!" })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
 const item = {
     getItems,
     createItem,
     buyItem,
     usedItem,
     getItemByProfile,
+    deleteItem,
 }
 
 module.exports = { item }

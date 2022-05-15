@@ -82,6 +82,7 @@ export const updateCommunity = (community_id, formData, navigate) => async dispa
             payload: res.data
         })
         navigate(`/communities/${community_id}`)
+        alert("Your community is updated")
 
     } catch (err) {
         dispatch({
@@ -99,6 +100,7 @@ export const deleteCommunity = (community_id) => async dispatch => {
             type: DELETE_COMMUNITY,
             payload: community_id
         })
+        alert("You have deleted your community permanently")
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,

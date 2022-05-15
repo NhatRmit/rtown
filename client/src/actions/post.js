@@ -56,6 +56,8 @@ export const addComment = (postId, formData, navigate) => async dispatch => {
             payload: res.data
         });
         dispatch(getPosts())
+        alert("Comment is created Successfully!")
+
         // navigate('/')
         // dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
@@ -80,6 +82,8 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
             payload: res.data
         })
         dispatch(getPosts())
+        alert("Comment is edited Successfully!")
+
         // navigate('/')
 
     } catch (err) {
@@ -103,6 +107,8 @@ export const deleteComment = (postId, commentId, navigate) => async dispatch => 
             payload: res.data
         });
         dispatch(getPosts())
+        alert("Comment is deleted Successfully!")
+
         // navigate('/')
         // dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
@@ -127,6 +133,8 @@ export const addPost = formData => async dispatch => {
             payload: res.data
         })
         dispatch(getPosts())
+        alert("Post is created Successfully!")
+
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -147,6 +155,8 @@ export const addCommunityPost = (formData, communityId) => async dispatch => {
             payload: res.data
         })
         dispatch(getCommunityPosts(communityId))
+        alert("Post is created Successfully!")
+
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -162,6 +172,8 @@ export const deletePost = (id, navigate) => async dispatch => {
             type: DELETE_POST,
             payload: id
         });
+        alert("Post is deleted Successfully!")
+
     } catch (error) {
         dispatch({
             type: POST_ERROR,
@@ -186,6 +198,8 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
         })
 
         dispatch(getPosts())
+        alert("Post is edited Successfully!")
+
         // dispatch(setAlert('Post Updated', 'success'))
 
         // navigate('/')
@@ -361,6 +375,7 @@ export const createEvent = (formData, communityId, navigate) => async dispatch =
 
         })
         navigate(`/communities/${communityId}`)
+        alert("New event has been created")
     } catch (error) {
         dispatch({
             type: POST_ERROR,

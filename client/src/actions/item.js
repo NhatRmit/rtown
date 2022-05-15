@@ -2,6 +2,8 @@ import {
     GET_ITEMS,
     BUY_ITEM,
     ITEM_ERROR,
+    DELETE_ITEM,
+    ADD_ITEM
 } from './types'
 
 import axios from 'axios'
@@ -51,6 +53,42 @@ export const buyItem = (item_id, navigate, auth) => async dispatch => {
         dispatch(getItemByProfile())
         navigate(`/profiles/${auth}`)
 
+    } catch (error) {
+        dispatch({
+            type: ITEM_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+export const deleteItem = (item_id) => async dispatch => {
+    try {
+        await axios.delete(`/api/items/delete/${item_id}`)
+        dispatch({
+            type: DELETE_ITEM,
+            payload: item_id
+        })
+    } catch (error) {
+        dispatch({
+            type: ITEM_ERROR,
+            payload: { msg: error.response, status: error.response }
+        })
+    }
+}
+
+export const createItem = (formdata) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
+    try {
+        const res = await axios.post(`/api/items/`, formdata, config)
+        dispatch({
+            type: ADD_ITEM,
+            payload: res.data
+        })
+        dispatch(getItems())
     } catch (error) {
         dispatch({
             type: ITEM_ERROR,
