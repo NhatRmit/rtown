@@ -1,42 +1,29 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import  "./Admin.css";
-import AddAdmin from "./AddAdmin";
+import "./Admin.css";
+import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
+import AdminCommunityRequest from "./AdminCommunityRequest"
+import AdminCommunityList from "./AdminCommunityList"
+import { useDispatch, useSelector } from "react-redux";
+import { getItems } from "../../actions/item"
+import ItemForm from "../Item/ItemForm"
+import { adminGetAllCommunityRequest, adminGetAllAccepted } from "../../actions/admin"
+// import { getAllCommunities } from "../../actions/community"
 import { clearPost, getPosts, deletePost } from '../../actions/post'
-import EditPost from "../Post/EditPost";
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
-import { IconContext } from 'react-icons/lib'
+import AdminPost from "./AdminPost";
 
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const comunities = useSelector(state => state.community.communities)
+  const items = useSelector(state => state.item.items)
   const posts = useSelector(state => state.post.posts)
-
-  useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch])
 
   const toggleTab = (index) => {
     setToggleState(index);
   };
 
-
-  const [edit, setEdit] = useState(false)
-  const pullData = (data) => {
-    setEdit(data)
-  }
-  const onEdit = e => {
-    e.preventDefault()
-    setEdit(true)
-    dispatch(clearPost())
-  }
-
-  const onDelete = (e) => {
-    e.preventDefault()
-    dispatch(deletePost(posts._id))
-  }
   return (
     <>
       <div className='admin-section'>
@@ -48,16 +35,17 @@ const Admin = () => {
                   toggleState === 1 ? "admin-tabs admin-active-tabs" : "tabs"
                 }
                 onClick={() => toggleTab(1)}>
-                Admin Profile
+                Profile
               </button>
               <button
                 className={
-                  toggleState === 2
-                    ? "admin-tabs admin-active-tabs"
-                    : "newsfeed-tabs"
+                  toggleState === 2 ? "admin-tabs admin-active-tabs" : "tabs"
                 }
-                onClick={() => toggleTab(2)}>
-                Add Admin Profile
+                onClick={() => {
+                  toggleTab(2)
+                  dispatch(getPosts())
+                }}>
+                Post
               </button>
               <button
                 className={
@@ -65,8 +53,35 @@ const Admin = () => {
                     ? "admin-tabs admin-active-tabs"
                     : "newsfeed-tabs"
                 }
-                onClick={() => toggleTab(3)}>
-                Posts
+                onClick={() => {
+                  toggleTab(3)
+                  dispatch(getItems())
+                }}>
+                Item
+              </button>
+              <button
+                className={
+                  toggleState === 4
+                    ? "admin-tabs admin-active-tabs"
+                    : "item-tabs"
+                }
+                onClick={() => {
+                  toggleTab(4)
+                  dispatch(adminGetAllCommunityRequest())
+                }}>
+                Community Request
+              </button>
+              <button
+                className={
+                  toggleState === 5
+                    ? "admin-tabs admin-active-tabs"
+                    : "item-tabs"
+                }
+                onClick={() => {
+                  toggleTab(5)
+                  dispatch(adminGetAllAccepted());
+                }}>
+                Community
               </button>
             </div>
 
@@ -79,14 +94,27 @@ const Admin = () => {
                 }>
                 <AdminProfile />
               </div>
-
               <div
                 className={
                   toggleState === 2
                     ? "admin-content  admin-active-content"
                     : "admin-content"
                 }>
-                <AddAdmin />
+                <div className='addAdmin-section'>
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <th>Content</th>
+                        <th>Image</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {
+                        posts.map(post => <AdminPost key={post._id} post={post} />)
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div
                 className={
@@ -95,59 +123,74 @@ const Admin = () => {
                     : "admin-content"
                 }>
                 <div className='addAdmin-section'>
+                  <ItemForm />
                   <table className="table">
-                    <tr>
-                      <th>Text Content</th>
-                      <th>Images</th>
+                    <tbody>
+                      <tr>
+                        <th>Item</th>
+                        <th>Rpoint</th>
+                        <th>Image</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {
+                        items.map(item => <AdminItem key={item._id} item={item} />)
+                      }
+                    </tbody>
 
-                      <th>EDIT</th>
-                      <th>DELETE</th>
-                    </tr>
-
-                    {
-                      posts.map(post =>
-                        <tr key={post._id}>
-                          <td>
-                            {
-                              !edit ? post.text :
-                                <EditPost singlePost={post} pullData={pullData} />
-                            }
-                          </td>
-                          <td><img src={post.image} alt="" /></td>
-
-                          <td>
-                            <span className='icon' onClick={onEdit}>
-                              <label htmlFor='edit-post'>
-                                <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                                  <AiFillEdit />
-                                </IconContext.Provider>
-                              </label>
-                              <p id='edit-post' className='icon-label'>
-                                Edit
-                              </p>
-                            </span>
-                          </td>
-                          <td>
-                            <span className='icon' onClick={onDelete}>
-                              <label htmlFor='delete-post'>
-                                <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                                  <AiFillDelete />
-                                </IconContext.Provider>
-                              </label>
-                              <p id='delete-post' className='icon-label'>
-                                Delete
-                              </p>
-                            </span></td>
-                        </tr>
-                      )
-                    }
                   </table>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              <div
+                className={
+                  toggleState === 4
+                    ? "admin-content  admin-active-content"
+                    : "admin-content"
+                }>
+                <div className='addAdmin-section'>
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <th>Community Name</th>
+                        <th>Community Description</th>
+                        <th>ACCEPT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {comunities.map(community =>
+                        <AdminCommunityRequest key={community._id} community={community} />
+                      )}
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+
+              <div
+                className={
+                  toggleState === 5
+                    ? "admin-content  admin-active-content"
+                    : "admin-content"
+                }>
+                <div className='addAdmin-section'>
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <th>Community Name</th>
+                        <th>Community Description</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {comunities.map(community =>
+                        <AdminCommunityList key={community._id} community={community} />
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
     </>
   );
 };

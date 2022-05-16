@@ -1,8 +1,7 @@
 const Profile = require('../models/profileModel')
 const Community = require('../models/communityModel')
+const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
-
-
 
 const getProfile = asyncHandler(async (req, res) => {
     try {
@@ -103,6 +102,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 const joinCommunity = asyncHandler(async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id })
     const community = await Community.findById(req.params.community_id)
+    const user = await User.findById(req.user.id)
 
     let isAlreadyJoined = true
 
@@ -126,6 +126,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
         })
         community.members.unshift({
             memberId: req.user.id,
+            memberName: user.usernameOrEmail
         })
 
         await profile.save()

@@ -7,7 +7,8 @@ import {
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
     GET_MY_COMMUNITIES,
-    GET_PROFILE
+    GET_PROFILE,
+    COMMUNITY_REQUEST_CREATE
 } from './types'
 
 import axios from 'axios'
@@ -82,6 +83,7 @@ export const updateCommunity = (community_id, formData, navigate) => async dispa
             payload: res.data
         })
         navigate(`/communities/${community_id}`)
+        alert("Your community is updated")
 
     } catch (err) {
         dispatch({
@@ -99,6 +101,7 @@ export const deleteCommunity = (community_id) => async dispatch => {
             type: DELETE_COMMUNITY,
             payload: community_id
         })
+        alert("You have deleted your community permanently")
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
@@ -155,6 +158,44 @@ export const joinCommunity = (community_id, profile_id, navigate) => async dispa
         dispatch(getCommunityById(community_id))
         navigate(`/profiles/${profile_id}`)
 
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const requestCreateCommunity = (formData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
+    try {
+        const res = await axios.post('/api/communities/createCommunityRequest', formData, config)
+
+        dispatch({
+            type: COMMUNITY_REQUEST_CREATE,
+            payload: res.data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+
+export const kickMember = (communityId, profileId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/communities/update/${communityId}/${profileId}`)
+        dispatch({
+            type: GET_COMMUNITY,
+            payload: res.data
+        })
+        dispatch(getCommunityById(communityId))
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,

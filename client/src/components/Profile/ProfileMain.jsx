@@ -6,7 +6,7 @@ import Spinner from '../Layout/Spinner'
 import PostsSection from '../Post/PostsSection'
 import RItem from "../../components/RShop/RItem";
 import RedeemedButton from "../Buttons/RedeemedButton";
-import { getMyPosts } from "../../actions/post";
+import { getMyPosts, getPostById, getUserPosts } from "../../actions/post";
 
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)
@@ -14,6 +14,7 @@ const ProfileMain = ({ profile, loading }) => {
     const { userId } = useParams()
     const dispatch = useDispatch()
     const [toggleState, setToggleState] = useState(1);
+    
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -22,10 +23,12 @@ const ProfileMain = ({ profile, loading }) => {
     const onMyPosts = e => {
         e.preventDefault()
         toggleTab(1)
-        dispatch(getMyPosts())
+        // dispatch(getMyPosts())
+        dispatch(getUserPosts(userId))
     }
     useEffect(() => {
-        dispatch(getMyPosts())
+        // dispatch(getMyPosts())
+        dispatch(getUserPosts(userId))
         dispatch(getProfile())
     }, [dispatch])
 
@@ -42,10 +45,10 @@ const ProfileMain = ({ profile, loading }) => {
                                     <button
                                         className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
                                         onClick={onMyPosts}>
-                                        My Posts
+                                        Posts
                                     </button>
                                     {
-                                        auth._id === profile.user ?
+                                        auth._id === userId ?
                                             <button
                                                 className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                                                 onClick={() => toggleTab(2)}>

@@ -3,7 +3,6 @@ const Profile = require('../models/profileModel')
 const User = require('../models/userModel')
 const Community = require('../models/communityModel')
 const Post = require('../models/postModel')
-const Item = require('../models/itemModel')
 
 // PROFILE
 const getAllUserProfile = asyncHandler(async (req, res) => {
@@ -19,7 +18,7 @@ const getAllUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-const editMemberProfile = asyncHandler(async (req, res)=>{
+const editMemberProfile = asyncHandler(async (req, res) => {
     const {
         bio,
         Rpoint,
@@ -44,13 +43,13 @@ const editMemberProfile = asyncHandler(async (req, res)=>{
     // if (community) profileFields.community = community
     if (admin) profileFields.admin = admin
     let editMemberprofile = await Profile.findOne(req.params._id)
-    try {  
-        if(editMemberprofile){
-           editMemberprofile = await Profile.findOneAndUpdate(
-               {user: req.user.id},
-               {$set: profileFields},
-               {new: true}
-           ) 
+    try {
+        if (editMemberprofile) {
+            editMemberprofile = await Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true }
+            )
         }
         res.status(200).json(editMemberprofile)
     } catch (err) {
@@ -65,7 +64,7 @@ const getAllCommunityRequest = asyncHandler(async (req, res) => {
     try {
         const communitiesRequest = await Community.find({
             requested: false,
-        })    
+        })
 
         res.status(200).json(communitiesRequest)
     } catch (err) {
@@ -74,7 +73,20 @@ const getAllCommunityRequest = asyncHandler(async (req, res) => {
     }
 })
 
-const editCommunity = asyncHandler(async (req, res) =>{
+const getAllAcceptedCommunity = asyncHandler(async (req, res) => {
+    try {
+        const communitiesRequest = await Community.find({
+            requested: true,
+        })
+
+        res.status(200).json(communitiesRequest)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
+const editCommunity = asyncHandler(async (req, res) => {
     const {
         communityName,
         description,
@@ -84,51 +96,52 @@ const editCommunity = asyncHandler(async (req, res) =>{
         communityName,
         description
     }
-    communityFields._id = req.params.community_id
+    // communityFields._id = req.params.community_id
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
+    if (req.file)
+        communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
 
     let communityEdit = await Community.findById(req.params.community_id)
     try {
-        if(communityEdit) {
+        if (communityEdit) {
             communityEdit = await Community.findOneAndUpdate(
                 { _id: req.params.community_id },
                 { $set: communityFields },
-                { new: true }
-            ) 
+            )
+            res.status(200).json(communityEdit)
         }
-        res.status(200).json(communityEdit)
     } catch (err) {
         console.error(err.message)
         res.status(500).json({ msg: 'Server Error' })
     }
-} )
+})
 
 const acceptCommunity = asyncHandler(async (req, res) => {
     try {
-    
+
         let communityAccept = await Community.findById(req.params.community_id)
-        let profile = await Profile.findOne({user: communityAccept.user})
+        let profile = await Profile.findOne({ user: communityAccept.user })
         if (communityAccept) {
             communityAccept = await Community.findOneAndUpdate(
-                {_id: req.params.community_id},
-                {requested: true}
-                )
-        }  
+                { _id: req.params.community_id },
+                { requested: true }
+            )
+        }
         profile.community.unshift({
-                communityId: communityAccept._id,
-                communityName: communityAccept.communityName
-            })
-          
-        communityAccept.members.unshift({
-                memberId: communityAccept.user,
-                memberName: communityAccept.name
+            communityId: communityAccept._id,
+            communityName: communityAccept.communityName
         })
-    
-            await profile.save()
-            await communityAccept.save()
-    
-            res.status(200).json(communityAccept)
+
+        communityAccept.members.unshift({
+            memberId: communityAccept.user,
+            memberName: communityAccept.name
+        })
+
+        await profile.save()
+        await communityAccept.save()
+
+        res.status(200).json(communityAccept)
 
     } catch (err) {
         console.error(err.message)
@@ -137,14 +150,13 @@ const acceptCommunity = asyncHandler(async (req, res) => {
 
 })
 
-const deleteCommunity = asyncHandler( async (req, res)=>{
+const deleteCommunity = asyncHandler(async (req, res) => {
     try {
         const community = await Community.findById(req.params.community_id)
-
         await community.remove()
+        
 
         res.status(200).json({ msg: 'Community Deleted' })
-
     } catch (err) {
         console.error(err.message)
         res.status(500).json({ msg: 'Server Error' })
@@ -168,6 +180,8 @@ const editPost = asyncHandler(async (req, res) => {
     const { text } = req.body
     //postFields.user = req.user.id
     if (text) postFields.text = text
+    if (req.file)
+        communityFields.image = `http://localhost:8000/api/images/${req.file.filename}`
 
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
@@ -207,7 +221,7 @@ const deletePost = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports= {
+module.exports = {
     getAllUserProfile,
     getAllCommunityRequest,
     acceptCommunity,
@@ -216,5 +230,6 @@ module.exports= {
     getPosts,
     deleteCommunity,
     editMemberProfile,
-    editCommunity
+    editCommunity,
+    getAllAcceptedCommunity,
 }

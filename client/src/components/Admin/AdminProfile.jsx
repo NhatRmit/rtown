@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../actions/profile";
 import "./Admin.css";
 
 const AdminProfile = () => {
+  const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth)
+  const profile = useSelector(state => state.profile.profile)
+
+  useEffect(() => {
+    dispatch(getProfile())
+  }, [dispatch])
+
   return (
-    <>
-      <div className='adminProfile-section'>
-        <div className='admin-pic'></div>
-        <div className='admin-profile'>
-          <p className='adminInfo-label'>Full Name</p>
-          <p className="adminInfo">ABC</p>
+    <div className='adminProfile-section'>
+      <img src={profile && profile.avatar} alt="" className="admin-pic" />
+      <div className='admin-profile'>
+        <p className='adminInfo-label'>Full Name</p>
+        <p className="adminInfo">{auth.usernameOrEmail}</p>
 
-          <p className='adminInfo-label'>Email</p>
-          <p className="adminInfo">ABC123@gmail.com</p>
-
-          <p className='adminInfo-label'>Phone Number</p>
-          <p className="adminInfo">09090909090</p>
-        </div>
+        <p className='adminInfo-label'>Email</p>
+        <p className="adminInfo">{auth.email}</p>
       </div>
-    </>
+    </div>
   );
 };
 

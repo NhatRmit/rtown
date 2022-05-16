@@ -3,19 +3,19 @@ import { useNavigate, useMatch } from "react-router-dom";
 
 const CommunitySection = ({ community }) => {
   const navigate = useNavigate()
+  const newsfeed = useMatch('/newsfeed')
+
   const onClick = e => {
     e.preventDefault()
-    navigate(`/communities/${community._id}`)
+    newsfeed ? navigate(`/communities/${community._id}`) : navigate(`/communities/${community.communityId._id}`)
   }
-  const newsfeed = useMatch('/newsfeed')
   return (
-
     newsfeed ?
       <div className='community-list-container' >
         <div className='joined-community' >
           <span onClick={onClick} className='community'>
             {" "}
-            <img src={(community && community.avatar)} alt='Community logo' className='community-logo' />
+            <img src={community && community.avatar} alt='Community logo' className='community-logo' />
           </span>
         </div>
       </div>
@@ -28,7 +28,6 @@ const CommunitySection = ({ community }) => {
           </span>
         </div>
       </div>
-
   );
 };
 

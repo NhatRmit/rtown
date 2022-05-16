@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { editPost, getPostById, getPosts } from "../../actions/post";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { adminEditPost } from "../../actions/admin";
+import { getItemById, getItems, updateItem } from "../../actions/item";
 
 const initialState = {
-    text: '',
+    name: '',
+    Rpoint: 0,
 }
 
-const EditPost = ({ singlePost, pullData }) => {
-    const navigate = useNavigate()
+const ItemEdit = ({ item, pullData }) => {
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState)
-    const admin = useSelector(state => state.auth.admin)
-
     const {
-        text,
+        name,
+        Rpoint
     } = formData
 
     const [uploadFile, setUploadFile] = useState(null)
@@ -23,24 +21,25 @@ const EditPost = ({ singlePost, pullData }) => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
     useEffect(() => {
-        if (!singlePost) {
-            dispatch(getPostById(singlePost._id));
+        if (!item) {
+            dispatch(getItemById(item._id));
         }
-        if (singlePost) {
+        if (item) {
             const textData = { ...initialState };
-            for (const key in singlePost) {
-                if (key in textData) textData[key] = singlePost[key];
+            for (const key in item) {
+                if (key in textData) textData[key] = item[key];
             }
             setFormData(textData);
         }
-    }, [singlePost, dispatch])
+    }, [item, dispatch])
 
     const onUpdate = (e) => {
         e.preventDefault()
         let formdata = new FormData();
+        formdata.append("name", name);
+        formdata.append("Rpoint", Rpoint);
         formdata.append("file", uploadFile);
-        formdata.append("text", text);
-        admin ? dispatch(adminEditPost(singlePost._id, formdata)) : dispatch(editPost(singlePost._id, formdata, navigate))
+        dispatch(updateItem(item._id, formdata))
         pullData(false)
     }
 
@@ -49,13 +48,19 @@ const EditPost = ({ singlePost, pullData }) => {
     }
 
     return (
-
         <form className="form" onSubmit={onUpdate}>
             <input
                 type="text"
                 placeholder="Content"
-                name="text"
-                value={text}
+                name="name"
+                value={name}
+                onChange={onChange}
+            />
+            <input
+                type="number"
+                placeholder="Rpoint"
+                name="Rpoint"
+                value={Rpoint}
                 onChange={onChange}
             />
             <input type="file" onChange={onChangeImage} />
@@ -66,4 +71,4 @@ const EditPost = ({ singlePost, pullData }) => {
 
 }
 
-export default EditPost
+export default ItemEdit

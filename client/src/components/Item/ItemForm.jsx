@@ -1,54 +1,65 @@
-import './CreatePost.css'
+import '../Post/CreatePost.css'
 import { BsFillCloudUploadFill } from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 import { useState, useEffect } from 'react'
-import { addPost, addCommunityPost } from '../../actions/post'
+import { createItem } from '../../actions/item'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
 
-const CreatePost = ({ isCommunity }) => {
+const ItemForm = () => {
     const dispatch = useDispatch()
-    const [text, setText] = useState('')
+    const [formData, setFormData] = useState({
+        text: "",
+        Rpoint: 0
+    })
+
+    const {
+        text, Rpoint
+    } = formData
+
     const [uploadFile, setUploadFile] = useState(null)
-    const { community_id } = useParams()
     const [reset, setReset] = useState(true)
 
     const onSubmit = e => {
         e.preventDefault();
         let formdata = new FormData();
         formdata.append("file", uploadFile);
-        formdata.append("text", text);
-
-        !isCommunity ? dispatch(addPost(formdata)) : dispatch(addCommunityPost(formdata, community_id))
-        setText('')
+        formdata.append("name", text);
+        formdata.append("Rpoint", Rpoint)
+        dispatch(createItem(formdata))
+        setFormData({
+            text: "",
+            Rpoint: 0
+        })
         setReset(false)
     }
-
+    
     const onChangeImage = e => {
         setUploadFile(e.target.files[0])
     }
 
     const onChange = e => {
-        setText(e.target.value)
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     useEffect(() => {
         !reset && setReset(true)
-      }, [reset])
+    }, [reset])
 
     return (
         <>
-            <h1 className="title">Create post</h1>
+            <h1 className="title">Create item</h1>
             <form onSubmit={onSubmit} className="textarea-container">
                 <textarea
                     name='text'
                     cols="30"
                     rows="5"
                     value={text}
-                    placeholder="Create a post"
+                    placeholder="Create an item"
                     onChange={onChange}
                     required
                 ></textarea>
+                <label>Input Rpoint</label>
+                <input type="number" onChange={onChange} value={Rpoint} name="Rpoint" id="rpoint"/>
                 <div className='upload-section'>
                     <div className='upload-icons'>
                         <span>
@@ -59,7 +70,7 @@ const CreatePost = ({ isCommunity }) => {
                             </label >
                             {
                                 reset &&
-                                    <input onChange={onChangeImage} id="img-input" type="file" />
+                                <input onChange={onChangeImage} id="img-input" type="file" />
                             }
                         </span >
                     </div >
@@ -71,4 +82,4 @@ const CreatePost = ({ isCommunity }) => {
     )
 }
 
-export default CreatePost
+export default ItemForm

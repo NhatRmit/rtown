@@ -76,12 +76,61 @@ const getItemByProfile = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteItem = asyncHandler(async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.item_id)
+        await item.remove()
+
+        res.status(200).json({ msg: "delete item successfully!" })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const getItemById = asyncHandler(async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.item_id)
+
+        res.status(200).json(item)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
+const updateItem = asyncHandler(async (req, res) => {
+    const itemFields = {}
+    const { name, Rpoint } = req.body
+    if (name) itemFields.name = name
+    if (Rpoint) itemFields.Rpoint = Rpoint
+    if (req.file) itemFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+
+    try {
+        // let item = await Item.findOne({ _id: req.params.item_id })
+
+        await Item.findOneAndUpdate(
+            { _id: req.params.item_id },
+            { $set: itemFields },
+        )
+        const newItem = await Item.findOne({ _id: req.params.item_id })
+        return res.status(200).json(newItem)
+
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Server Error')
+    }
+})
+
 const item = {
     getItems,
     createItem,
     buyItem,
     usedItem,
     getItemByProfile,
+    deleteItem,
+    getItemById,
+    updateItem,
 }
 
 module.exports = { item }

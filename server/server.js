@@ -1,14 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv').config();
 const connectDB = require('./configs/database');
 const cors = require('cors')
-
 const app = express();
-app.use(cors())
+require('dotenv').config();
 connectDB();
 
+app.use(cors())
 app.use(express.json());
-
 app.use('/api/users', require('./routes/api/userRoute'))
 app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/auth', require('./routes/api/authRoute'))
@@ -19,5 +17,5 @@ app.use('/api/messengers', require('./routes/api/messengerRoute'))
 app.use('/api/images', require('./routes/api/imageRoute'))
 app.use('/api/admins', require('./routes/api/adminRoute'))
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));

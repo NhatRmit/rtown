@@ -7,6 +7,13 @@ const getAllCommunity = asyncHandler(async (req, res) => {
     try {
         const communities = await Community
             .aggregate([
+                {
+                    $match:
+                    {
+                        $expr:
+                            { $gt: [{ $getField: "requested" }, false] }
+                    }
+                },
                 { "$addFields": { "membersCount": { "$size": "$members" } } },
                 { "$sort": { "membersCount": -1 } },
             ])
@@ -38,17 +45,18 @@ const getCommunityById = asyncHandler(async (req, res) => {
 const createCommunityRequest = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
-        const profile = await Profile.findOne({user: req.user.id})
+        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const profile = await Profile.findOne({ user: req.user.id })
         const newCommunityRequest = new Community({
             communityName: req.body.communityName,
             description: req.body.description,
             name: user.usernameOrEmail,
-            user: req.user.id
-            
+            user: req.user.id,
+            avatar: imgUrl
         })
         await newCommunityRequest.save()
         res.status(200).json(newCommunityRequest)
-        
+
     } catch (err) {
         console.error(err.message)
         res.status(500).json({ msg: 'Server Error' })
@@ -101,14 +109,14 @@ const updateCommunity = asyncHandler(async (req, res) => {
         description
     }
 
-    communityFields.user = req.user.id
+    // communityFields.user = req.user.id
 
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
-    if (req.file) 
+    if (req.file)
         communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
 
-    
+
     let community = await Community.findOne({ user: req.user.id })
     try {
         if (community) {
@@ -172,6 +180,32 @@ const getCommunityMember = asyncHandler(async (req, res) => {
     }
 })
 
+const kickMember = asyncHandler(async (req, res) => {
+    try {
+        const comm = await Community.findOne({ _id: req.params.community_id })
+        const profile = await Profile.findOne({ user: req.params.profile_id })
+
+        const removeProfileIndex = profile.community
+            .map(item => item.communityId)
+            .indexOf(req.params.community_id)
+
+        const removeCommunityIndex = comm.members
+            .map(item => item.memberId)
+            .indexOf(req.params.profile_id)
+
+        profile.community.splice(removeProfileIndex, 1)
+        comm.members.splice(removeCommunityIndex, 1)
+        
+        await comm.save()
+        await profile.save()
+
+        res.status(200).json(comm)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
 const community = {
     getAllCommunity,
     getCommunityById,
@@ -181,6 +215,7 @@ const community = {
     getMyCommunities,
     getCommunityMember,
     createCommunityRequest,
+    kickMember,
 }
 
 module.exports = { community }

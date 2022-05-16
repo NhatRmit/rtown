@@ -31,7 +31,7 @@ function postReducer(state = initialState, action) {
         ...state,
         posts: payload,
         loading: false
-      };
+      }
     case GET_POST:
     case CHECK_OUT:
       return {
@@ -44,7 +44,7 @@ function postReducer(state = initialState, action) {
 
       return {
         ...state,
-        posts: [payload, ...state.posts],
+        post: payload,
         loading: false
       };
     case EDIT_POST:

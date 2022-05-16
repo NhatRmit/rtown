@@ -9,6 +9,7 @@ const RItem = ({ item, myItem, isMyItem }) => {
         isMyItem ?
           <div className='rItem'>
             <p className='item-name'>{myItem && myItem.itemName}</p>
+            <img src={myItem.item && myItem.item.image} alt="" className="item-pic"/>
           </div> :
           <div className='rItem'>
             <p className='item-name'>{item && item.name}</p>

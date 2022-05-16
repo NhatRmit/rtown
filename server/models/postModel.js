@@ -89,12 +89,8 @@ const postSchema = mongoose.Schema({
     },
     community: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'community'
+        ref: 'community',
     }
 })
-
-// postSchema.virtual('commentCount').get(function () {
-//     return this.comments.length;
-// })
 
 module.exports = mongoose.model('Post', postSchema)
