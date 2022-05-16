@@ -13,9 +13,11 @@ const RedeemButton = ({ item }) => {
 
     const onRedeem = e => {
         e.preventDefault()
-        dispatch(buyItem(item._id, navigate, auth))
+        dispatch(buyItem(item._id))
         setIsOpenModal(false)
-        // dispatch(getItemByProfile())
+        navigate(`/profiles/${auth}`)
+        dispatch(getItemByProfile())
+
     }
 
     const openModal = e => {

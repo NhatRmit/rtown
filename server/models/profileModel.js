@@ -15,14 +15,6 @@ const profileStudentSchema = mongoose.Schema({
     avatar: {
         type: String,
     },
-    checkouts: [
-        {
-            event: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'post'
-            }
-        }
-    ],
     itemList: [
         {
             item: {

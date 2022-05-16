@@ -56,10 +56,12 @@ const AboutCommunity = ({ community_id, community }) => {
       </p>
       <div className="buttons">
         {
-            community && community.user._id === auth &&
-              <div onClick={onCreateEvent}>
+          community && community.members.map(
+            (member, index) => member.memberId === auth &&
+              <div key={index} onClick={onCreateEvent}>
                 <CreateEvent />
               </div>
+          )
         }
         {
           community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>

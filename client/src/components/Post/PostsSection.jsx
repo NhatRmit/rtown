@@ -2,7 +2,6 @@ import "./PostsSection.css";
 import { BiUpvote, BiDownvote } from 'react-icons/bi'
 import { BsPatchCheckFill } from 'react-icons/bs'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
-import { TiLockClosedOutline } from 'react-icons/ti'
 import { FaUserCircle } from 'react-icons/fa'
 import { MdReportGmailerrorred } from 'react-icons/md'
 import { IconContext } from 'react-icons/lib'
@@ -11,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState } from 'react'
-import { getPosts, deletePost, clearPost, addUpvote, removeUpvote, checkIn, checkOut } from '../../actions/post'
+import { getPosts, deletePost, clearPost, addUpvote, removeUpvote, checkOut, } from '../../actions/post'
 import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
 import CommentForm from '../Comment/CommentForm'
@@ -21,7 +20,6 @@ const PostsSection = ({ post }) => {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const [edit, setEdit] = useState(false)
-  const profile = useSelector(state => state.profile.profile)
 
   const pullData = (data) => {
     setEdit(data)
@@ -60,33 +58,19 @@ const PostsSection = ({ post }) => {
     post.upvotes.length === 1 ? unUpvote(e) : unUpvote(e)
   }
 
-  const onCheckin = e => {
-    e.preventDefault()
-    dispatch(checkIn(post._id, auth._id, navigate))
-  }
-
   const onCheckout = e => {
     e.preventDefault()
     dispatch(checkOut(post._id, auth._id, navigate))
-    alert("successfully check out")
   }
 
-  const checkinIndex = post && post.checkouts
+  const checkoutIndex = post && post.checkouts
     .map(item => item.user)
     .indexOf(auth._id)
 
-  const checkoutIndex = profile && profile.checkouts
-    .map(item => item.event)
-    .indexOf(post._id)
-
-  const memberIndex = post.community && post.community.members
-    .map(item => item.memberId)
-    .indexOf(auth._id)
-
   const [time, setTime] = useState(null)
+
   useEffect(() => {
     // dispatch(getPosts())
-
     let timer = setInterval(() => {
       let count = 0
       count++
@@ -100,6 +84,7 @@ const PostsSection = ({ post }) => {
       clearInterval(timer);
     }
   }, [])
+
   return (
     <>
       <div className='post-container'>
@@ -141,42 +126,18 @@ const PostsSection = ({ post }) => {
                 </Moment>
               </p>
             </div>
-            {/* (post && post.Rpoint !== 0) &&  */}
             {
-              post.Rpoint !== 0 ?
-                ((post.startTime && (new Date(post.startTime)) <= time) ?
-                  <div className="content-right-header">
-                    {
-                      ((Math.floor(time - new Date(post.startTime)) / 1000) < 60) ?
-                        (checkinIndex === -1) ?
-                          <button className="checkout" onClick={onCheckin}>Check In</button>
-                          :
-                          <p>Check in successfully!</p>
-                        :
-                        (post.endTime && (new Date(post.endTime)) <= time) ?
-                          <>
-                            {
-                              ((Math.floor(time - new Date(post.endTime)) / 1000) < 60) ?
-                                (checkinIndex !== -1 && checkoutIndex === -1) ?
-                                  <button className="checkout" onClick={onCheckout}>Check Out</button>
-                                  :
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <BsPatchCheckFill />
-                                  </IconContext.Provider> :
-                                checkoutIndex !== -1 ?
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <BsPatchCheckFill />
-                                  </IconContext.Provider> :
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <TiLockClosedOutline />
-                                  </IconContext.Provider>
-                            }
-                          </> : <></>
-                    }
-                  </div> :
-                  <></>
-                ) :
-                <></>
+              (post && post.Rpoint !== 0) && (post.endTime && (new Date(post.endTime)) <= time) ?
+                <div className="content-right-header">
+                  {
+                    (checkoutIndex === -1) ?
+                      <button className="checkout" onClick={onCheckout}>Check Out</button>
+                      :
+                      <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                        <BsPatchCheckFill />
+                      </IconContext.Provider>
+                  }
+                </div> : <></>
             }
           </div>
           <div className='post-content'>
@@ -184,7 +145,7 @@ const PostsSection = ({ post }) => {
             <div>
               {
                 !edit ? post.text :
-                  <EditPost singlePost={post} pullData={pullData} />
+                  <EditPost singlePost={post} pullData={pullData}/>
               }
             </div>
           </div>
@@ -240,11 +201,7 @@ const PostsSection = ({ post }) => {
               <Comment key={comment._id} post={post} comment={comment} />
             )
           }
-          {
-            post.community === null || (memberIndex !== -1) ?
-              <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
-          }
-
+          <CommentForm postId={post._id} />
         </div>
 
       </div>

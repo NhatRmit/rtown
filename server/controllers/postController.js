@@ -139,7 +139,6 @@ const createEvent = asyncHandler(async (req, res) => {
 
         const newEvent = new Post({
             text: req.body.text,
-            startTime: req.body.startTime,
             endTime: req.body.endTime,
             Rpoint: req.body.Rpoint,
             user: req.user.id,
@@ -157,41 +156,18 @@ const createEvent = asyncHandler(async (req, res) => {
     }
 })
 
-const checkIn = asyncHandler(async (req, res) => {
+const checkOut = asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.post_id);
-    // const profile = await Profile.findOne({ user: req.user.id })
+    const profile = await Profile.findOne({ user: req.user.id })
     try {
         if (post.checkouts.filter(checkout => checkout.user.toString() === req.user.id).length > 0) {
             return res.status(400).json({ msg: 'Post already checked out' })
         }
 
         post.checkouts.unshift({ user: req.user.id });
-        // profile.Rpoint += post.Rpoint
+        profile.Rpoint += post.Rpoint
 
         await post.save();
-        // await profile.save()
-
-        res.json(post);
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send('Server Error')
-    }
-})
-
-const checkOut = asyncHandler(async (req, res) => {
-    const post = await Post.findById(req.params.post_id);
-    const profile = await Profile.findOne({ user: req.user.id })
-    try {
-        // if (post.checkouts.filter(checkout => checkout.user.toString() === req.user.id).length > 0) {
-        //     return res.status(400).json({ msg: 'Post already checked out' })
-        // }
-        const checkoutIndex = post.checkouts.map(checkout => checkout.user.toString()).indexOf(req.user.id);
-
-        profile.checkouts.unshift({ event: req.params.post_id });
-        if (checkoutIndex !== -1)
-            profile.Rpoint += post.Rpoint
-
-        // await post.save();
         await profile.save()
 
         res.json(post);
@@ -405,21 +381,6 @@ const getMyPosts = asyncHandler(async (req, res) => {
     }
 })
 
-const getUserPosts = asyncHandler(async (req, res) => {
-    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
-
-    try {
-        const posts = await Post.find({ user: req.params.user_id }).sort({ date: -1 }).populate(query)
-        res.status(200).json(posts)
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-})
-
-
-
 const post = {
     getPosts,
     getMyPosts,
@@ -437,11 +398,9 @@ const post = {
     editComment,
     createEvent,
     getCommentById,
-    checkIn,
     checkOut,
     createCommunityPost,
-    getCommunityPosts,
-    getUserPosts,
+    getCommunityPosts
 }
 
 module.exports = { post } 

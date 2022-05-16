@@ -83,16 +83,13 @@ const postSchema = mongoose.Schema({
     },
     startTime: {
         type: Date,
-        default: null,
     },
     endTime: {
         type: Date,
-        default: null,
     },
     community: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'community',
-        default: null,
+        ref: 'community'
     }
 })
 

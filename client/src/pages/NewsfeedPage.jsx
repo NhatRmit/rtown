@@ -7,7 +7,6 @@ import CreatePost from '../components/Post/CreatePost'
 import PostsSection from '../components/Post/PostsSection'
 import './NewsfeedPage.css'
 import { getAllCommunities } from '../actions/community'
-import { getProfile } from '../actions/profile'
 import { RiCommunityFill } from 'react-icons/ri'
 import { IconContext } from 'react-icons/lib'
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,6 @@ const NewsfeedPage = () => {
   useEffect(() => {
     dispatch(getAllCommunities())
     dispatch(getPosts())
-    dispatch(getProfile())
   }, [dispatch])
 
   const onCreate = e => {
@@ -53,7 +51,7 @@ const NewsfeedPage = () => {
           </div>
           <div className='newsfeed-right-container'>
             <>
-              <CreatePost isCommunity={false} />
+              <CreatePost isCommunity={false}/>
             </>
             <>
               <Filter />
