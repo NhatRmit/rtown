@@ -79,14 +79,13 @@ const PostsSection = ({ post }) => {
     .map(item => item.event)
     .indexOf(post._id)
 
-  const memberIndex = post.community && post.community.members
+  let memberIndex
+  memberIndex = post.community && post.community.members
     .map(item => item.memberId)
     .indexOf(auth._id)
 
   const [time, setTime] = useState(null)
   useEffect(() => {
-    // dispatch(getPosts())
-
     let timer = setInterval(() => {
       let count = 0
       count++
@@ -101,7 +100,7 @@ const PostsSection = ({ post }) => {
     }
   }, [])
   return (
-    <>
+    <div>
       <div className='post-container'>
         <div className='vote-container'>
           <span className='upvote-icon' onClick={handleUpvote}>
@@ -241,7 +240,7 @@ const PostsSection = ({ post }) => {
             )
           }
           {
-            post.community === null || (memberIndex !== -1) ?
+            (memberIndex !== -1) ?
               <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
           }
 
@@ -249,7 +248,7 @@ const PostsSection = ({ post }) => {
 
       </div>
 
-    </>
+    </div>
 
   );
 };

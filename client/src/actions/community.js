@@ -187,3 +187,19 @@ export const requestCreateCommunity = (formData) => async dispatch => {
         })
     }
 }
+
+export const kickMember = (communityId, profileId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/communities/update/${communityId}/${profileId}`)
+        dispatch({
+            type: GET_COMMUNITY,
+            payload: res.data
+        })
+        dispatch(getCommunityById(communityId))
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}

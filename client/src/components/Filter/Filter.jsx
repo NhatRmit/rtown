@@ -1,9 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { TiStarburstOutline } from 'react-icons/ti'
-import { HiTrendingUp } from 'react-icons/hi'
-import { IoIosPodium } from 'react-icons/io'
-import { IconContext } from 'react-icons/lib'
 import { getPosts, getFilter } from '../../actions/post'
 
 import './Filter.css'
@@ -13,50 +9,53 @@ const Filter = () => {
 
   const onClickTop = (e) => {
     e.preventDefault()
+    toggleTab(3)
     dispatch(getFilter('top'))
   }
 
   const onClickTrending = (e) => {
     e.preventDefault()
+    toggleTab(2)
     dispatch(getFilter('trending'))
   }
 
   const onClickNewest = (e) => {
     e.preventDefault()
+    toggleTab(1)
     dispatch(getPosts())
   }
 
-  return (
-    <div className="container-filter">
-      <header className='header-filter'>
-        {
-          <ul>
-            <li>
-              <button className='btn-filter' onClick={onClickNewest}>
-                <IconContext.Provider value={{ size: '0.75rem' }}>
-                  <TiStarburstOutline /> New
-                </IconContext.Provider>
-              </button>
-            </li >
-            <li>
-              <button className='btn-filter' onClick={onClickTrending}>
-                <IconContext.Provider value={{ size: '0.75rem' }}>
-                  <HiTrendingUp /> Treding
-                </IconContext.Provider>
-              </button>
-            </li>
-            <li>
-              <button className='btn-filter' onClick={onClickTop}>
-                <IconContext.Provider value={{ size: '0.75rem' }}>
-                  <IoIosPodium /> Top
-                </IconContext.Provider>
-              </button>
-            </li>
-          </ul >
-        }
+  const [toggleState, setToggleState] = useState(1)
 
-      </header >
-    </div >
+  const toggleTab = (index) => {
+    setToggleState(index)
+  }
+
+  return (
+    <div className='newsfeed-section'>
+      <div className='newsfeed-wrapper'>
+        <div className='newsfeed-tabs-container'>
+          <div className='newsfeed-bloc-tabs'>
+            <button
+              className={toggleState === 1 ? "newsfeed-tabs newsfeed-active-tabs" : "tabs"}
+              onClick={onClickNewest}>
+              New
+            </button>
+            <button
+              className={toggleState === 2 ? "newsfeed-tabs newsfeed-active-tabs" : "newsfeed-tabs"}
+              onClick={onClickTrending}>
+              Trending
+            </button>
+            <button
+              className={toggleState === 3 ? "newsfeed-tabs newsfeed-active-tabs" : "newsfeed-tabs"}
+              onClick={onClickTop}>
+              Top
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   )
 }
 

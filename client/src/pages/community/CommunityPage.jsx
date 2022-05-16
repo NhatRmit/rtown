@@ -14,29 +14,38 @@ import { getCommunityPosts } from '../../actions/post'
 const CommunityPage = () => {
   const dispatch = useDispatch()
   const { community_id } = useParams()
-  const [isJoined, setIsJoined] = useState(localStorage.getItem('isJoined'))
 
   useEffect(() => {
-    setIsJoined(localStorage.getItem('isJoined'))
     dispatch(getCommunityById(community_id))
     dispatch(getCommunityPosts(community_id))
   }, [dispatch, community_id])
 
   const posts = useSelector(state => state.post.posts)
   const community = useSelector(state => state.community.community)
+  const auth = useSelector(state => state.auth._id)
 
+  const memberIndex = community && community.members
+    .map(member => member.memberId)
+    .indexOf(auth)
 
   return (
     <>
       <Layout header footer>
         <div className='community-container'>
           <div className='left-community-container'>
-            <MemberSection community={community} />
+            <div className='member-container'>
+              <h1 className='title'>Members</h1>
+              <div className="member-list">
+                {community && community.members && community.members.map((member) => (
+                  <MemberSection key={member._id} community={community} member={member} />
+                ))}
+              </div>
+            </div>
           </div>
           <div className='center-community-container'>
             <div>
               {
-                isJoined !== 'false' ? <CreatePost isCommunity={true} /> : <></>
+                memberIndex !== -1 ? <CreatePost isCommunity={true} /> : <></>
               }
             </div>
             <div>

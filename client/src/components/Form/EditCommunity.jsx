@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateCommunity, getCommunityById } from '../../actions/community';
+import { adminEditCommunity } from '../../actions/admin';
 
 const initialState = {
     communityName: '',
@@ -15,6 +16,7 @@ const EditCommunity = () => {
     const navigate = useNavigate()
     const { community_id } = useParams()
     const community = useSelector(state => state.community.community)
+    const admin = useSelector(state => state.auth.admin)
 
     const [formData, setFormData] = useState(initialState)
     const [uploadFile, setUploadFile] = useState(null)
@@ -30,7 +32,8 @@ const EditCommunity = () => {
         formdata.append('communityName', communityName)
         formdata.append('description', description)
         formdata.append('file', uploadFile)
-        dispatch(updateCommunity(community_id, formdata, navigate))
+        admin ? dispatch(adminEditCommunity(community_id, formdata, navigate)) :
+            dispatch(updateCommunity(community_id, formdata, navigate))
     }
 
     const onChange = e => {
@@ -43,7 +46,7 @@ const EditCommunity = () => {
 
     const onGoBack = e => {
         e.preventDefault()
-        navigate(-1)
+        admin ? navigate("/admin-profile") : navigate(-1)
     }
 
     useEffect(() => {

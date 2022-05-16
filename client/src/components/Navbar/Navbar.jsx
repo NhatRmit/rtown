@@ -15,6 +15,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth)
+    const admin = useSelector(state => state.auth.admin)
 
     useEffect(() => {
         dispatch(loadUser())
@@ -27,7 +28,7 @@ const Navbar = () => {
 
     const onProfile = (e) => {
         e.preventDefault()
-        navigate(`/profiles/${auth._id}`)
+        admin ? navigate("/admin-profile") : navigate(`/profiles/${auth._id}`)
     }
 
     const onChat = e => {

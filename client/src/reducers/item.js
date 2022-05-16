@@ -1,4 +1,4 @@
-import { BUY_ITEM, GET_ITEMS, ITEM_ERROR, DELETE_ITEM, ADD_ITEM } from '../actions/types';
+import { BUY_ITEM, GET_ITEMS, ITEM_ERROR, DELETE_ITEM, ADD_ITEM, UPDATE_ITEM, GET_ITEM } from '../actions/types';
 
 const initialState = {
     items: [],
@@ -18,6 +18,13 @@ function itemReducer(state = initialState, action) {
                 loading: false
             };
         case ADD_ITEM:
+            return {
+                ...state,
+                items: [payload, ...state.posts],
+                loading: false,
+            }
+        case UPDATE_ITEM:
+        case GET_ITEM:
             return {
                 ...state,
                 item: payload,

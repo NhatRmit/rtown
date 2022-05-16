@@ -4,10 +4,10 @@ import "./Admin.css";
 import EditButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteItem } from "../../actions/item";
-import ItemEdit from '../Item/ItemEdit'
+import { adminDeletePost } from "../../actions/admin";
+import EditPost from "../Post/EditPost";
 
-const AdminItem = ({ item }) => {
+const AdminPost = ({ post }) => {
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false)
     const pullData = (data) => {
@@ -16,7 +16,7 @@ const AdminItem = ({ item }) => {
 
     const onDelete = e => {
         e.preventDefault();
-        dispatch(deleteItem(item._id))
+        dispatch(adminDeletePost(post && post._id))
     }
 
     const onEdit = e => {
@@ -28,12 +28,11 @@ const AdminItem = ({ item }) => {
         <tr>
             <td>
                 {
-                    !edit ? item.name :
-                        <ItemEdit item={item} pullData={pullData} />
+                    !edit ? post.text :
+                        <EditPost singlePost={post} pullData={pullData} />
                 }
             </td>
-            <td>{item.Rpoint}</td>
-            <td><img src={item.image} alt="" style={{ width: "2rem" }} /></td>
+            <td><img src={post.image} alt="" style={{ width: "2rem" }} /></td>
             <td>
                 <div onClick={onEdit}><EditButton /></div>
             </td>
@@ -44,4 +43,4 @@ const AdminItem = ({ item }) => {
     );
 };
 
-export default AdminItem;
+export default AdminPost;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { editPost, getPostById } from "../../actions/post";
-import { useDispatch } from 'react-redux'
+import { editPost, getPostById, getPosts } from "../../actions/post";
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import { adminEditPost } from "../../actions/admin";
 
 const initialState = {
     text: '',
@@ -11,6 +12,7 @@ const EditPost = ({ singlePost, pullData }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState)
+    const admin = useSelector(state => state.auth.admin)
 
     const {
         text,
@@ -19,7 +21,7 @@ const EditPost = ({ singlePost, pullData }) => {
     const [uploadFile, setUploadFile] = useState(null)
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
-    
+
     useEffect(() => {
         if (!singlePost) {
             dispatch(getPostById(singlePost._id));
@@ -38,7 +40,7 @@ const EditPost = ({ singlePost, pullData }) => {
         let formdata = new FormData();
         formdata.append("file", uploadFile);
         formdata.append("text", text);
-        dispatch(editPost(singlePost._id, formdata, navigate))
+        admin ? dispatch(adminEditPost(singlePost._id, formdata)) : dispatch(editPost(singlePost._id, formdata, navigate))
         pullData(false)
     }
 
@@ -47,21 +49,19 @@ const EditPost = ({ singlePost, pullData }) => {
     }
 
     return (
-        <>
-            <form className="form" onSubmit={onUpdate}>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Content"
-                        name="text"
-                        value={text}
-                        onChange={onChange}
-                    />
-                    <input type="file" onChange={onChangeImage} />
-                    <input type="submit" className="btn btn-primary my-1" />
-                </div>
-            </form>
-        </>
+
+        <form className="form" onSubmit={onUpdate}>
+            <input
+                type="text"
+                placeholder="Content"
+                name="text"
+                value={text}
+                onChange={onChange}
+            />
+            <input type="file" onChange={onChangeImage} />
+            <input type="submit" className="btn btn-primary my-1" />
+        </form>
+
     )
 
 }

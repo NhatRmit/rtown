@@ -26,8 +26,8 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                 <Spinner />
             ) : (
                 <>
-                    <ProfileAvatar profile={profile}/>
-                    <div className="community-item-container">
+                    <ProfileAvatar profile={profile} />
+                    {/* <div className="community-item-container">
                         <div onClick={onCreate} className="community-item-create-community">
                             <span className='create-icon'>
                                 <IconContext.Provider value={{ color: '#C0BFBF', size: '2em' }}>
@@ -36,11 +36,9 @@ const ProfileSidebar = ({ profile, loading, communities }) => {
                             </span>
                             <p>Create community</p>
                         </div>
-                    </div>
+                    </div> */}
                     {communities.map(community => {
-                        return (                            
-                            <CommunitySection key={community._id} community={community} />
-                        )
+                        return <CommunitySection key={community._id} community={community} />
                     }
                     )}
                 </>

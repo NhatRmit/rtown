@@ -196,13 +196,8 @@ export const editPost = (postId, formData, navigate) => async dispatch => {
             type: EDIT_POST,
             payload: res.data
         })
-
         dispatch(getPosts())
         alert("Post is edited Successfully!")
-
-        // dispatch(setAlert('Post Updated', 'success'))
-
-        // navigate('/')
     } catch (error) {
         dispatch({
             type: POST_ERROR,

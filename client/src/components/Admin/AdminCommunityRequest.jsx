@@ -9,44 +9,31 @@ import { setRandomFallback } from "bcryptjs";
 
 const AdminCommunityRequest = ({ community }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
-    // const comunities = useSelector(state => state.community.communities)
-
-    // useEffect(() => {
-    //     dispatch(adminGetAllCommunityRequest());
-    // }, [dispatch])
-
     const onDelete = e => {
         e.preventDefault()
         dispatch(deleteCommunityRequest(community._id))
-
     }
 
     const onAccept = e => {
         e.preventDefault()
         dispatch(adminAcceptCommunityRequest(community._id))
-
     }
     return (
-        <> {
-            community && !community.requested &&
-
-            <tr>
-                <td>{community.communityName}</td>
-                <td>{community.description}</td>
-                <td>
-                    <button className="delete-btn" onClick={onAccept}>
-                        ACCEPT
-                    </button>
-                </td>
-                <td>
-                    <button className="delete-btn" onClick={onDelete}>
-                        DELETE
-                    </button>
-                </td>
-            </tr>
-        }
-        </>
+        community && !community.requested &&
+        <tr>
+            <td>{community.communityName}</td>
+            <td>{community.description}</td>
+            <td>
+                <button className="delete-btn" onClick={onAccept}>
+                    ACCEPT
+                </button>
+            </td>
+            <td>
+                <button className="delete-btn" onClick={onDelete}>
+                    DELETE
+                </button>
+            </td>
+        </tr>
     )
 }
 

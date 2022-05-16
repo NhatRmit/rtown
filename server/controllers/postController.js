@@ -9,7 +9,6 @@ const checkWord = (text) => {
     for (let i = 0; i < blackList.length; i++) {
         text = text.replace(blackList[i], "****")
     }
-
     return text
 }
 
@@ -36,8 +35,10 @@ const searchPost = asyncHandler(async (req, res) => {
 })
 
 const getPostById = asyncHandler(async (req, res) => {
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
+
     try {
-        const post = await Post.findById(req.params.post_id)
+        const post = await Post.findById(req.params.post_id).populate(query)
         res.status(200).json(post)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -60,13 +61,11 @@ const filterPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
     let posts;
     try {
-
         if (filter === 'top') {
-            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community.communityId')
+            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community')
         }
         else if (filter === 'trending') {
-            posts = await Post.find().sort({ commentsCount: -1 }).populate('community.communityId')
-
+            posts = await Post.find().sort({ commentsCount: -1 }).populate('community')
         }
         res.status(200).json(posts)
     } catch (error) {
@@ -204,7 +203,7 @@ const checkOut = asyncHandler(async (req, res) => {
 const editPost = asyncHandler(async (req, res) => {
     const postFields = {}
     const { text } = req.body
-    postFields.user = req.user.id
+    // postFields.user = req.user.id
     if (text) postFields.text = text
     if (req.file) postFields.image = `http://localhost:8000/api/images/${req.file.filename}`
 

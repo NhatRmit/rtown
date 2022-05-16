@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./Admin.css";
-import AddAdmin from "./AddAdmin";
 import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
 import AdminCommunityRequest from "./AdminCommunityRequest"
@@ -9,9 +8,10 @@ import AdminCommunityList from "./AdminCommunityList"
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "../../actions/item"
 import ItemForm from "../Item/ItemForm"
-import { adminGetAllCommunityRequest } from "../../actions/admin"
-import { getAllCommunities } from "../../actions/community"
+import { adminGetAllCommunityRequest, adminGetAllAccepted } from "../../actions/admin"
+// import { getAllCommunities } from "../../actions/community"
 import { clearPost, getPosts, deletePost } from '../../actions/post'
+import AdminPost from "./AdminPost";
 
 const Admin = () => {
   const [toggleState, setToggleState] = useState(1);
@@ -20,33 +20,10 @@ const Admin = () => {
   const items = useSelector(state => state.item.items)
   const posts = useSelector(state => state.post.posts)
 
-  useEffect(() => {
-    dispatch(getItems());
-    dispatch(adminGetAllCommunityRequest());
-    dispatch(getAllCommunities());
-    dispatch(getPosts())
-  })
-
-
   const toggleTab = (index) => {
     setToggleState(index);
   };
 
-
-  const [edit, setEdit] = useState(false)
-  const pullData = (data) => {
-    setEdit(data)
-  }
-  const onEdit = e => {
-    e.preventDefault()
-    setEdit(true)
-    dispatch(clearPost())
-  }
-
-  const onDelete = (e) => {
-    e.preventDefault()
-    dispatch(deletePost(posts._id))
-  }
   return (
     <>
       <div className='admin-section'>
@@ -58,16 +35,17 @@ const Admin = () => {
                   toggleState === 1 ? "admin-tabs admin-active-tabs" : "tabs"
                 }
                 onClick={() => toggleTab(1)}>
-                Admin Profile
+                Profile
               </button>
               <button
                 className={
-                  toggleState === 2
-                    ? "admin-tabs admin-active-tabs"
-                    : "newsfeed-tabs"
+                  toggleState === 2 ? "admin-tabs admin-active-tabs" : "tabs"
                 }
-                onClick={() => toggleTab(2)}>
-                Add Admin Profile
+                onClick={() => {
+                  toggleTab(2)
+                  dispatch(getPosts())
+                }}>
+                Post
               </button>
               <button
                 className={
@@ -75,8 +53,11 @@ const Admin = () => {
                     ? "admin-tabs admin-active-tabs"
                     : "item-tabs"
                 }
-                onClick={() => toggleTab(3)}>
-                Item Dashboard
+                onClick={() => {
+                  toggleTab(3)
+                  dispatch(getItems())
+                }}>
+                Item
               </button>
               <button
                 className={
@@ -84,8 +65,11 @@ const Admin = () => {
                     ? "admin-tabs admin-active-tabs"
                     : "item-tabs"
                 }
-                onClick={() => toggleTab(4)}>
-                Community Request List
+                onClick={() => {
+                  toggleTab(4)
+                  dispatch(adminGetAllCommunityRequest())
+                }}>
+                Community Request
               </button>
               <button
                 className={
@@ -93,10 +77,12 @@ const Admin = () => {
                     ? "admin-tabs admin-active-tabs"
                     : "item-tabs"
                 }
-                onClick={() => toggleTab(5)}>
-                Community List
+                onClick={() => {
+                  toggleTab(5)
+                  dispatch(adminGetAllAccepted());
+                }}>
+                Community
               </button>
-
             </div>
 
             <div className='admin-content-tabs'>
@@ -108,14 +94,27 @@ const Admin = () => {
                 }>
                 <AdminProfile />
               </div>
-
               <div
                 className={
                   toggleState === 2
                     ? "admin-content  admin-active-content"
                     : "admin-content"
                 }>
-                <AddAdmin />
+                <div className='addAdmin-section'>
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <th>Content</th>
+                        <th>Image</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {
+                        posts.map(post => <AdminPost key={post._id} post={post} />)
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div
                 className={
@@ -126,16 +125,19 @@ const Admin = () => {
                 <div className='addAdmin-section'>
                   <ItemForm />
                   <table className="table">
-                    <tr>
-                      <th>Item</th>
-                      <th>Rpoint</th>
-                      <th>Image</th>
-                      <th>EDIT</th>
-                      <th>DELETE</th>
-                    </tr>
-                    {
-                      items.map(item => <AdminItem item={item} />)
-                    }
+                    <tbody>
+                      <tr>
+                        <th>Item</th>
+                        <th>Rpoint</th>
+                        <th>Image</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {
+                        items.map(item => <AdminItem key={item._id} item={item} />)
+                      }
+                    </tbody>
+
                   </table>
                 </div>
               </div>
@@ -147,18 +149,20 @@ const Admin = () => {
                 }>
                 <div className='addAdmin-section'>
                   <table className="table">
-                    <tr>
-                      <th>Community Name</th>
-                      <th>Community Description</th>
-                      <th>ACCEPT</th>
-                      <th>DELETE</th>
-                    </tr>
-                    {comunities.map(community =>
+                    <tbody>
+                      <tr>
+                        <th>Community Name</th>
+                        <th>Community Description</th>
+                        <th>ACCEPT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {comunities.map(community =>
+                        <AdminCommunityRequest key={community._id} community={community} />
+                      )}
+                    </tbody>
 
-                      <AdminCommunityRequest community={community} />
-
-                    )}
-                  </table> </div>
+                  </table>
+                </div>
               </div>
 
               <div
@@ -169,19 +173,19 @@ const Admin = () => {
                 }>
                 <div className='addAdmin-section'>
                   <table className="table">
-                    <tr>
-                      <th>Community Name</th>
-                      <th>Community Description</th>
-                      <th>EDIT</th>
-                      <th>DELETE</th>
-                    </tr>
-
-                    {comunities.map(community =>
-
-                      <AdminCommunityList community={community} />
-
-                    )}
-                  </table> </div>
+                    <tbody>
+                      <tr>
+                        <th>Community Name</th>
+                        <th>Community Description</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                      </tr>
+                      {comunities.map(community =>
+                        <AdminCommunityList key={community._id} community={community} />
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div >
             </div >
           </div >
