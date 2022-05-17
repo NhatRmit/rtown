@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { editPost, getPostById, getPosts } from "../../actions/post";
+import { editPost, getPostById } from "../../actions/post";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import { adminEditPost } from "../../actions/admin";

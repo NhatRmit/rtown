@@ -106,9 +106,9 @@ export const adminEditPost = (postId, formData) => async dispatch => {
 }
 
 // Delete post
-export const adminDeletePost = (id, navigate) => async dispatch => {
+export const adminDeletePost = (id) => async dispatch => {
     try {
-        const res = await axios.delete(`/api/admins/${id}`)
+        await axios.delete(`/api/admins/${id}`)
         dispatch({
             type: DELETE_POST,
             payload: id

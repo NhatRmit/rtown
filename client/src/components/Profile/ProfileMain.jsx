@@ -6,7 +6,7 @@ import Spinner from '../Layout/Spinner'
 import PostsSection from '../Post/PostsSection'
 import RItem from "../../components/RShop/RItem";
 import RedeemedButton from "../Buttons/RedeemedButton";
-import { getMyPosts, getPostById, getUserPosts } from "../../actions/post";
+import { getUserPosts } from "../../actions/post";
 
 const ProfileMain = ({ profile, loading }) => {
     const posts = useSelector(state => state.post.posts)

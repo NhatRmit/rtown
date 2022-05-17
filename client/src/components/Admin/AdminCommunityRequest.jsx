@@ -1,11 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { adminGetAllCommunityRequest, deleteCommunityRequest, adminAcceptCommunityRequest } from "../../actions/admin"
-import { setRandomFallback } from "bcryptjs";
-
-
+import { useDispatch,  } from "react-redux";
+import { deleteCommunityRequest, adminAcceptCommunityRequest } from "../../actions/admin"
 
 const AdminCommunityRequest = ({ community }) => {
     const dispatch = useDispatch();

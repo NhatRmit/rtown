@@ -8,11 +8,9 @@ import {
   REMOVE_COMMENT,
   EDIT_POST,
   GET_POST,
-  EDIT_COMMENT,
   CLEAR_POST,
   CHECK_OUT,
   DISPLAY_IMAGE,
-  CLEAR_COMMENT,
 } from '../actions/types';
 
 const initialState = {
