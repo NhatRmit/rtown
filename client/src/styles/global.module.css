@@ -1,13 +1,16 @@
 :root {
     /* Fonts */
+    --heading-font: "Helvetica";
     --body-font: "Arial";
 
     /* RTown color palette */
     --navy: #000054;
     --red: #E4052A;
-    --light-grey: #F8F9FA;
-    --grey: #C2C2C2;
-    --dark-grey: #DDE2E5;
-    --darkes-grey: #545454;
-    --white: #ffffff;
+    --lighter-grey: #F8F9FA; ;
+    --light-grey: #F4F5F6;
+    --grey: #DDE2E5;
+    --dark-grey: #C0BFBF;
+    --darker-grey: #676767;
+    --white: #FFFFFF;
+    --yellow: yellow;
 }

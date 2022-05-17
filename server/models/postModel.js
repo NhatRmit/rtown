@@ -3,30 +3,36 @@ const mongoose = require('mongoose')
 const postSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
-    title: {
-        type: String,
-        required: true
+    profile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'profileStudent'
     },
     text: {
         type: String,
         required: true
     },
-    name: {
+    image: {
         type: String
     },
-    avatar: {
-        type: String
-    },
-    upvotes: {
-        type: Number
+    upvotes: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        }
+    ],
+    upvotesCount: {
+        type: Number,
+        default: 0,
     },
     downvotes: [
         {
             user: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'user'
             }
         }
     ],
@@ -34,8 +40,7 @@ const postSchema = mongoose.Schema({
         {
             user: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-
+                ref: 'user'
             },
             text: {
                 type: String,
@@ -47,6 +52,9 @@ const postSchema = mongoose.Schema({
             avatar: {
                 type: String
             },
+            image: {
+                type: String, 
+            },
             date: {
                 type: Date,
                 default: Date.now
@@ -54,16 +62,37 @@ const postSchema = mongoose.Schema({
         }
     ],
     commentsCount:{
-        type: Number
+        type: Number,
+        default: 0,
     },
+    Rpoint: {
+        type: Number,
+        default: 0,
+    },
+    checkouts: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now
+    },
+    startTime: {
+        type: Date,
+        default: null,
+    },
+    endTime: {
+        type: Date,
+        default: null,
+    },
+    community: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'community',
     }
 })
-
-// postSchema.virtual('commentCount').get(function () {
-//     return this.comments.length;
-// })
 
 module.exports = mongoose.model('Post', postSchema)

@@ -1,42 +1,32 @@
 const express = require('express');
-const dotenv = require('dotenv').config()
-// const connectDB = require('./configs/database')
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-
-// connectDB();
-
+const connectDB = require('./configs/database');
+const cors = require('cors')
 const app = express();
+const path = require('path');
+require('dotenv').config();
+connectDB();
 
+app.use(cors())
+app.use(express.json());
 app.use('/api/users', require('./routes/api/userRoute'))
 app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/auth', require('./routes/api/authRoute'))
-app.use('/api/profile', require('./routes/api/profileRoute'))
+app.use('/api/profiles', require('./routes/api/profileRoute'))
+app.use('/api/communities', require('./routes/api/communityRoute'))
+app.use('/api/items', require('./routes/api/itemRoute'))
+app.use('/api/messengers', require('./routes/api/messengerRoute'))
+app.use('/api/images', require('./routes/api/imageRoute'))
+app.use('/api/admins', require('./routes/api/adminRoute'))
 
-// Bodyparser middleware
-app.use(
-    bodyParser.urlencoded({
-      extended: false
+// serve static assets if in production
+if(process.env.NODE_ENV === 'production'){
+    // Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
-  );
-app.use(bodyParser.json());
+}
 
-// DB Config
-const db = require("./config/keys").mongoURI;
-
-// Connect to MongoDB
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("MongoDB successfully connected"))
-  .catch(err => console.log(err));
-
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));
-//routes
-// app.use('api/users', require('./routes/api/users'));
-// app.use('api/users', require('./routes/api/posts'));
-
-
