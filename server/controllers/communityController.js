@@ -29,7 +29,7 @@ const getAllCommunity = asyncHandler(async (req, res) => {
 
 const getCommunityById = asyncHandler(async (req, res) => {
     try {
-        const community = await Community.findById(req.params.community_id).populate({ path: 'user' })
+        const community = await Community.findOne({ _id: req.params.community_id }).populate({ path: 'user' })
 
         if (!community) {
             res.status(400).json({ msg: 'Community Not Found' })
@@ -182,7 +182,7 @@ const getCommunityMember = asyncHandler(async (req, res) => {
 
 const kickMember = asyncHandler(async (req, res) => {
     try {
-        const comm = await Community.findOne({ _id: req.params.community_id })
+        const comm = await Community.findById(req.params.community_id)
         const profile = await Profile.findOne({ user: req.params.profile_id })
 
         const removeProfileIndex = profile.community
@@ -195,8 +195,29 @@ const kickMember = asyncHandler(async (req, res) => {
 
         profile.community.splice(removeProfileIndex, 1)
         comm.members.splice(removeCommunityIndex, 1)
-        
+
         await comm.save()
+        await profile.save()
+
+        res.status(200).json(comm)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ msg: 'Server Error' })
+    }
+})
+
+const clearCommunityData = asyncHandler(async (req, res) => {
+    try {
+        const comm = await Community.findById(req.params.community_id)
+
+        const profile = await Profile.findOne({ user: req.params.profile_id })
+
+        const removeProfileIndex = profile.community
+            .map(item => item.communityId)
+            .indexOf(req.params.community_id)
+
+        profile.community.splice(removeProfileIndex, 1)
+
         await profile.save()
 
         res.status(200).json(comm)
@@ -216,6 +237,7 @@ const community = {
     getCommunityMember,
     createCommunityRequest,
     kickMember,
+    clearCommunityData,
 }
 
 module.exports = { community }

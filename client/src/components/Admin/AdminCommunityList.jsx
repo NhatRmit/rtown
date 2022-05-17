@@ -1,12 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCommunityRequest, adminAcceptCommunityRequest, adminDeletePost } from "../../actions/admin"
-import { kickMember } from "../../actions/community";
-import { getCommunityPosts, getPosts } from "../../actions/post";
-
-
+import { deleteCommunityRequest, adminDeletePost } from "../../actions/admin"
+import { clearCommunityData } from "../../actions/community";
+import { getCommunityPosts } from "../../actions/post";
 
 const AdminCommunityList = ({ community }) => {
     const dispatch = useDispatch()
@@ -24,10 +22,16 @@ const AdminCommunityList = ({ community }) => {
 
     const onDelete = e => {
         e.preventDefault()
-        posts.find(post => dispatch(adminDeletePost(post._id)))
-        community.members.find(member => dispatch(kickMember(community._id, member.memberId)))
-        // dispatch(deleteCommunityRequest(community._id))
+        posts.forEach(
+            post => dispatch(adminDeletePost(post._id))
+        )
+        community.members.forEach(
+            member => dispatch(clearCommunityData(community._id, member.memberId))
+        )
+        dispatch(deleteCommunityRequest(community._id))
     }
+
+
 
     return (
         community && (community.requested === true) &&

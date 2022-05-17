@@ -1,7 +1,6 @@
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require("../models/userModel")
-const { loginValidation } = require('../../validation');
+const { loginValidation } = require('../validators/validation');
 const asyncHandler = require('express-async-handler')
 
 

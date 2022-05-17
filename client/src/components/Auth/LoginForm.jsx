@@ -3,8 +3,7 @@ import style from "./LoginForm.module.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { loadUser, loginUser } from "../../actions/auth";
-import { FaBullseye } from "react-icons/fa";
+import { loginUser } from "../../actions/auth";
 
 const LoginForm = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");

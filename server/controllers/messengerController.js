@@ -155,11 +155,31 @@ const deliveredMessage = async (req, res) => {
           })
 }
 
+const messageSeen = async (req,res) => {
+     const messageId = req.body._id;
+     
+     await Message.findByIdAndUpdate(messageId, {
+         status : 'seen' 
+     })
+     .then(() => {
+          res.status(200).json({
+               success : true
+          })
+     }).catch(() => {
+          res.status(500).json({
+               error : {
+                    errorMessage : 'Internal Server Error'
+               }
+          })
+     })
+}
+
 const message = {
      getFriends,
      messageUploadDB,
      messageGet,
-     deliveredMessage
+     deliveredMessage,
+     messageSeen
 }
 
 module.exports = { message }

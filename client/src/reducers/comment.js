@@ -15,11 +15,6 @@ function commentReducer(state = initialState, action) {
                 ...state,
                 comments: payload
             }
-        // case GET_COMMENTS: 
-        //     return {
-        //         ...state,
-        //         comments: payload
-        //     }
         default:
             return state;
     }

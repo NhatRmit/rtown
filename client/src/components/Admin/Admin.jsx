@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Admin.css";
 import AdminItem from "./AdminItem";
 import AdminProfile from "./AdminProfile";
@@ -9,8 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "../../actions/item"
 import ItemForm from "../Item/ItemForm"
 import { adminGetAllCommunityRequest, adminGetAllAccepted } from "../../actions/admin"
-// import { getAllCommunities } from "../../actions/community"
-import { clearPost, getPosts, deletePost } from '../../actions/post'
+import { getPosts } from '../../actions/post'
 import AdminPost from "./AdminPost";
 
 const Admin = () => {

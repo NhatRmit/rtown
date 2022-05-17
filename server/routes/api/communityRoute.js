@@ -17,6 +17,7 @@ router.get('/:community_id', auth, community.getCommunityById)
 
 router.put('/update/:community_id', upload.single("file"), auth, community.updateCommunity)
 router.put('/update/:community_id/:profile_id', auth, community.kickMember)
+router.put('/clear/:community_id/:profile_id', auth, community.clearCommunityData)
 router.post('/createCommunityRequest', auth, upload.single("file"),  community.createCommunityRequest)
 router.delete('/:community_id', auth, community.deleteCommunity)
 

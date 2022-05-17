@@ -18,47 +18,6 @@ const getAllUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-const editMemberProfile = asyncHandler(async (req, res) => {
-    const {
-        bio,
-        Rpoint,
-        avatar,
-        // itemList,
-        // community,
-        admin
-    } = req.body
-    const profileFields = {
-        bio,
-        Rpoint,
-        avatar,
-        // itemList,
-        // community,
-        admin
-    }
-    profileFields.user = req.user.id
-    if (bio) profileFields.bio = bio
-    if (Rpoint) profileFields.Rpoint = Rpoint
-    if (avatar) profileFields.avatar = avatar
-    // if (itemList) profileFields.itemList = itemList
-    // if (community) profileFields.community = community
-    if (admin) profileFields.admin = admin
-    let editMemberprofile = await Profile.findOne(req.params._id)
-    try {
-        if (editMemberprofile) {
-            editMemberprofile = await Profile.findOneAndUpdate(
-                { user: req.user.id },
-                { $set: profileFields },
-                { new: true }
-            )
-        }
-        res.status(200).json(editMemberprofile)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).json({ msg: 'Server Error' })
-    }
-})
-
-
 // COMMUNITY 
 const getAllCommunityRequest = asyncHandler(async (req, res) => {
     try {
@@ -178,7 +137,6 @@ const getPosts = asyncHandler(async (req, res) => {
 const editPost = asyncHandler(async (req, res) => {
     const postFields = {}
     const { text } = req.body
-    //postFields.user = req.user.id
     if (text) postFields.text = text
     if (req.file)
         communityFields.image = `http://localhost:8000/api/images/${req.file.filename}`
@@ -229,7 +187,6 @@ module.exports = {
     editPost,
     getPosts,
     deleteCommunity,
-    editMemberProfile,
     editCommunity,
     getAllAcceptedCommunity,
 }
