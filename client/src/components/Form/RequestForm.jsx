@@ -3,7 +3,7 @@ import './RequestForm.css';
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addCommunity, requestCreateCommunity } from '../../actions/community';
+import { requestCreateCommunity } from '../../actions/community';
 
 
 const RequestForm = () => {

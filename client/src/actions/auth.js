@@ -5,7 +5,6 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     CLEAR_PROFILE,
-    CLEAR_COMMUNITY
 } from './types'
 
 import axios from 'axios'

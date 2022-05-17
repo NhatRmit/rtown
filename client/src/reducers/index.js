@@ -7,7 +7,6 @@ import comment from './comment'
 import item from './item'
 import image from './image'
 import messenger from './messenger'
-import admin from './admin'
 
 export default combineReducers({
   auth,
@@ -18,5 +17,4 @@ export default combineReducers({
   item,
   image,
   messenger,
-  admin
 });

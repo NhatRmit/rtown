@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_COMMUNITY, ADD_IMAGE, DISPLAY_IMAGE, IMAGE_ERROR } from "./types";
+import { ADD_IMAGE, DISPLAY_IMAGE, IMAGE_ERROR } from "./types";
 
 export const addImage = (image) => async dispatch => {
     const config = {

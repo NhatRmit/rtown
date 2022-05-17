@@ -10,7 +10,6 @@ const {
     deletePost,
     editPost,
     deleteCommunity,
-    editMemberProfile,
     editCommunity,
     getAllAcceptedCommunity
 } = require('../../controllers/adminController')
@@ -21,7 +20,6 @@ router.get('/getAllAcceptedCommunity', auth, getAllAcceptedCommunity)
 
 router.put('/communityAccept/:community_id', auth, acceptCommunity)
 router.delete('/deleteCommunity/:community_id', auth, deleteCommunity)
-router.put('/editMemberProfile/:user_id', auth, editMemberProfile)
 router.put('/editCommunity/:community_id', upload.single("file"), auth, editCommunity)
 
 router.get('/getAllPosts', auth, getPosts)

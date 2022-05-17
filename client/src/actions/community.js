@@ -7,7 +7,6 @@ import {
     CLEAR_COMMUNITY,
     COMMUNITY_ERROR,
     GET_MY_COMMUNITIES,
-    GET_PROFILE,
     COMMUNITY_REQUEST_CREATE
 } from './types'
 
@@ -130,11 +129,8 @@ export const getMyCommunities = (userId) => async dispatch => {
 export const leaveCommunity = (community_id, navigate) => async dispatch => {
     dispatch({ type: CLEAR_COMMUNITY })
     try {
-        const res = await axios.put(`/api/profiles/leave/${community_id}`)
-        // dispatch({
-        //     type: GET_MY_COMMUNITIES,
-        //     payload: res.data
-        // })
+        await axios.put(`/api/profiles/leave/${community_id}`)
+
         dispatch(getCommunityById(community_id))
 
         navigate(`/`)
@@ -150,11 +146,7 @@ export const leaveCommunity = (community_id, navigate) => async dispatch => {
 export const joinCommunity = (community_id, profile_id, navigate) => async dispatch => {
     // dispatch({ type: CLEAR_COMMUNITY })
     try {
-        const res = await axios.put(`/api/profiles/join/${community_id}`)
-        // dispatch({
-        //     type: GET_COMMUNITY,
-        //     payload: res.data
-        // })
+        await axios.put(`/api/profiles/join/${community_id}`)
         dispatch(getCommunityById(community_id))
         navigate(`/profiles/${profile_id}`)
 
@@ -203,3 +195,19 @@ export const kickMember = (communityId, profileId) => async dispatch => {
         })
     }
 }
+
+export const clearCommunityData = (communityId, profileId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/communities/clear/${communityId}/${profileId}`)
+        dispatch({
+            type: GET_COMMUNITY,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: COMMUNITY_ERROR,
+            payload: { msg: err.response, status: err.response }
+        })
+    }
+}
+

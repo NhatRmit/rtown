@@ -3,7 +3,7 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { kickMember } from '../../actions/community'
 
 const MemberSection = ({ community, member }) => {
@@ -16,10 +16,6 @@ const MemberSection = ({ community, member }) => {
 
 
   return (
-    // <div className='member-container'>
-    //   <h1 className='title'>Members</h1>
-    //   <div className="member-list">
-    // {community && community.members && community.members.map((member) => (
     <>
       <span onClick={onKick}>
         <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
@@ -44,10 +40,6 @@ const MemberSection = ({ community, member }) => {
 
       </div>
     </>
-    // ))}
-    //   </div>
-
-    // </div>
   );
 };
 

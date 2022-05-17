@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import NewsfeedPage from './pages/NewsfeedPage'
@@ -16,14 +16,12 @@ import RequestEvent from './components/Form/RequestEvent'
 import RShopPage from './pages/RShopPage'
 import AdminProfilePage from './pages/profile/AdminProfilePage'
 import Modal from 'react-modal'
-import { getAllProfiles, getProfile } from './actions/profile'
+import { getAllProfiles } from './actions/profile'
 
 Modal.setAppElement('#root');
 
 const App = () => {
   const dispatch = useDispatch()
-  // const admin = useSelector(state => state.auth.admin)
-  const [time, setTime] = useState(new Date())
 
   useEffect(() => {
     if (localStorage.token) {
@@ -33,10 +31,6 @@ const App = () => {
     }
     dispatch(getAllProfiles())
     dispatch(loadUser())
-    setInterval(
-      () => {
-        setTime(new Date())
-      }, 1000)
   }, [dispatch])
 
   return (
@@ -66,15 +60,12 @@ const App = () => {
             exact path='/communities/event-request/:community_id'
             element={<PrivateRoute element={RequestEvent} />}
           />
-          {/* <Route
-            exact path='/newsfeed'
-            element={<PrivateRoute element={NewsfeedPage} />}
-          /> */}
-          {/* <Route exact path='/comment' element={<CommentForm />} /> */}
+
           <Route
             exact path='profiles/:userId'
             element={<PrivateRoute element={UserProfile} />}
           />
+          
           <Route
             exact path='/rshop'
             element={<PrivateRoute element={RShopPage} />}
@@ -89,13 +80,6 @@ const App = () => {
             exact path='/newsfeed'
             element={<PrivateRoute element={NewsfeedPage} />}
           />
-
-          {/* <Route
-            exact path='/admin-profile'
-            element={<PrivateRoute element={AdminProfilePage} />}
-          /> */}
-
-
         </Routes>
       </Router>
     </>
