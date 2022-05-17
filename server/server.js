@@ -8,6 +8,9 @@ connectDB();
 
 app.use(cors())
 app.use(express.json());
+
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
 app.use('/api/users', require('./routes/api/userRoute'))
 app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/auth', require('./routes/api/authRoute'))
@@ -17,27 +20,19 @@ app.use('/api/items', require('./routes/api/itemRoute'))
 app.use('/api/messengers', require('./routes/api/messengerRoute'))
 app.use('/api/images', require('./routes/api/imageRoute'))
 app.use('/api/admins', require('./routes/api/adminRoute'))
-
-// serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static('client/build'));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    })
-}
-
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 const port = process.env.PORT;
-// app.listen(port, () => console.log(`Server started on port ${port}`));
+let io = require('socket.io')(
+    app.listen(port, () =>
+        console.log(`Server started on port ${port}`)), {
 
-let io = require('socket.io')(app.listen(port, () => console.log(`Server started on port ${port}`)), {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
     }
 })
-
 
 let users = [];
 const addUser = (userId, socketId, userInfo) => {
@@ -46,10 +41,6 @@ const addUser = (userId, socketId, userInfo) => {
     if (!checkUser) {
         users.push({ userId, socketId, userInfo });
     }
-}
-
-const userRemove = (socketId) => {
-    users = users.filter(u => u.socketId !== socketId);
 }
 
 const findFriend = (id) => {
@@ -109,3 +100,14 @@ io.on('connection', (socket) => {
         }
     })
 })
+
+// serve static assets if in production
+// if (process.env.NODE_ENV === 'production') {
+//     // Set static folder
+//     app.use(express.static('client/build'));
+
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//     })
+// }
+
