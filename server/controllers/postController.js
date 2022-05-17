@@ -59,13 +59,14 @@ const getCommentById = asyncHandler(async (req, res) => {
 
 const filterPost = asyncHandler(async (req, res) => {
     const { filter } = req.query;
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
     let posts;
     try {
         if (filter === 'top') {
-            posts = await Post.find().sort({ upvotesCount: -1 }).populate('community')
+            posts = await Post.find().sort({ upvotesCount: -1 }).populate(query)
         }
         else if (filter === 'trending') {
-            posts = await Post.find().sort({ commentsCount: -1 }).populate('community')
+            posts = await Post.find().sort({ commentsCount: -1 }).populate(query)
         }
         res.status(200).json(posts)
     } catch (error) {

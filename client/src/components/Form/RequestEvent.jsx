@@ -95,10 +95,8 @@ const RequestEvent = () => {
                             }
                         />
                     </div>
-                    <br />
                     <div>
                         <label className="label">End Time</label>
-                        <br />
                         <Flatpickr
                             data-enable-time
                             value={endTime}
