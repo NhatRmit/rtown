@@ -12,14 +12,6 @@ const messengerState = {
 const messengerReducer = (state = messengerState, action) => {
      const { type, payload } = action;
 
-
-     if (type === 'THEME_GET_SUCCESS' || type === 'THEME_SET_SUCCESS') {
-          return {
-               ...state,
-               themeMood: payload.theme
-          }
-     }
-
      if (type === FRIEND_GET_SUCCESS) {
           return {
                ...state,
