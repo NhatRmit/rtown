@@ -6,7 +6,13 @@ const path = require('path');
 require('dotenv').config();
 connectDB();
 
-app.use(cors())
+app.use(cors({
+    'allowedHeaders': ['sessionId', 'Content-Type'],
+    'exposedHeaders': ['sessionId'],
+    'origin': '*',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
+}))
 app.use(express.json());
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -95,19 +101,7 @@ io.on('connection', (socket) => {
                 senderId: data.senderId,
                 receiverId: data.receiverId,
                 msg: data.msg
-
             })
         }
     })
 })
-
-// serve static assets if in production
-// if (process.env.NODE_ENV === 'production') {
-//     // Set static folder
-//     app.use(express.static('client/build'));
-
-//     app.get('*', (req, res) => {
-//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-//     })
-// }
-

@@ -12,6 +12,7 @@ const CreatePost = ({ isCommunity }) => {
     const [uploadFile, setUploadFile] = useState(null)
     const { community_id } = useParams()
     const [reset, setReset] = useState(true)
+    const [tempFile, setTempFile] = useState("")
 
     const onSubmit = e => {
         e.preventDefault();
@@ -21,20 +22,21 @@ const CreatePost = ({ isCommunity }) => {
 
         !isCommunity ? dispatch(addPost(formdata)) : dispatch(addCommunityPost(formdata, community_id))
         setText('')
+        setTempFile("")
         setReset(false)
     }
 
     const onChangeImage = e => {
         setUploadFile(e.target.files[0])
+        setTempFile(e.target.files[0].name)
     }
-
     const onChange = e => {
         setText(e.target.value)
     }
 
     useEffect(() => {
         !reset && setReset(true)
-      }, [reset])
+    }, [reset])
 
     return (
         <>
@@ -53,14 +55,17 @@ const CreatePost = ({ isCommunity }) => {
                     <div className='upload-icons'>
                         <span>
                             <label>
+                                {
+                                    reset &&
+                                    <input onChange={onChangeImage} id="img-input" type="file" style={{
+                                        visibility: "hidden"
+                                    }} />
+                                }
                                 <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
                                     <BsFillCloudUploadFill />
                                 </IconContext.Provider>
-                            </label >
-                            {
-                                reset &&
-                                    <input onChange={onChangeImage} id="img-input" type="file" />
-                            }
+                                {tempFile}
+                            </label>
                         </span >
                     </div >
                     <button type="submit">Post</button>

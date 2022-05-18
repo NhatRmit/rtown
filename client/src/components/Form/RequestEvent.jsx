@@ -71,6 +71,7 @@ const RequestEvent = () => {
                             name='text'
                         />
                     </div>
+                    
                     <div className='communityName'>
                         <label className="label">Event RPoint</label>
                         <input

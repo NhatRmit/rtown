@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from '../components/Layout'
@@ -61,7 +60,10 @@ const NewsfeedPage = () => {
             <>
               {
                 posts.map(post =>
-                  <PostsSection key={post._id} post={post} />
+                  post.Rpoint === 0 ?
+                    <PostsSection key={post._id} post={post} isEvent={false} />
+                    :
+                    <PostsSection key={post._id} post={post} isEvent={true} />
                 )
               }
             </>

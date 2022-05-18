@@ -49,11 +49,13 @@ const CommunityPage = () => {
               }
             </div>
             <div>
-              {posts.map(post => <PostsSection key={post._id} post={post} />
+              {posts.map(post =>
+                post.Rpoint === 0 ?
+                  <PostsSection key={post._id} post={post} isEvent={false}/>
+                  :
+                  <PostsSection key={post._id} post={post} isEvent={true}/>
               )}
             </div>
-
-            <span ></span>
           </div>
           <div className='right-community-container'>
             <AboutCommunity community_id={community_id} community={community} />

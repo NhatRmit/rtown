@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { FaEllipsisH, FaEdit, FaSistrix, FaSignOutAlt } from "react-icons/fa";
-import ActiveFriend from './ActiveFriend';
 import Friends from './Friends';
 import RightSide from './RightSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFriends, messageSend, getMessage, ImageMessageSend, seenMessage, updateMessage, getTheme, themeSet } from '../../actions/messenger';
-import { logoutUser } from '../../actions/auth';
+import { getFriends, messageSend, getMessage, seenMessage, updateMessage } from '../../actions/messenger';
 import { getProfile } from '../../actions/profile'
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
@@ -247,12 +244,6 @@ const Messenger = () => {
      //           dispatch(ImageMessageSend(formData));
      //      }
      // }
-
-     const [hide, setHide] = useState(true);
-
-     useEffect(() => {
-          dispatch(getTheme());
-     }, [dispatch]);
 
      return (
           <Layout header footer>

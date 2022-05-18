@@ -1,4 +1,5 @@
 import "./AboutCommunity.css";
+import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import CreateEvent from "../Buttons/CreateEventButton"
 import LeaveCommunity from "../Buttons/LeaveButton"
@@ -9,6 +10,9 @@ import { deletePost } from "../../actions/post"
 import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
 import EditCommunity from "../Buttons/EditCommunityButton"
+import { AiFillSetting } from "react-icons/ai"
+import { IconContext } from 'react-icons/lib'
+
 
 
 const AboutCommunity = ({ community_id, community }) => {
@@ -17,6 +21,12 @@ const AboutCommunity = ({ community_id, community }) => {
 
   const auth = useSelector(state => state.auth._id)
   const posts = useSelector(state => state.post.posts)
+
+  const [expand, setExpand] = useState(false)
+
+  const onTrigger = e => {
+    setExpand(!expand)
+  }
 
   const onEdit = e => {
     e.preventDefault()
@@ -41,7 +51,7 @@ const AboutCommunity = ({ community_id, community }) => {
   const onDelete = e => {
     e.preventDefault()
     posts.forEach(
-      post => dispatch(deletePost(post._id))
+      post => dispatch(deletePost(post._id, false))
     )
     community.members.forEach(
       member => dispatch(clearCommunityData(community._id, member.memberId))
@@ -62,33 +72,44 @@ const AboutCommunity = ({ community_id, community }) => {
 
   return (
     <div className='about-container'>
-      <h1 className='title'>{community && community.communityName}</h1>
-      <p className='description'>
-        {community && community.description}
-      </p>
+
+      <h1 className='title'>
+        {community && community.communityName}
+        <span onClick={onTrigger}>
+          <label>
+            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
+              <AiFillSetting style={{ cursor: "pointer" }} />
+            </IconContext.Provider>
+          </label>
+        </span>
+      </h1>
+
+      <img src={community && community.avatar} alt="" style={{ width: "10rem" }} />
       <div className="buttons">
-        {
-          community && community.user._id === auth &&
-          <div onClick={onCreateEvent}>
-            <CreateEvent />
-          </div>
-        }
-        {
-          community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
-        }
-        {
-          community && community.members.length === 0 ?
-            <div onClick={onJoin}><JoinCommunity /></div> :
-            memberIndex !== -1 ?
-              <div onClick={onLeave}><LeaveCommunity /></div> :
-              <div onClick={onJoin}><JoinCommunity /></div>
-        }
-        {
-          community && community.user._id === auth && <div onClick={onDelete}>
-            <button className="createEvent-btn">
-              DELETE
-            </button></div>
-        }
+        {expand && <>
+          {
+            community && community.user._id === auth &&
+            <div onClick={onCreateEvent}>
+              <CreateEvent />
+            </div>
+          }
+          {
+            community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
+          }
+          {
+            community && community.members.length === 0 ?
+              <div onClick={onJoin}><JoinCommunity /></div> :
+              memberIndex !== -1 ?
+                <div onClick={onLeave}><LeaveCommunity /></div> :
+                <div onClick={onJoin}><JoinCommunity /></div>
+          }
+          {
+            community && community.user._id === auth && <div onClick={onDelete}>
+              <button className="createEvent-btn">
+                DELETE
+              </button></div>
+          }
+        </>}
 
       </div>
     </div >

@@ -5,6 +5,7 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     CLEAR_PROFILE,
+    LOGOUT_SUCCESS,
 } from './types'
 
 import axios from 'axios'
@@ -61,5 +62,8 @@ export const logoutUser = () => dispatch => {
     })
     dispatch({
         type: LOGOUT
+    })
+    dispatch({
+        type: LOGOUT_SUCCESS
     })
 }

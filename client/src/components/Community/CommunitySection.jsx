@@ -14,7 +14,6 @@ const CommunitySection = ({ community }) => {
       <div className='community-list-container' >
         <div className='joined-community' >
           <span onClick={onClick} className='community'>
-            {" "}
             <img src={community && community.avatar} alt='Community logo' className='community-logo' />
           </span>
         </div>

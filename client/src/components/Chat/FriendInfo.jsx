@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaCaretSquareDown, FaEdit, FaSistrix } from "react-icons/fa";
+import { messageSend } from '../../actions/messenger';
 
 
 const FriendInfo = ({ currentfriend, activeUser, message }) => {
@@ -20,27 +21,27 @@ const FriendInfo = ({ currentfriend, activeUser, message }) => {
 
 
                <div className='others'>
-                    {/* <div className='custom-chat'>
+                    <div className='custom-chat'>
                          <h3>Coustomise Chat </h3>
                          <FaCaretSquareDown />
-                    </div> */}
+                    </div>
 
-                    {/* <div className='privacy'>
+                    <div className='privacy'>
                          <h3>Privacy and Support </h3>
                          <FaCaretSquareDown />
-                    </div> */}
+                    </div>
 
-                    {/* <div className='media'>
+                    <div className='media'>
                          <h3>Shared Media </h3>
                          <label htmlFor='gallery'> <FaCaretSquareDown /> </label>
-                    </div> */}
+                    </div>
                </div>
 
-               {/* <div className='gallery'>
+               <div className='gallery'>
                     {
-                         message && message.length > 0 ? message.map((m, index) => m.message.image && <img key={index} src={`./image/${m.message.image}`} />) : ''
+                         message && message.length > 0 ? message.map((m, index) => m.message.image && <img key={index} src={message.image} alt=""/>) : ''
                     }
-               </div> */}
+               </div>
 
           </div>
      )

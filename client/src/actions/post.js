@@ -6,8 +6,11 @@ import {
     ADD_POST,
     DELETE_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE, CHECK_OUT
+    GET_COMMUNITY_POSTS,
+    REMOVE_COMMENT, EDIT_POST, EDIT_COMMENT, CLEAR_POSTS, CLEAR_POST, GET_COMMENT, UPDATE_UPVOTE, UPDATE_DOWNVOTE, CHECK_OUT
 } from "./types";
+
+
 
 //Get post
 export const getPosts = () => async dispatch => {
@@ -29,7 +32,7 @@ export const getCommunityPosts = (community_id) => async dispatch => {
     try {
         const res = await axios.get(`/api/posts/postCommunity/${community_id}`)
         dispatch({
-            type: GET_POSTS,
+            type: GET_COMMUNITY_POSTS,
             payload: res.data
         })
     } catch (error) {
@@ -97,8 +100,6 @@ export const editComment = (postId, commentId, formData, navigate) => async disp
 
 //Delete comment
 export const deleteComment = (postId, commentId, navigate) => async dispatch => {
-
-
     try {
         const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 
@@ -165,14 +166,14 @@ export const addCommunityPost = (formData, communityId) => async dispatch => {
     }
 }
 // Delete post
-export const deletePost = (id, navigate) => async dispatch => {
+export const deletePost = (id, check = true) => async dispatch => {
     try {
-        const res = await axios.delete(`/api/posts/${id}`)
+        await axios.delete(`/api/posts/${id}`)
         dispatch({
             type: DELETE_POST,
             payload: id
         });
-        alert("Post is deleted Successfully!")
+        check ? alert("Post is deleted Successfully!") : <></>
 
     } catch (error) {
         dispatch({
@@ -348,6 +349,11 @@ export const getSearch = (keyword) => async dispatch => {
     }
 }
 
+export const clearPosts = () => async dispatch => {
+    dispatch({
+        type: CLEAR_POSTS
+    })
+}
 
 
 export const clearPost = () => async dispatch => {

@@ -9,8 +9,10 @@ import {
   EDIT_POST,
   GET_POST,
   CLEAR_POST,
+  CLEAR_POSTS,
   CHECK_OUT,
   DISPLAY_IMAGE,
+  GET_COMMUNITY_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +27,7 @@ function postReducer(state = initialState, action) {
 
   switch (type) {
     case GET_POSTS:
+    case GET_COMMUNITY_POSTS:
       return {
         ...state,
         posts: payload,
@@ -39,14 +42,13 @@ function postReducer(state = initialState, action) {
       }
     case ADD_POST:
     case DISPLAY_IMAGE:
-
       return {
         ...state,
         post: payload,
         loading: false
       };
     case EDIT_POST:
-    // case EDIT_COMMENT:
+      // case EDIT_COMMENT:
       return {
         ...state,
         post: payload,
@@ -82,6 +84,12 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         post: payload
+      }
+    case CLEAR_POSTS:
+      return {
+        ...state,
+        loading: false,
+        posts: null,
       }
     case CLEAR_POST:
       return {

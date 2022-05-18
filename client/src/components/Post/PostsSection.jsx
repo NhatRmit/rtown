@@ -1,5 +1,5 @@
 import "./PostsSection.css";
-import { BiUpvote, BiDownvote } from 'react-icons/bi'
+import { BiUpvote, BiDownvote, BiRightArrow } from 'react-icons/bi'
 import { BsPatchCheckFill } from 'react-icons/bs'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import { TiLockClosedOutline } from 'react-icons/ti'
@@ -8,20 +8,21 @@ import { MdReportGmailerrorred } from 'react-icons/md'
 import { IconContext } from 'react-icons/lib'
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useMatch } from 'react-router-dom'
 import Moment from 'react-moment'
 import { useEffect, useState, useRef } from 'react'
-import { deletePost, clearPost, addUpvote, removeUpvote, checkIn, checkOut } from '../../actions/post'
+import { getPosts, deletePost, clearPost, addUpvote, removeUpvote, checkIn, checkOut } from '../../actions/post'
 import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
 import CommentForm from '../Comment/CommentForm'
 
-const PostsSection = ({ post }) => {
+const PostsSection = ({ post, isEvent }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const [edit, setEdit] = useState(false)
   const profile = useSelector(state => state.profile.profile)
+  const newsfeed = useMatch('/newsfeed')
 
   const pullData = (data) => {
     setEdit(data)
@@ -39,6 +40,10 @@ const PostsSection = ({ post }) => {
   const onProfile = (e) => {
     e.preventDefault()
     navigate(`/profiles/${post.user._id}`)
+  }
+  const onCommunity = e => {
+    e.preventDefault()
+    navigate(`/communities/${post.community._id}`)
   }
   const onUpvote = (e) => {
     e.preventDefault()
@@ -86,6 +91,7 @@ const PostsSection = ({ post }) => {
       .map(item => item.memberId)
       .indexOf(auth._id)
 
+    newsfeed ? dispatch(getPosts()) : dispatch(clearPost())
   }, [])
 
   const [time, setTime] = useState(null)
@@ -105,7 +111,7 @@ const PostsSection = ({ post }) => {
   }, [])
   return (
     <div>
-      <div className='post-container'>
+      <div className={isEvent ? 'event-container' : 'post-container'}>
         <div className='vote-container'>
           <span className='upvote-icon' onClick={handleUpvote}>
             <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
@@ -119,75 +125,114 @@ const PostsSection = ({ post }) => {
             </IconContext.Provider>
           </span>
         </div>
-
         <div className='content-container'>
           <div className='content-section-header'>
-            <div className="content-left-header">
-              <span className="users-icon" onClick={onProfile}>
-                <label htmlFor='username'>
-                  {
-                    (post.profile && post.profile.avatar) === undefined ?
-                      <IconContext.Provider value={{ color: "#676767", size: "1.5em" }}>
-                        <FaUserCircle />
-                      </IconContext.Provider> :
-                      <img src={post.profile && post.profile.avatar} alt="" style={{ width: "2rem", borderRadius: "50%" }} />
+            {post.community !== null ?
+              <>
+                <div className="content-left-header">
+                  <span className="users-icon" onClick={onCommunity}>
+                    <label htmlFor='username'>
+                      <img src={post.community && post.community.avatar} alt="" style={{ height: "2.5rem", width: "2.5rem", borderRadius: "50%" }} />
+                    </label>
+                    <p id='username' className='username'>
+                      {post.community && post.community.communityName}
+                    </p>
+                  </span>
+                  <span className="users-icon">
+                    <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
+                      <BiRightArrow />
+                    </IconContext.Provider>
+                  </span>
+                  <span className="users-icon" onClick={onProfile}>
+                    <label htmlFor='username'>
+                      {
+                        (post.profile && post.profile.avatar) === undefined ?
+                          <IconContext.Provider value={{ color: "#676767", size: "2em" }}>
+                            <FaUserCircle />
+                          </IconContext.Provider> :
+                          <img src={post.profile && post.profile.avatar} alt="" style={{ height: "1.5rem", width: "1.5rem", borderRadius: "50%" }} />
+                      }
+                    </label>
+                    <p id='username' className='username'>
+                      {post && post.user.usernameOrEmail}
+                    </p>
+                    <p className='uploaded-time'>
+                      <Moment format='DD/MM/YYYY'>
+                        {post.date && post.date}
+                      </Moment>
+                    </p>
+                  </span>
+                  {post.Rpoint !== 0 &&
+                    <h3 className="rpoint" style={{ cursor: "default", margin: "0.8rem 0rem" }}>
+                      <span style={{
+                        textShadow: "3px 3px 8px var(--red)",
+                      }}> {post.Rpoint} Rpoints</span>
+                    </h3>
                   }
-                </label>
-                <p id='username' className='username'>
-                  {post && post.user.usernameOrEmail}
-                </p>
-              </span>
-
-              <p className='uploaded-time'>
-                <Moment format='DD/MM/YYYY'>
-                  {post.date && post.date}
-                </Moment>
-              </p>
-            </div>
-            {/* (post && post.Rpoint !== 0) &&  */}
-            {
-              post.Rpoint !== 0 ?
-                ((post.startTime && (new Date(post.startTime)) <= time) ?
-                  <div className="content-right-header">
+                </div>
+              </>
+              :
+              <div className="content-left-header">
+                <span className="users-icon" onClick={onProfile}>
+                  <label htmlFor='username'>
                     {
-                      ((Math.floor(time - new Date(post.startTime)) / 1000) < 60) ?
-                        (checkinIndex === -1) ?
-                          <button className="checkout" onClick={onCheckin}>Check In</button>
-                          :
-                          <p>Check in successfully!</p>
-                        :
-                        (post.endTime && (new Date(post.endTime)) <= time) ?
-                          <>
-                            {
-                              ((Math.floor(time - new Date(post.endTime)) / 1000) < 60) ?
-                                (checkinIndex !== -1 && checkoutIndex === -1) ?
-                                  <button className="checkout" onClick={onCheckout}>Check Out</button>
-                                  :
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <BsPatchCheckFill />
-                                  </IconContext.Provider> :
-                                checkoutIndex !== -1 ?
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <BsPatchCheckFill />
-                                  </IconContext.Provider> :
-                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                                    <TiLockClosedOutline />
-                                  </IconContext.Provider>
-                            }
-                          </> : <></>
+                      (post.profile && post.profile.avatar) === undefined ?
+                        <IconContext.Provider value={{ color: "#676767", size: "2em" }}>
+                          <FaUserCircle />
+                        </IconContext.Provider> :
+                        <img src={post.profile && post.profile.avatar} alt="" style={{ height: "2.5rem", width: "2.5rem", borderRadius: "50%" }} />
                     }
-                  </div> :
-                  <></>
-                ) :
-                <></>
+                  </label>
+                  <p id='username' className='username'>
+                    {post && post.user.usernameOrEmail}
+                  </p>
+                  <p className='uploaded-time'>
+                    <Moment format='DD/MM/YYYY'>
+                      {post.date && post.date}
+                    </Moment>
+                  </p>
+                </span>
+
+              </div>}
+            {post.Rpoint !== 0 ?
+              ((post.startTime && (new Date(post.startTime)) <= time) ?
+                <div className="content-right-header">
+                  {
+                    ((Math.floor(time - new Date(post.startTime)) / 1000) < 60) ?
+                      (checkinIndex === -1) ?
+                        <button className="checkout" onClick={onCheckin}>Check In</button>
+                        :
+                        <p>Check in successfully!</p>
+                      :
+                      (post.endTime && (new Date(post.endTime)) <= time) ?
+                        <>
+                          {
+                            ((Math.floor(time - new Date(post.endTime)) / 1000) < 60) ?
+                              (checkinIndex !== -1 && checkoutIndex === -1) ?
+                                <button className="checkout" onClick={onCheckout}>Check Out</button>
+                                :
+                                <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                  <BsPatchCheckFill />
+                                </IconContext.Provider> :
+                              checkoutIndex !== -1 ?
+                                <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                  <BsPatchCheckFill />
+                                </IconContext.Provider> :
+                                <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                  <TiLockClosedOutline />
+                                </IconContext.Provider>
+                          }
+                        </> : <></>
+                  }
+                </div> : <></>)
+              : <></>
             }
           </div>
           <div className='post-content'>
             <img src={post.image} alt="" style={{ width: "30%" }} />
             <div>
-              {
-                !edit ? post.text :
-                  <EditPost singlePost={post} pullData={pullData} />
+              {!edit ? post.text :
+                <EditPost singlePost={post} pullData={pullData} />
               }
             </div>
           </div>
@@ -234,23 +279,22 @@ const PostsSection = ({ post }) => {
               }
             </div>
           </div>
-        </div>
-      </div >
-      <div className="comment-page-container">
-        <div className="comment-section">
-          {
-            post.comments.map(comment =>
-              <Comment key={comment._id} post={post} comment={comment} />
-            )
-          }
-          {
-            (memberIndex.current !== -1) ?
-              <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
-          }
+          <div className="comment-page-container">
+            <div className="comment-section">
+              {
+                (memberIndex.current !== -1) ?
+                  <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
+              }
+              {
+                post.comments.map(comment =>
+                  <Comment key={comment._id} post={post} comment={comment} />
+                )
+              }
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
   );
 };
 

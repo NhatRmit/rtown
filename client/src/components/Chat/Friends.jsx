@@ -4,6 +4,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 
 const Friends = ({ activeUser, auth, friend }) => {
      const { fndInfo, msgInfo } = friend;
+     console.log(msgInfo)
      return (
           <div className='friend'>
                <div className='friend-image'>
@@ -21,13 +22,29 @@ const Friends = ({ activeUser, auth, friend }) => {
                          <h4 className={msgInfo?.senderId !== auth && msgInfo?.status !== undefined && msgInfo.status !== 'seen' ? 'unseen_message Fd_name ' : 'Fd_name'} >{fndInfo.userName}</h4>
 
                          <div className='msg-time'>
+                              <span>
+                                   {msgInfo ?
+                                        moment(msgInfo.createdAt).startOf('mini').fromNow() :
+                                        moment(fndInfo.createdAt).startOf('mini').fromNow()
+                                   }
+                              </span>
+                              <br />
                               {
-                                   msgInfo && msgInfo.senderId === auth ? <span>You </span> : <span className={msgInfo?.senderId !== auth && msgInfo?.status !== undefined && msgInfo.status !== 'seen' ? 'unseen_message ' : ''}> {fndInfo.userName + ' '} </span>
+                                   msgInfo && msgInfo.message.text ?
+                                        <span className={msgInfo?.senderId !== auth && msgInfo?.status !== undefined && msgInfo.status !== 'seen' ? 'unseen_message' : ''}>
+                                             You: {msgInfo.message.text.slice(0, 10)} {""}
+                                        </span> : msgInfo && msgInfo.message.image ?
+                                             <span>Send A image </span>
+                                             : <></>
                               }
                               {
-                                   msgInfo && msgInfo.message.text ? <span className={msgInfo?.senderId !== auth && msgInfo?.status !== undefined && msgInfo.status !== 'seen' ? 'unseen_message ' : ''}>{msgInfo.message.text.slice(0, 10)}</span> : msgInfo && msgInfo.message.image ? <span>Send A image </span> : <span>Connect You </span>
+                                   msgInfo && msgInfo.message.text ?
+                                        <span className={msgInfo?.senderId !== auth && msgInfo?.status !== undefined && msgInfo.status !== 'seen' ? 'unseen_message' : ''}>
+                                             You: {msgInfo.message.text.slice(0, 10)} {""}
+                                        </span> : msgInfo && msgInfo.message.image ?
+                                             <span>Send A image </span>
+                                             : <></>
                               }
-                              <span>{msgInfo ? moment(msgInfo.createdAt).startOf('mini').fromNow() : moment(fndInfo.createdAt).startOf('mini').fromNow()}</span>
 
                          </div>
                     </div>

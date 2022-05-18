@@ -1,4 +1,5 @@
 export const GET_POSTS = 'GET_POSTS';
+export const GET_COMMUNITY_POSTS = 'GET_COMMUNITY_POSTS'
 export const ADD_POST  = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -30,6 +31,7 @@ export const LOGOUT = 'LOGOUT'
 export const GET_POST = 'GET_POST'
 export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
 export const CLEAR_POST = 'CLEAR_POST';
+export const CLEAR_POSTS = 'CLEAR_POSTS';
 export const GET_COMMENT = 'GET_COMMENT';
 export const GET_ITEMS = 'GET_ITEMS'
 export const BUY_ITEM = 'BUY_ITEM'
@@ -63,4 +65,4 @@ export const MESSAGE_GET_SUCCESS_CLEAR = 'MESSAGE_GET_SUCCESS_CLEAR'
 export const SEEN_ALL = 'SEEN_ALL'
 export const THEME_GET_SUCCESS = 'THEME_GET_SUCCESS'
 export const THEME_SET_SUCCESS = 'THEME_SET_SUCCESS'
-
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
