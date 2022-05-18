@@ -89,7 +89,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        posts: null,
+        posts: [],
       }
     case CLEAR_POST:
       return {

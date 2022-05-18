@@ -38,7 +38,7 @@ const ProfileMain = ({ profile, loading }) => {
             ) : (
                 <>
                     <div className='rItems-section'>
-                        <div className='rshop-wrapper'>
+                        <div className='rshop-wrapper' style={{width: "90%", marginLeft: "0"}}>
                             <div id="tabs-profile" className='tabs-container'>
                                 <div className='bloc-tabs'>
                                     <button
@@ -59,7 +59,7 @@ const ProfileMain = ({ profile, loading }) => {
 
                                 </div>
 
-                                <div className='content-tabs'>
+                                <div className='content-tabs' style={{margin: "0"}}>
                                     <div className={toggleState === 1 ? "content  active-content" : "content"}>
                                         {
                                             posts.map(post =>

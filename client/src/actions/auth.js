@@ -6,11 +6,11 @@ import {
     LOGOUT,
     CLEAR_PROFILE,
     LOGOUT_SUCCESS,
+    CLEAR_POSTS,
 } from './types'
 
 import axios from 'axios'
 import setAuthToken from '../utils/setAuthToken'
-
 
 export const loadUser = () => async dispatch => {
     if(localStorage.token){
@@ -66,4 +66,8 @@ export const logoutUser = () => dispatch => {
     dispatch({
         type: LOGOUT_SUCCESS
     })
+    dispatch({
+        type: CLEAR_POSTS
+    })
+
 }

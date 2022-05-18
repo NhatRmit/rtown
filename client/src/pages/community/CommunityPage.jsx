@@ -29,7 +29,6 @@ const CommunityPage = () => {
   const memberIndex = community && community.members
     .map(member => member.memberId)
     .indexOf(auth)
-
   return (
     <>
       <Layout header footer>
@@ -39,8 +38,10 @@ const CommunityPage = () => {
               <h1 className='title'>Members</h1>
               <div className="member-list">
                 {community && community.members && community.members.map((member) => (
-                  
-                  <MemberSection key={member._id} community={community} member={member}/>
+                  member.memberId === community.user._id ?
+                    <MemberSection key={member._id} community={community} member={member} isLeader={true} />
+                    :
+                    <MemberSection key={member._id} community={community} member={member} isLeader={false} />
                 ))}
               </div>
             </div>
@@ -54,9 +55,9 @@ const CommunityPage = () => {
             <div>
               {posts.map(post =>
                 post.Rpoint === 0 ?
-                  <PostsSection key={post._id} post={post} isEvent={false}/>
+                  <PostsSection key={post._id} post={post} isEvent={false} />
                   :
-                  <PostsSection key={post._id} post={post} isEvent={true}/>
+                  <PostsSection key={post._id} post={post} isEvent={true} />
               )}
             </div>
           </div>

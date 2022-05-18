@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCommunityById, joinCommunity, leaveCommunity, clearCommunityData, deleteCommunity } from '../../actions/community'
 import { deletePost } from "../../actions/post"
 import { useEffect } from "react";
-import { loadUser } from "../../actions/auth";
 import EditCommunity from "../Buttons/EditCommunityButton"
 import { AiFillSetting } from "react-icons/ai"
 import { IconContext } from 'react-icons/lib'
@@ -18,7 +17,6 @@ import { IconContext } from 'react-icons/lib'
 const AboutCommunity = ({ community_id, community }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
   const auth = useSelector(state => state.auth._id)
   const posts = useSelector(state => state.post.posts)
 
@@ -60,9 +58,7 @@ const AboutCommunity = ({ community_id, community }) => {
   }
 
   useEffect(() => {
-    dispatch(loadUser())
     dispatch(getCommunityById(community_id))
-
   }, [dispatch, community_id])
 
   const user = useSelector(state => state.auth)

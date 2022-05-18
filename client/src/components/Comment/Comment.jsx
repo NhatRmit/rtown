@@ -16,6 +16,8 @@ const Comment = ({ post, comment }) => {
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
   const [show, setShow] = useState(false)
+  const auth = useSelector(state => state.auth)
+
 
 
   const pullData = (data) => {
@@ -39,11 +41,6 @@ const Comment = ({ post, comment }) => {
   }
 
 
-  useEffect(() => {
-    dispatch(loadUser())
-  }, [dispatch])
-
-  const auth = useSelector(state => state.auth)
 
   return (
     <>

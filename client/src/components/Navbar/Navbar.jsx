@@ -17,10 +17,6 @@ const Navbar = () => {
     const auth = useSelector(state => state.auth)
     const admin = useSelector(state => state.auth.admin)
 
-    useEffect(() => {
-        dispatch(loadUser())
-    }, [dispatch])
-
     const onLogout = (e) => {
         dispatch(logoutUser())
         navigate('/')

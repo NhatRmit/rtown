@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { kickMember } from '../../actions/community'
 
 
-const MemberSection = ({ community, member }) => {
+const MemberSection = ({ community, member, isLeader }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = useSelector(state => state.auth._id)
@@ -21,22 +21,34 @@ const MemberSection = ({ community, member }) => {
   }
   return (
     <>
-      {community.user._id === auth ?
-        <span onClick={onKick}>
-          <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
-            <AiFillCloseCircle />
-          </IconContext.Provider>
-        </span> : <></>
-      }
-      <div onClick={onProfile} className='member'>
-        <span className='user-icon'>
-          <img src={member.avatar} style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%" }} alt="" />
-        </span>
-        <div className='link'>
-          <p>{member.memberName}</p>
+      {!isLeader ?
+        <>
+          {
+            community.user._id === auth ?
+              <span onClick={onKick}>
+                <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
+                  <AiFillCloseCircle />
+                </IconContext.Provider>
+              </span> : <></>
+          }
+          < div onClick={onProfile} className='member'>
+            <span className='user-icon'>
+              <img src={member.avatar} style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%" }} alt="" />
+            </span>
+            <div className='link'>
+              <p>{member.memberName}</p>
+            </div>
+          </div>
+        </> :
+        <div onClick={onProfile} className='member'>
+          <span className='user-icon'>
+            <img src={member.avatar} style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%" }} alt="" />
+          </span>
+          <div className='link'>
+            <p>{member.memberName}</p>
+          </div>
         </div>
-
-      </div>
+      }
     </>
   );
 };

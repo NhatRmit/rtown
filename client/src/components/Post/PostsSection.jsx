@@ -23,7 +23,6 @@ const PostsSection = ({ post, isEvent }) => {
   const [edit, setEdit] = useState(false)
   const [show, setShow] = useState(false)
   const profile = useSelector(state => state.profile.profile)
-  const newsfeed = useMatch('/newsfeed')
 
   const pullData = (data) => {
     setEdit(data)
@@ -85,15 +84,16 @@ const PostsSection = ({ post, isEvent }) => {
     .map(item => item.event)
     .indexOf(post._id)
 
+  // let memberIndex = useRef()
+  // useEffect(() => {
+  //   memberIndex.current = post.community && post.community.members
+  //     .map(item => item.memberId)
+  //     .indexOf(auth._id)
+  // }, [auth._id, post.community])
 
-  let memberIndex = useRef()
-  useEffect(() => {
-    memberIndex.current = post.community && post.community.members
-      .map(item => item.memberId)
-      .indexOf(auth._id)
-
-    newsfeed ? dispatch(getPosts()) : dispatch(clearPost())
-  }, [])
+  const memberIndex = post.community && post.community.members
+    .map(item => item.memberId)
+    .indexOf(auth._id)
 
   const [time, setTime] = useState(null)
   useEffect(() => {
@@ -327,7 +327,7 @@ const PostsSection = ({ post, isEvent }) => {
           <div className="comment-page-container">
             <div className="comment-section">
               {
-                (memberIndex.current !== -1) ?
+                (memberIndex !== -1) ?
                   <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
               }
               {
