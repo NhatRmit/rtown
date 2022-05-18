@@ -49,6 +49,7 @@ export const loginUser = (usernameOrEmail, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         })
+        dispatch(loadUser())
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL
