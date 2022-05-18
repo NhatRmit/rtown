@@ -15,11 +15,13 @@ const Comment = ({ post, comment }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
-  
+  const [show, setShow] = useState(false)
+
+
   const pullData = (data) => {
     setEdit(data)
   }
-  
+
   const onDelete = e => {
     e.preventDefault()
     dispatch(deleteComment(post._id, comment._id, navigate))
@@ -48,11 +50,7 @@ const Comment = ({ post, comment }) => {
       <div className='comment-display'>
         <div onClick={onProfile} className='user'>
           <span className='user-icon'>
-            {/*CHANGE ICON FOR ME*/}
-            {/* <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
-              <FaUserCircle />
-            </IconContext.Provider> */}
-            <img src={comment && comment.avatar} alt="" style={{ width: "1.5rem", borderRadius: "50%" }} />
+            <img src={comment && comment.avatar} alt="" style={{ height: "1.3rem", width: "1.3rem", borderRadius: "50%" }} />
           </span>
           <p>{comment && comment.name}</p>
         </div>
@@ -60,8 +58,26 @@ const Comment = ({ post, comment }) => {
           <img src={comment.image} alt="" style={{ width: "30%" }} />
           <div>
             {
-              !edit ? comment.text :
-                <EditComment singlePost={post} singleComment={comment} pullData={pullData}/>
+              !edit ?
+                <>
+                  {show ? comment.text : comment.text.substring(0, 250)}
+                  <button style={{
+                    alignItem: "center",
+                    justifyContent: "center",
+                    backgroundColor: "grey",
+                    fontSize: "0.5rem",
+                    color: "white",
+                    borderRadius: "1rem",
+                    borderStyle: "none",
+                    cursor: "pointer",
+                    marginLeft: "0.5rem",
+                    padding: "0.3rem",
+                  }} onClick={() => setShow(!show)}>
+                    Show more
+                  </button>
+                </>
+                :
+                <EditComment singlePost={post} singleComment={comment} pullData={pullData} />
             }
           </div>
           <p className="comment-time">

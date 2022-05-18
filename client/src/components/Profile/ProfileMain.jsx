@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getProfile } from '../../actions/profile'
+import { getProfileById } from '../../actions/profile'
 import Spinner from '../Layout/Spinner'
 import PostsSection from '../Post/PostsSection'
 import RItem from "../../components/RShop/RItem";
@@ -14,7 +14,6 @@ const ProfileMain = ({ profile, loading }) => {
     const { userId } = useParams()
     const dispatch = useDispatch()
     const [toggleState, setToggleState] = useState(1);
-    
 
     const toggleTab = (index) => {
         setToggleState(index);
@@ -29,7 +28,7 @@ const ProfileMain = ({ profile, loading }) => {
     useEffect(() => {
         // dispatch(getMyPosts())
         dispatch(getUserPosts(userId))
-        dispatch(getProfile())
+        dispatch(getProfileById(userId))
     }, [dispatch, userId])
 
     return (

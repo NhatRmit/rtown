@@ -19,7 +19,10 @@ const AdminCommunityRequest = ({ community }) => {
             <td>{community.communityName}</td>
             <td>{community.description}</td>
             <td>
-                <button className="delete-btn" onClick={onAccept}>
+                <img src={community.avatar} alt="" style={{width: "8rem"}}/>
+            </td>
+            <td>
+                <button className="edit-btn" onClick={onAccept}>
                     ACCEPT
                 </button>
             </td>

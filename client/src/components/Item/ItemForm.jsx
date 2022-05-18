@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 
 const ItemForm = () => {
     const dispatch = useDispatch()
+    const [tempFile, setTempFile] = useState("")
     const [formData, setFormData] = useState({
         text: "",
         Rpoint: 0
@@ -31,10 +32,12 @@ const ItemForm = () => {
             Rpoint: 0
         })
         setReset(false)
+        setTempFile("")
     }
-    
+
     const onChangeImage = e => {
         setUploadFile(e.target.files[0])
+        setTempFile(e.target.files[0].name)
     }
 
     const onChange = e => {
@@ -47,34 +50,35 @@ const ItemForm = () => {
 
     return (
         <>
-            <h1 className="title">Create item</h1>
-            <form onSubmit={onSubmit} className="textarea-container">
+            <form onSubmit={onSubmit} className="textarea-container" style={{ height: "50%", width: "40%", marginBottom: "2rem" }}>
                 <textarea
                     name='text'
                     cols="30"
-                    rows="5"
+                    rows="1"
                     value={text}
                     placeholder="Create an item"
                     onChange={onChange}
                     required
                 ></textarea>
-                <label>Input Rpoint</label>
-                <input type="number" onChange={onChange} value={Rpoint} name="Rpoint" id="rpoint"/>
+                <span>
+                    Rpoint <input type="number" onChange={onChange} value={Rpoint} name="Rpoint" id="rpoint" style={{ width: "20%" }} />
+                </span>
                 <div className='upload-section'>
                     <div className='upload-icons'>
-                        <span>
-                            <label>
-                                <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
-                                    <BsFillCloudUploadFill />
-                                </IconContext.Provider>
-                            </label >
+                        <label>
                             {
                                 reset &&
-                                <input onChange={onChangeImage} id="img-input" type="file" />
+                                <input onChange={onChangeImage} id="img-input" type="file" style={{
+                                    visibility: "hidden",
+                                }} />
                             }
-                        </span >
+                            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
+                                <BsFillCloudUploadFill />
+                            </IconContext.Provider>
+                            {tempFile}
+                        </label>
                     </div >
-                    <button type="submit">Post</button>
+                    <button type="submit" style={{ width: "20%" }}>Add</button>
                 </div >
             </form >
         </>

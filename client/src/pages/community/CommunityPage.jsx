@@ -10,6 +10,7 @@ import PostsSection from "../../components/Post/PostsSection";
 import AboutCommunity from "../../components/Community/AboutCommunity";
 import "./CommunityPage.css";
 import { getCommunityPosts } from '../../actions/post'
+import { getAllProfiles } from '../../actions/profile';
 
 const CommunityPage = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const CommunityPage = () => {
   useEffect(() => {
     dispatch(getCommunityById(community_id))
     dispatch(getCommunityPosts(community_id))
+    dispatch(getAllProfiles())
   }, [dispatch, community_id])
 
   const posts = useSelector(state => state.post.posts)
@@ -37,7 +39,8 @@ const CommunityPage = () => {
               <h1 className='title'>Members</h1>
               <div className="member-list">
                 {community && community.members && community.members.map((member) => (
-                  <MemberSection key={member._id} community={community} member={member} />
+                  
+                  <MemberSection key={member._id} community={community} member={member}/>
                 ))}
               </div>
             </div>

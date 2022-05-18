@@ -11,6 +11,8 @@ import axios from 'axios'
 
 
 export const getProfile = () => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
+
     try {
         const res = await axios.get('/api/profiles/myProfile')
 
@@ -27,6 +29,8 @@ export const getProfile = () => async dispatch => {
 }
 
 export const getProfileById = (userId) => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
+
     try {
         const res = await axios.get(`/api/profiles/${userId}`)
 

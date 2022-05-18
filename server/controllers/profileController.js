@@ -127,7 +127,8 @@ const joinCommunity = asyncHandler(async (req, res) => {
         })
         community.members.unshift({
             memberId: req.user.id,
-            memberName: user.usernameOrEmail
+            memberName: user.usernameOrEmail,
+            avatar: profile.avatar
         })
 
         await profile.save()

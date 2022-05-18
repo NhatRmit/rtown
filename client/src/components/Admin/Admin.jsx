@@ -120,9 +120,9 @@ const Admin = () => {
                   toggleState === 3
                     ? "admin-content  admin-active-content"
                     : "admin-content"
-                }>
+                }>                
+                <ItemForm />
                 <div className='addAdmin-section'>
-                  <ItemForm />
                   <table className="table">
                     <tbody>
                       <tr>
@@ -133,7 +133,7 @@ const Admin = () => {
                         <th>DELETE</th>
                       </tr>
                       {
-                        items.map(item => <AdminItem key={item._id} item={item} />)
+                        items && items.map(item => <AdminItem key={item._id} item={item} />)
                       }
                     </tbody>
 
@@ -152,6 +152,7 @@ const Admin = () => {
                       <tr>
                         <th>Community Name</th>
                         <th>Community Description</th>
+                        <th>Community Image</th>
                         <th>ACCEPT</th>
                         <th>DELETE</th>
                       </tr>
@@ -176,6 +177,7 @@ const Admin = () => {
                       <tr>
                         <th>Community Name</th>
                         <th>Community Description</th>
+                        <th>Community Image</th>
                         <th>EDIT</th>
                         <th>DELETE</th>
                       </tr>

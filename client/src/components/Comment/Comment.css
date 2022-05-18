@@ -1,8 +1,8 @@
 .comment-page-container {
     height: fit-content;
-    margin: auto;
-    /* width: 95%;
-    margin-left:5% */
+    /* margin: auto; */
+    width: 100%;
+    /* margin-left:5% */
 }
 
 .comment-textarea {

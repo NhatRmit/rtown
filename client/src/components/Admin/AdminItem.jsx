@@ -33,7 +33,7 @@ const AdminItem = ({ item }) => {
                 }
             </td>
             <td>{item.Rpoint}</td>
-            <td><img src={item.image} alt="" style={{ width: "2rem" }} /></td>
+            <td><img src={item.image} alt="" style={{ width: "8rem" }} /></td>
             <td>
                 <div onClick={onEdit}><EditButton /></div>
             </td>

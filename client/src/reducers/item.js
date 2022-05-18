@@ -20,7 +20,7 @@ function itemReducer(state = initialState, action) {
         case ADD_ITEM:
             return {
                 ...state,
-                items: [payload, ...state.posts],
+                items: [payload, ...state.items],
                 loading: false,
             }
         case UPDATE_ITEM:

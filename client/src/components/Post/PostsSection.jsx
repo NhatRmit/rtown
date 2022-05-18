@@ -21,6 +21,7 @@ const PostsSection = ({ post, isEvent }) => {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
   const [edit, setEdit] = useState(false)
+  const [show, setShow] = useState(false)
   const profile = useSelector(state => state.profile.profile)
   const newsfeed = useMatch('/newsfeed')
 
@@ -198,9 +199,22 @@ const PostsSection = ({ post, isEvent }) => {
               ((post.startTime && (new Date(post.startTime)) <= time) ?
                 <div className="content-right-header">
                   {
-                    ((Math.floor(time - new Date(post.startTime)) / 1000) < 60) ?
+                    ((Math.floor(time - new Date(post.startTime)) / 1000) < 60000000) ?
                       (checkinIndex === -1) ?
-                        <button className="checkout" onClick={onCheckin}>Check In</button>
+                        <button
+                          style={{
+                            alignItem: "center",
+                            justifyContent: "center",
+                            backgroundColor: "var(--red)",
+                            color: "white",
+                            borderRadius: "5px",
+                            borderStyle: "none",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            marginLeft: "0.5rem",
+                            padding: "0.75rem",
+                          }}
+                          className="checkout" onClick={onCheckin}>Check In</button>
                         :
                         <p>Check in successfully!</p>
                       :
@@ -209,7 +223,20 @@ const PostsSection = ({ post, isEvent }) => {
                           {
                             ((Math.floor(time - new Date(post.endTime)) / 1000) < 60) ?
                               (checkinIndex !== -1 && checkoutIndex === -1) ?
-                                <button className="checkout" onClick={onCheckout}>Check Out</button>
+                                <button
+                                  style={{
+                                    alignItem: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: "var(--navy)",
+                                    color: "white",
+                                    borderRadius: "5px",
+                                    borderStyle: "none",
+                                    cursor: "pointer",
+                                    display: "inline-flex",
+                                    marginLeft: "0.5rem",
+                                    padding: "0.75rem",
+                                  }}
+                                  className="checkout" onClick={onCheckout}>Check Out</button>
                                 :
                                 <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
                                   <BsPatchCheckFill />
@@ -231,7 +258,25 @@ const PostsSection = ({ post, isEvent }) => {
           <div className='post-content'>
             <img src={post.image} alt="" style={{ width: "30%" }} />
             <div>
-              {!edit ? post.text :
+              {!edit ?
+                <>
+                  {show ? post.text : post.text.substring(0, 250)}
+                  <button style={{
+                    alignItem: "center",
+                    justifyContent: "center",
+                    backgroundColor: "grey",
+                    fontSize: "0.5rem",
+                    color: "white",
+                    borderRadius: "1rem",
+                    borderStyle: "none",
+                    cursor: "pointer",
+                    marginLeft: "0.5rem",
+                    padding: "0.3rem",
+                  }} onClick={() => setShow(!show)}>
+                    Show more
+                  </button>
+                </>
+                :
                 <EditPost singlePost={post} pullData={pullData} />
               }
             </div>
@@ -294,7 +339,7 @@ const PostsSection = ({ post, isEvent }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

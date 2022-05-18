@@ -77,14 +77,15 @@ const AboutCommunity = ({ community_id, community }) => {
         {community && community.communityName}
         <span onClick={onTrigger}>
           <label>
-            <IconContext.Provider value={{ color: '#676767', size: '1.5em' }}>
+            <IconContext.Provider value={{ color: '#676767', size: '1.2em' }}>
               <AiFillSetting style={{ cursor: "pointer" }} />
             </IconContext.Provider>
           </label>
         </span>
       </h1>
 
-      <img src={community && community.avatar} alt="" style={{ width: "10rem" }} />
+      <img src={community && community.avatar} alt="" style={{ width: "auto" }} />
+      <br />
       <div className="buttons">
         {expand && <>
           {
@@ -97,11 +98,9 @@ const AboutCommunity = ({ community_id, community }) => {
             community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
           }
           {
-            community && community.members.length === 0 ?
-              <div onClick={onJoin}><JoinCommunity /></div> :
               memberIndex !== -1 ?
                 <div onClick={onLeave}><LeaveCommunity /></div> :
-                <div onClick={onJoin}><JoinCommunity /></div>
+                <></>
           }
           {
             community && community.user._id === auth && <div onClick={onDelete}>
@@ -110,6 +109,13 @@ const AboutCommunity = ({ community_id, community }) => {
               </button></div>
           }
         </>}
+        {
+          community && community.members.length === 0 ?
+            <div onClick={onJoin}><JoinCommunity /></div> :
+            memberIndex !== -1 ?
+              <></> :
+              <div onClick={onJoin}><JoinCommunity /></div>
+        }
 
       </div>
     </div >

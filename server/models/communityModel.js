@@ -34,6 +34,10 @@ const communitySchema = mongoose.Schema({
                 type: mongoose.Schema.Types.String,
                 ref: 'user'       
             },
+            avatar: {
+                type: String,
+                ref: 'profileStudent'
+            }
         }
         
     ],

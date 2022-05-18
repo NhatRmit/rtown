@@ -4,7 +4,6 @@ import { FaRegCheckCircle } from "react-icons/fa";
 
 const Friends = ({ activeUser, auth, friend }) => {
      const { fndInfo, msgInfo } = friend;
-     console.log(msgInfo)
      return (
           <div className='friend'>
                <div className='friend-image'>

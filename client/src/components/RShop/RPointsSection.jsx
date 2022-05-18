@@ -5,7 +5,7 @@ const RPointsSection = ({ Rpoint }) => {
   return (
     <>
       <div className='rPoints-section'>
-        <p>Current R-Points</p>
+        <p>RPoints</p>
         <h2>{Rpoint}</h2>
       </div>
     </>

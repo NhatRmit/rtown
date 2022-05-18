@@ -85,7 +85,7 @@ export const createItem = (formdata) => async dispatch => {
         }
     }
     try {
-        const res = await axios.post(`/api/items/`, formdata, config)
+        const res = await axios.post(`/api/items`, formdata, config)
         dispatch({
             type: ADD_ITEM,
             payload: res.data

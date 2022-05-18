@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { kickMember } from '../../actions/community'
 
+
 const MemberSection = ({ community, member }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -14,7 +15,10 @@ const MemberSection = ({ community, member }) => {
     e.preventDefault()
     dispatch(kickMember(community._id, member.memberId))
   }
-
+  const onProfile = e => {
+    e.preventDefault()
+    navigate(`/profiles/${member.memberId}`)
+  }
   return (
     <>
       {community.user._id === auth ?
@@ -24,17 +28,9 @@ const MemberSection = ({ community, member }) => {
           </IconContext.Provider>
         </span> : <></>
       }
-      <div
-        onClick={
-          e => {
-            e.preventDefault()
-            navigate(`/profiles/${member.memberId}`)
-          }}
-        className='member'>
+      <div onClick={onProfile} className='member'>
         <span className='user-icon'>
-          <IconContext.Provider value={{ color: "#676767", size: "1em" }}>
-            <BsFillChatDotsFill />
-          </IconContext.Provider>
+          <img src={member.avatar} style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%" }} alt="" />
         </span>
         <div className='link'>
           <p>{member.memberName}</p>
