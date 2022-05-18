@@ -84,13 +84,6 @@ const PostsSection = ({ post, isEvent }) => {
     .map(item => item.event)
     .indexOf(post._id)
 
-  // let memberIndex = useRef()
-  // useEffect(() => {
-  //   memberIndex.current = post.community && post.community.members
-  //     .map(item => item.memberId)
-  //     .indexOf(auth._id)
-  // }, [auth._id, post.community])
-
   const memberIndex = post.community && post.community.members
     .map(item => item.memberId)
     .indexOf(auth._id)

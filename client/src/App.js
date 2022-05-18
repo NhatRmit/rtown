@@ -30,7 +30,6 @@ const App = () => {
       setAuthToken(localStorage.token)
     }
     dispatch(getAllProfiles())
-    dispatch(loadUser())
   }, [dispatch])
 
   return (
