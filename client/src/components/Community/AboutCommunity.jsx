@@ -4,7 +4,8 @@ import CreateEvent from "../Buttons/CreateEventButton"
 import LeaveCommunity from "../Buttons/LeaveButton"
 import JoinCommunity from "../Buttons/JoinButton"
 import { useDispatch, useSelector } from "react-redux";
-import { getCommunityById, joinCommunity, leaveCommunity } from '../../actions/community'
+import { getCommunityById, joinCommunity, leaveCommunity, clearCommunityData, deleteCommunity } from '../../actions/community'
+import { deletePost } from "../../actions/post"
 import { useEffect } from "react";
 import { loadUser } from "../../actions/auth";
 import EditCommunity from "../Buttons/EditCommunityButton"
@@ -15,6 +16,7 @@ const AboutCommunity = ({ community_id, community }) => {
   const dispatch = useDispatch()
 
   const auth = useSelector(state => state.auth._id)
+  const posts = useSelector(state => state.post.posts)
 
   const onEdit = e => {
     e.preventDefault()
@@ -36,6 +38,17 @@ const AboutCommunity = ({ community_id, community }) => {
     navigate(`/communities/event-request/${community_id}`)
   }
 
+  const onDelete = e => {
+    e.preventDefault()
+    posts.forEach(
+      post => dispatch(deletePost(post._id))
+    )
+    community.members.forEach(
+      member => dispatch(clearCommunityData(community._id, member.memberId))
+    )
+    dispatch(deleteCommunity(community._id, navigate))
+  }
+
   useEffect(() => {
     dispatch(loadUser())
     dispatch(getCommunityById(community_id))
@@ -55,10 +68,10 @@ const AboutCommunity = ({ community_id, community }) => {
       </p>
       <div className="buttons">
         {
-            community && community.user._id === auth &&
-              <div onClick={onCreateEvent}>
-                <CreateEvent />
-              </div>
+          community && community.user._id === auth &&
+          <div onClick={onCreateEvent}>
+            <CreateEvent />
+          </div>
         }
         {
           community && community.user._id === auth && <div onClick={onEdit}><EditCommunity /></div>
@@ -69,6 +82,12 @@ const AboutCommunity = ({ community_id, community }) => {
             memberIndex !== -1 ?
               <div onClick={onLeave}><LeaveCommunity /></div> :
               <div onClick={onJoin}><JoinCommunity /></div>
+        }
+        {
+          community && community.user._id === auth && <div onClick={onDelete}>
+            <button className="createEvent-btn">
+              DELETE
+            </button></div>
         }
 
       </div>

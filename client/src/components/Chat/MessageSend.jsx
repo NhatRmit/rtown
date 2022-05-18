@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaPlusCircle, FaFileImage, FaGift, FaPaperPlane } from "react-icons/fa";
-import { useDispatch } from 'react-redux'
 
 const MessageSend = ({ inputHendle, newMessage, sendMessage, emojiSend, ImageSend }) => {
 
@@ -12,8 +11,6 @@ const MessageSend = ({ inputHendle, newMessage, sendMessage, emojiSend, ImageSen
           '😜', '🧐', '🤓', '😎',
           '😕', '🤑', '🥴', '😱'
      ]
-
-     const dispatch = useDispatch()
 
      return (
 

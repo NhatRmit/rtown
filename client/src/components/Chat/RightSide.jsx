@@ -8,9 +8,7 @@ import MessageSend from './MessageSend';
 const RightSide = (props) => {
 
      const { currentfriend, inputHendle, newMessage, sendMessage, message, scrollRef, emojiSend, ImageSend, activeUser, typingMessage } = props;
-
-
-
+     
      return (
           <div className='col-9'>
                <div className='right-side'>
@@ -21,16 +19,13 @@ const RightSide = (props) => {
                                    <div className='chat-header'>
                                         <div className='image-name'>
                                              <div className='image'>
-                                                  <img src={`./image/${currentfriend.image}`} alt='' />
-
+                                                  <img src={currentfriend.avatar} alt='' />
                                                   {
-                                                       activeUser && activeUser.length > 0 && activeUser.some(u => u.userId === currentfriend._id) ? <div className='active-icon'></div> : ''
+                                                       activeUser && activeUser.length > 0 && activeUser.some(u => u.userId === currentfriend.user) ? <div className='active-icon'></div> : ''
                                                   }
-
-
                                              </div>
                                              <div className='name'>
-                                                  <h3>{currentfriend.userName} </h3>
+                                                  <h3>{currentfriend.userName}</h3>
 
                                              </div>
                                         </div>

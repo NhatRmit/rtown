@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Moment from 'react-moment'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { deletePost, clearPost, addUpvote, removeUpvote, checkIn, checkOut } from '../../actions/post'
 import EditPost from './EditPost'
 import Comment from '../Comment/Comment'
@@ -79,10 +79,14 @@ const PostsSection = ({ post }) => {
     .map(item => item.event)
     .indexOf(post._id)
 
-  let memberIndex
-  memberIndex = post.community && post.community.members
-    .map(item => item.memberId)
-    .indexOf(auth._id)
+
+  let memberIndex = useRef()
+  useEffect(() => {
+    memberIndex.current = post.community && post.community.members
+      .map(item => item.memberId)
+      .indexOf(auth._id)
+
+  }, [])
 
   const [time, setTime] = useState(null)
   useEffect(() => {
@@ -240,14 +244,11 @@ const PostsSection = ({ post }) => {
             )
           }
           {
-            (memberIndex !== -1) ?
+            (memberIndex.current !== -1) ?
               <CommentForm postId={post._id} /> : <p>Join the community to Comment</p>
           }
-
         </div>
-
       </div>
-
     </div>
 
   );

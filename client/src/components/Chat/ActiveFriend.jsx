@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ActiveFriend = ({ user, setCurrentFriend }) => {
+     console.log(user)
      return (
           <div onClick={() => setCurrentFriend({
                _id: user.userInfo.id,

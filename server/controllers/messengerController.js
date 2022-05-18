@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
 const Message = require('../models/messageModel');
 
 const getLastMessage = async (myId, fdId) => {
@@ -34,8 +34,8 @@ const getLastMessage = async (myId, fdId) => {
 const getFriends = async (req, res) => {
      let fnd_msg = [];
      try {
-          const friendGet = await User.find({
-               _id: {
+          const friendGet = await Profile.find({
+               user: {
                     $ne: req.user.id
                }
           });

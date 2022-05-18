@@ -5,6 +5,10 @@ const profileStudentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    userName: {
+        type: String,
+        ref: 'user'
+    },
     bio: {
         type: String
     },

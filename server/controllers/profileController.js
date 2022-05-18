@@ -54,8 +54,9 @@ const createProfile = asyncHandler(async (req, res) => {
     const { bio } = req.body
 
     const profileFields = {}
-
+    const user = await User.findById(req.user.id)
     profileFields.user = req.user.id
+    profileFields.userName = user.usernameOrEmail
     if (bio) profileFields.bio = bio
 
     let profile = await Profile.findOne({ user: req.user.id })

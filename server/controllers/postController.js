@@ -24,10 +24,12 @@ const getPosts = asyncHandler(async (req, res) => {
 
 const searchPost = asyncHandler(async (req, res) => {
     const { search } = req.query;
+    const query = [{ path: 'profile' }, { path: 'community' }, { path: 'user' }]
+
     try {
         const post = await Post.find({
             $or: [{ "text": { $regex: search, $options: 'i' } }]
-        })
+        }).populate(query)
         res.status(200).json(post)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -84,6 +86,7 @@ const createPost = asyncHandler(async (req, res) => {
             text: checkWord(req.body.text),
             user: req.user.id,
             profile: profile._id,
+            community: profile._id,
             image: imgUrl,
         })
 

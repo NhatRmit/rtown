@@ -92,7 +92,7 @@ export const updateCommunity = (community_id, formData, navigate) => async dispa
     }
 }
 
-export const deleteCommunity = (community_id) => async dispatch => {
+export const deleteCommunity = (community_id, navigate) => async dispatch => {
     try {
         await axios.delete(`/api/communities/${community_id}`)
 
@@ -101,6 +101,7 @@ export const deleteCommunity = (community_id) => async dispatch => {
             payload: community_id
         })
         alert("You have deleted your community permanently")
+        navigate("/newsfeed")
     } catch (err) {
         dispatch({
             type: COMMUNITY_ERROR,
