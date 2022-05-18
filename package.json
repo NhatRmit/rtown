@@ -5,12 +5,12 @@
   "main": "server.js",
   "proxy": "http://localhost:8000",
   "scripts": {
+    "client-install": "npm install --prefix client",
     "start": "nodemon server/server.js",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "cd client && npm install && npm run build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION= false   npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Nhat Hoang Anh Thu",
   "license": "MIT",
