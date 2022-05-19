@@ -223,6 +223,7 @@ export const addUpvote = id => async dispatch => {
         })
     }
 }
+
 // Remove Upvote
 export const removeUpvote = id => async dispatch => {
     try {
