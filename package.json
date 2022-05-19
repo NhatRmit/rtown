@@ -5,7 +5,7 @@
   "main": "server.js",
   "proxy": "http://localhost:8000",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon --experimental-modules server/server.js",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
