@@ -64,8 +64,8 @@ const Navbar = () => {
                             value={text}
                             onChange={onChange}
                         />
-                        <label>
-                            <IconContext.Provider value={{ className: "search-icon", color: 'white', size: '1.6em' }}>
+                        <label className='search-icon'>
+                            <IconContext.Provider value={{ color: 'white', size: '1.6em' }}>
                                 <BsSearch />
                             </IconContext.Provider>
                         </label>

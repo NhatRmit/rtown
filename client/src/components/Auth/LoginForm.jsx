@@ -24,10 +24,11 @@ const LoginForm = () => {
         return <Navigate replace to='/admin-profile' />
     }
 
+
     return (
         <div className={style["loginform-container"]}>
             <h1 className={style["h1"]}>Welcome to RMIT Town!</h1>
-            <p className={style["intro"]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sollicitudin dictum nulla eu hendrerit. Donec commodo fringilla sollicitudin. Duis sit amet ligula quis tellus scelerisque pulvinar ut vitae ligula. Phasellus lectus felis, convallis sit amet consequat quis, interdum eu lectus. Suspendisse potenti.</p>
+            <p className={style["intro"]}>This is where you can spark discussion to raise your voice. Please add your details with your existing account by RMIT and you will be able to login. If you cannot login, please contact support from RMIT IT department. </p>
             <form className={style["form"]} onSubmit={handleSubmit} >
                 <label className={style["label"]}>RMIT ID or Email address</label>
                 <input
@@ -48,14 +49,15 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className={style["input"]}
                 />
-                <p className={style["p"]}>By signing in, you accept <Link to={'/'} className={style["a"]}>the rules of use of RMIT systems.</Link></p>
+                <div className="rules">
+                    <p className={style["p"]}>By signing in, you accept </p>
+                    <p className={style["a"]} onClick={() => window.open('https://policies.rmit.edu.au')}>the rules of use of RMIT systems.</p>
+                </div>
+                
                 <div className={style["button-wrapper"]}>
                     <button type='submit' className={style["login-btn"]}>Sign in</button>
                 </div>
             </form>
-
-            <Link to="/" className={style["link"]}>Forgot your password?</Link>
-
         </div>
     );
 };

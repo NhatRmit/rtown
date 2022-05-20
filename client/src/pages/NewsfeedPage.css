@@ -19,3 +19,14 @@
     width: 70%;
     margin-right: 4rem;
 }
+
+.create-community-section:hover {
+    border: 2px solid var(--navy);
+}
+
+.create-community {
+    font-family: var(--body-font);
+    text-align: center;
+    color: var(--dark-grey);
+}
+

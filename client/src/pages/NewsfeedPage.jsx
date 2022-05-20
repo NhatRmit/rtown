@@ -1,33 +1,35 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Layout from '../components/Layout'
-import CommunitySection from '../components/Community/CommunitySection'
-import CreatePost from '../components/Post/CreatePost'
-import PostsSection from '../components/Post/PostsSection'
-import './NewsfeedPage.css'
-import { getAllCommunities } from '../actions/community'
-import { RiCommunityFill } from 'react-icons/ri'
-import { IconContext } from 'react-icons/lib'
-import { useNavigate } from "react-router-dom";
-import { getPosts } from '../actions/post'
-import Filter from '../components/Filter/Filter'
-
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import Layout from "../components/Layout";
+import CommunitySection from "../components/Community/CommunitySection";
+import CreatePost from "../components/Post/CreatePost";
+import PostsSection from "../components/Post/PostsSection";
+import "./NewsfeedPage.css";
+import {getAllCommunities} from "../actions/community";
+import {MdAddBusiness} from "react-icons/md";
+import {IconContext} from "react-icons/lib";
+import {useNavigate} from "react-router-dom";
+import {getPosts} from "../actions/post";
+import Filter from "../components/Filter/Filter";
+import {useState} from "react";
 
 const NewsfeedPage = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const communities = useSelector(state => state.community.communities)
-  const posts = useSelector(state => state.post.posts)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const communities = useSelector((state) => state.community.communities);
+  const posts = useSelector((state) => state.post.posts);
+  const profiles = useSelector(state => state.profile.profiles)
 
   useEffect(() => {
-    dispatch(getAllCommunities())
-    dispatch(getPosts())
-  }, [dispatch])
+    dispatch(getAllCommunities());
+    dispatch(getPosts());
+  }, [dispatch]);
 
-  const onCreate = e => {
-    e.preventDefault()
-    navigate('/communities/community-request')
-  }
+  const onCreate = (e) => {
+    e.preventDefault();
+    navigate("/communities/community-request");
+  };
+
   return (
     <>
       <Layout header footer>
@@ -36,17 +38,17 @@ const NewsfeedPage = () => {
             <h1 className='title'>Community</h1>
             <div onClick={onCreate} className='create-community-section'>
               <span className='create-icon'>
-                <IconContext.Provider value={{ color: '#C0BFBF', size: "2em" }}>
-                  <RiCommunityFill />
+                <IconContext.Provider value={{color: "#C0BFBF", size: "2rem"}}>
+                  <MdAddBusiness />
                 </IconContext.Provider>
               </span>
-              <p>Create community</p>
+
+              <p className='create-community'>Create community</p>
             </div>
-            {
-              communities && communities.map(community =>
+            {communities &&
+              communities.map((community) => (
                 <CommunitySection key={community._id} community={community} />
-              )
-            }
+              ))}
           </div>
           <div className='newsfeed-right-container'>
             <>
@@ -57,13 +59,13 @@ const NewsfeedPage = () => {
             </>
             <>
               {
-                posts.map(post =>
-                  post.Rpoint === 0 ?
-                    <PostsSection key={post._id} post={post} isEvent={false} />
-                    :
-                    <PostsSection key={post._id} post={post} isEvent={true} />
+              posts.map((post) =>
+                post.Rpoint === 0 ? (
+                  <PostsSection key={post._id} post={post} isEvent={false} />
+                ) : (
+                  <PostsSection key={post._id} post={post} isEvent={true} />
                 )
-              }
+              )}
             </>
           </div>
         </div>
@@ -71,4 +73,4 @@ const NewsfeedPage = () => {
     </>
   );
 };
-export default NewsfeedPage
+export default NewsfeedPage;

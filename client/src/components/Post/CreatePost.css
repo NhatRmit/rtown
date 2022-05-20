@@ -54,6 +54,7 @@
 
 .upload-section {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -61,11 +62,23 @@
     width: 4em;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    font-family: var(--body-font);
 }
+ 
 
 .image-upload label,
-.file-upload label  {
+.file-upload label,
+.upload-icons>label  {
     cursor: pointer;
+}
+
+.upload-icons>label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    color: var(--darker-grey);
 }
 
 .image-upload input,

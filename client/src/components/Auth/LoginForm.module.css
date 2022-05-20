@@ -51,17 +51,24 @@
     font-size: 1em;
 }
 
-.p {
+.p { 
     margin: 0 auto;
     color: var(--darker-grey);
+    display: inline;
 }
 
 .a {
-    color: var(--darker-grey);
+    margin: 0 auto;
+    color: var(--navy);
+    display: inline;
+    cursor: pointer;
+
 }
 
 .a:hover {
     color: var(--red);
+    display: inline;
+    text-decoration: underline;
 }
 
 .login-btn {
@@ -92,4 +99,13 @@
 .link:hover {
     color: var(--navy);
     text-decoration: underline;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.rules {
+    display: inline;
 }
