@@ -25,7 +25,7 @@ const Messenger = () => {
      const [typingMessage, setTypingMessage] = useState('');
      useEffect(() => {
           dispatch(getProfile())
-          socket.current = io('ws://localhost:8000');
+          socket.current = io('ws://34.124.147.121:8000/');
           socket.current.on('getMessage', (data) => {
                setSocketMessage(data);
           })

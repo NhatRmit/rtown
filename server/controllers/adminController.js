@@ -59,7 +59,7 @@ const editCommunity = asyncHandler(async (req, res) => {
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
     if (req.file)
-        communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
+        communityFields.avatar = `http://34.124.147.121:8000/api/images/${req.file.filename}`
 
     let communityEdit = await Community.findById(req.params.community_id)
     try {
@@ -139,7 +139,7 @@ const editPost = asyncHandler(async (req, res) => {
     const { text } = req.body
     if (text) postFields.text = text
     if (req.file)
-        communityFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+        communityFields.image = `http://34.124.147.121:8000/api/images/${req.file.filename}`
 
     try {
         let post = await Post.findOne({ _id: req.params.post_id })

@@ -14,7 +14,7 @@ const getItems = asyncHandler(async (req, res) => {
 const createItem = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const newItem = new Item({
             name: req.body.name,
             Rpoint: req.body.Rpoint,
@@ -104,7 +104,7 @@ const updateItem = asyncHandler(async (req, res) => {
     const { name, Rpoint } = req.body
     if (name) itemFields.name = name
     if (Rpoint) itemFields.Rpoint = Rpoint
-    if (req.file) itemFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+    if (req.file) itemFields.image = `http://34.124.147.121:8000/api/images/${req.file.filename}`
 
     try {
         // let item = await Item.findOne({ _id: req.params.item_id })

@@ -79,7 +79,7 @@ const filterPost = asyncHandler(async (req, res) => {
 const createPost = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({ user: req.user.id })
 
         const newPost = new Post({
@@ -103,7 +103,7 @@ const createPost = asyncHandler(async (req, res) => {
 const createCommunityPost = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({ user: req.user.id })
         const newPost = new Post({
             text: req.body.text,
@@ -137,7 +137,7 @@ const getCommunityPosts = asyncHandler(async (req, res) => {
 const createEvent = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({ user: req.user.id })
 
         const newEvent = new Post({
@@ -209,7 +209,7 @@ const editPost = asyncHandler(async (req, res) => {
     const { text } = req.body
     // postFields.user = req.user.id
     if (text) postFields.text = text
-    if (req.file) postFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+    if (req.file) postFields.image = `http://34.124.147.121:8000/api/images/${req.file.filename}`
 
     try {
         let post = await Post.findOne({ _id: req.params.post_id })
@@ -311,7 +311,7 @@ const deletePost = asyncHandler(async (req, res) => {
 const createComment = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.post_id);
         const profile = await Profile.findOne({ user: req.user._id })
@@ -343,7 +343,7 @@ const editComment = asyncHandler(async (req, res) => {
 
     const commentFields = {}
     if (req.file)
-        commentFields.image = `http://localhost:8000/api/images/${req.file.filename}`
+        commentFields.image = `http://34.124.147.121:8000/api/images/${req.file.filename}`
     else
         commentFields.image = commentIndex.image
 

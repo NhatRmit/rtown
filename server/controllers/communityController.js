@@ -45,7 +45,7 @@ const getCommunityById = asyncHandler(async (req, res) => {
 const createCommunityRequest = asyncHandler(async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const profile = await Profile.findOne({ user: req.user.id })
         const newCommunityRequest = new Community({
             communityName: req.body.communityName,
@@ -66,7 +66,7 @@ const createCommunityRequest = asyncHandler(async (req, res) => {
 const createCommunity = asyncHandler(async (req, res) => {
     try {
         if (req.file === undefined) return res.send("you must select a file.");
-        const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+        const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
         const user = await User.findById(req.user.id).select('-password')
         const profile = await Profile.findOne({ user: req.user.id })
 
@@ -114,7 +114,7 @@ const updateCommunity = asyncHandler(async (req, res) => {
     if (communityName) communityFields.communityName = communityName
     if (description) communityFields.description = description
     if (req.file)
-        communityFields.avatar = `http://localhost:8000/api/images/${req.file.filename}`
+        communityFields.avatar = `http://34.124.147.121:8000/api/images/${req.file.filename}`
 
 
     let community = await Community.findOne({ user: req.user.id })

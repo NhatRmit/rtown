@@ -29,13 +29,13 @@ const getImage = asyncHandler(async (req, res) => {
 
 const selectImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+    const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
     return res.send(imgUrl);
 })
 
 const selectProfileImage = asyncHandler(async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/api/images/${req.file.filename}`;
+    const imgUrl = `http://34.124.147.121:8000/api/images/${req.file.filename}`;
     let profile = await Profile.findOne({ user: req.user.id })
     try {
         if (profile) {
