@@ -1,16 +1,17 @@
 import "./PostsSection.css";
-import {BiUpvote, BiDownvote, BiRightArrow} from "react-icons/bi";
-import {BsPatchCheckFill} from "react-icons/bs";
-import {AiFillDelete, AiFillEdit} from "react-icons/ai";
-import {TiLockClosedOutline} from "react-icons/ti";
-import {FaUserCircle} from "react-icons/fa";
-import {MdReportGmailerrorred} from "react-icons/md";
-import {IconContext} from "react-icons/lib";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useMatch} from "react-router-dom";
+import { BiUpvote, BiDownvote, BiRightArrow } from "react-icons/bi";
+import { BsPatchCheckFill } from "react-icons/bs";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { TiLockClosedOutline } from "react-icons/ti";
+import { FaUserCircle } from "react-icons/fa";
+import { MdReportGmailerrorred } from "react-icons/md";
+import { IconContext } from "react-icons/lib";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useMatch } from "react-router-dom";
 import Moment from "react-moment";
-import {useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
+import { getProfile } from '../../actions/profile'
 import {
   getPosts,
   deletePost,
@@ -24,12 +25,13 @@ import EditPost from "./EditPost";
 import Comment from "../Comment/Comment";
 import CommentForm from "../Comment/CommentForm";
 
-const PostsSection = ({post, isEvent, profile}) => {
+const PostsSection = ({ post, isEvent }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const [edit, setEdit] = useState(false);
   const [show, setShow] = useState(false);
+  const profile = useSelector(state => state.profile.profile)
 
   const pullData = (data) => {
     setEdit(data);
@@ -122,13 +124,13 @@ const PostsSection = ({post, isEvent, profile}) => {
       <div className={isEvent ? "event-container" : "post-container"}>
         <div className='vote-container'>
           <span className='upvote-icon' onClick={handleUpvote}>
-            <IconContext.Provider value={{color: "#676767", size: "2em"}}>
+            <IconContext.Provider value={{ color: "#676767", size: "2em" }}>
               <BiUpvote />
             </IconContext.Provider>
           </span>
           <p>{post.upvotes.length}</p>
           <span className='downvote-icon' onClick={handleDownvote}>
-            <IconContext.Provider value={{color: "#676767", size: "2em"}}>
+            <IconContext.Provider value={{ color: "#676767", size: "2em" }}>
               <BiDownvote />
             </IconContext.Provider>
           </span>
@@ -161,7 +163,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                   <span className='users-icon'>
                     {/* Right arrow icon */}
                     <IconContext.Provider
-                      value={{color: "#676767", size: "1em"}}>
+                      value={{ color: "#676767", size: "1em" }}>
                       <BiRightArrow />
                     </IconContext.Provider>
                   </span>
@@ -171,7 +173,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                     <label htmlFor='username'>
                       {(post.profile && post.profile.avatar) === undefined ? (
                         <IconContext.Provider
-                          value={{color: "#676767", size: "2em"}}>
+                          value={{ color: "#676767", size: "2em" }}>
                           <FaUserCircle />
                         </IconContext.Provider>
                       ) : (
@@ -203,7 +205,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                   <label htmlFor='username'>
                     {(post.profile && post.profile.avatar) === undefined ? (
                       <IconContext.Provider
-                        value={{color: "#676767", size: "2em"}}>
+                        value={{ color: "#676767", size: "2em" }}>
                         <FaUserCircle />
                       </IconContext.Provider>
                     ) : (
@@ -229,13 +231,13 @@ const PostsSection = ({post, isEvent, profile}) => {
                 </span>
               </div>
             )}
-            {post.Rpoint !== 0 ? (
+            {/* {post.Rpoint !== 0 ? (
               post.startTime && new Date(post.startTime) <= time ? (
                 <div className='content-right-header'>
                   {post.Rpoint !== 0 && (
                     <h3
                       className='rpoint'
-                      style={{cursor: "default", margin: "0.8rem 0rem"}}>
+                      style={{ cursor: "default", margin: "0.8rem 0rem" }}>
                       <span
                         style={{
                           textShadow: "none",
@@ -246,7 +248,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                     </h3>
                   )}
                   {Math.floor(time - new Date(post.startTime)) / 1000 <
-                  1 ? (
+                    1 ? (
                     checkinIndex === -1 ? (
                       <button
                         className='checkout'
@@ -267,18 +269,18 @@ const PostsSection = ({post, isEvent, profile}) => {
                           </button>
                         ) : (
                           <IconContext.Provider
-                            value={{color: "#000054", size: "1.5em"}}>
+                            value={{ color: "#000054", size: "1.5em" }}>
                             <BsPatchCheckFill />
                           </IconContext.Provider>
                         )
                       ) : checkoutIndex !== -1 ? (
                         <IconContext.Provider
-                          value={{color: "#000054", size: "1.5em"}}>
+                          value={{ color: "#000054", size: "1.5em" }}>
                           <BsPatchCheckFill />
                         </IconContext.Provider>
                       ) : (
                         <IconContext.Provider
-                          value={{color: "#000054", size: "1.5em"}}>
+                          value={{ color: "#000054", size: "1.5em" }}>
                           <TiLockClosedOutline />
                         </IconContext.Provider>
                       )}
@@ -293,9 +295,30 @@ const PostsSection = ({post, isEvent, profile}) => {
             ) : (
               <></>
             )}
+          </div> */}
+            {post.Rpoint !== 0 ?
+              ((post.startTime && (new Date(post.startTime)) <= time)
+                ? <div className="content-right-header">
+                  {((Math.floor(time - new Date(post.startTime)) / 1000) < 1) ?
+                    (checkinIndex === -1) ? <button className="checkout" onClick={onCheckin}>Check In</button>
+                      : <p>Check in successfully!</p> : (post.endTime && (new Date(post.endTime)) <= time) ?
+                      <> {((Math.floor(time - new Date(post.endTime)) / 1000) < 600000) ?
+                        (checkinIndex !== -1 && checkoutIndex === -1) ?
+                          <button className="checkout" onClick={onCheckout}>Check Out</button> :
+                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                            <BsPatchCheckFill /> </IconContext.Provider> :
+                        checkoutIndex !== -1 ?
+                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                            <BsPatchCheckFill /> </IconContext.Provider> :
+                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                            <TiLockClosedOutline /> </IconContext.Provider>} </> :
+                      <></>}
+                </div> :
+                <></>) :
+              <></>}
           </div>
           <div className='post-content'>
-            <img src={post.image} alt='' style={{width: "30%"}} />
+            <img src={post.image} alt='' style={{ width: "30%" }} />
             <div className='text-content'>
               {!edit ? (
                 <>
@@ -317,7 +340,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                 <Link to='/'>
                   <label htmlFor='report'>
                     <IconContext.Provider
-                      value={{color: "#676767", size: "1.5em"}}>
+                      value={{ color: "#676767", size: "1.5em" }}>
                       <MdReportGmailerrorred />
                     </IconContext.Provider>
                   </label>
@@ -333,7 +356,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                   <span className='icon' onClick={onEdit}>
                     <label htmlFor='edit-post'>
                       <IconContext.Provider
-                        value={{color: "#676767", size: "1.5em"}}>
+                        value={{ color: "#676767", size: "1.5em" }}>
                         <AiFillEdit />
                       </IconContext.Provider>
                     </label>
@@ -344,7 +367,7 @@ const PostsSection = ({post, isEvent, profile}) => {
                   <span className='icon' onClick={onDelete}>
                     <label htmlFor='delete-post'>
                       <IconContext.Provider
-                        value={{color: "#676767", size: "1.5em"}}>
+                        value={{ color: "#676767", size: "1.5em" }}>
                         <AiFillDelete />
                       </IconContext.Provider>
                     </label>
@@ -371,7 +394,7 @@ const PostsSection = ({post, isEvent, profile}) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

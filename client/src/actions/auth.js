@@ -11,7 +11,7 @@ import {
 
 import axios from 'axios'
 import setAuthToken from '../utils/setAuthToken'
-import { getAllProfiles } from './profile'
+import { getProfile } from './profile'
 
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
@@ -51,7 +51,7 @@ export const loginUser = (usernameOrEmail, password) => async dispatch => {
             payload: res.data
         })
         dispatch(loadUser())
-        dispatch(getAllProfiles())
+        dispatch(getProfile())
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL
