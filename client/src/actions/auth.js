@@ -72,5 +72,5 @@ export const logoutUser = () => dispatch => {
     dispatch({
         type: CLEAR_POSTS
     })
-
+    
 }

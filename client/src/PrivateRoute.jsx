@@ -6,7 +6,6 @@ import Spinner from './components/Layout/Spinner';
 const PrivateRoute = ({ element: Element}) => {
     const loading = useSelector(state => state.auth.loading)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-
     if (loading) return <Spinner />;
     if (isAuthenticated) return <Element />;
 
