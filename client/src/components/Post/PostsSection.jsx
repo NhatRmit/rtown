@@ -112,13 +112,13 @@ const PostsSection = ({ post, isEvent }) => {
         clearInterval(timer);
       }
     }, 1000);
-
+    dispatch(getProfile())
     return () => {
       clearInterval(timer);
     };
   }, []);
-  let date = new Date(post.startTime)
-  console.log(date)
+  // let date = new Date(post.startTime)
+  console.log(checkoutIndex)
 
   return (
     <div>
@@ -245,7 +245,7 @@ const PostsSection = ({ post, isEvent }) => {
                 </span>
               </h3>
             )}
-            {
+            {/* {
               post.Rpoint !== 0 ?
                 ((post.startTime && (new Date(post.startTime)) <= time) ?
                   <div className="content-right-header">
@@ -281,28 +281,39 @@ const PostsSection = ({ post, isEvent }) => {
                 ) :
                 <></>
             }
-          </div>
-          {/* {post.Rpoint !== 0 ?
+          </div> */}
+            {post.Rpoint !== 0 ?
               ((post.startTime && (new Date(post.startTime)) <= time)
                 ? <div className="content-right-header">
-                  {((Math.floor(time - new Date(post.startTime)) / 1000) < 1) ?
+                  {((Math.floor(time - new Date(post.startTime)) / 1000) < 60) ?
                     (checkinIndex === -1) ? <button className="checkout" onClick={onCheckin}>Check In</button>
-                      : <p>Check in successfully!</p> : (post.endTime && (new Date(post.endTime)) <= time) ?
-                      <> {((Math.floor(time - new Date(post.endTime)) / 1000) < 600000) ?
-                        (checkinIndex !== -1 && checkoutIndex === -1) ?
-                          <button className="checkout" onClick={onCheckout}>Check Out</button> :
-                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                            <BsPatchCheckFill /> </IconContext.Provider> :
-                        checkoutIndex !== -1 ?
-                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                            <BsPatchCheckFill /> </IconContext.Provider> :
-                          <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
-                            <TiLockClosedOutline /> </IconContext.Provider>} </> :
-                      <></>}
+                      :
+                      <p>Check in successfully!</p> : (post.endTime && (new Date(post.endTime)) <= time) ?
+
+                      <>
+                        {((Math.floor(time - new Date(post.endTime)) / 1000) < 60) ?
+                          (checkinIndex !== -1 && checkoutIndex === -1) ?
+                            <button className="checkout" onClick={onCheckout}>Check Out</button> :
+                            <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                              <BsPatchCheckFill />
+                            </IconContext.Provider> :
+
+                          (checkoutIndex !== -1) ?
+                            <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                              <BsPatchCheckFill />
+                            </IconContext.Provider> :
+                            <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                              <TiLockClosedOutline />
+                            </IconContext.Provider>
+                        }
+                      </> :
+                      <></>
+                  }
                 </div> :
                 <></>) :
-              <></>} */}
-          {/* </div> */}
+              <></>
+            }
+          </div>
           <div className='post-content'>
             <img src={post.image} alt='' style={{ width: "30%" }} />
             <div className='text-content'>
