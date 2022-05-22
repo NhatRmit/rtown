@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useMatch } from "react-router-dom";
 import Moment from "react-moment";
 import { useEffect, useState, useRef } from "react";
-import { getProfile } from '../../actions/profile'
 import {
   getPosts,
   deletePost,
@@ -112,7 +111,6 @@ const PostsSection = ({ post, isEvent }) => {
         clearInterval(timer);
       }
     }, 1000);
-    dispatch(getProfile())
     return () => {
       clearInterval(timer);
     };

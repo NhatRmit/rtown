@@ -11,6 +11,8 @@ import AboutCommunity from "../../components/Community/AboutCommunity";
 import "./CommunityPage.css";
 import { getCommunityPosts } from '../../actions/post'
 import { getAllProfiles } from '../../actions/profile';
+import { getProfile } from '../../actions/profile'
+
 
 const CommunityPage = () => {
   const dispatch = useDispatch()
@@ -20,6 +22,7 @@ const CommunityPage = () => {
     dispatch(getCommunityById(community_id))
     dispatch(getCommunityPosts(community_id))
     dispatch(getAllProfiles())
+    dispatch(getProfile())
   }, [dispatch, community_id])
 
   const posts = useSelector(state => state.post.posts)

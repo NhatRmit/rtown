@@ -12,17 +12,20 @@ import {useNavigate} from "react-router-dom";
 import {getPosts} from "../actions/post";
 import Filter from "../components/Filter/Filter";
 import {useState} from "react";
+import { getProfile } from '../actions/profile'
+
 
 const NewsfeedPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const communities = useSelector((state) => state.community.communities);
   const posts = useSelector((state) => state.post.posts);
-  const profiles = useSelector(state => state.profile.profiles)
+
 
   useEffect(() => {
     dispatch(getAllCommunities());
     dispatch(getPosts());
+    dispatch(getProfile())
   }, [dispatch]);
 
   const onCreate = (e) => {
