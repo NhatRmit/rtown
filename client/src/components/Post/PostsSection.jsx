@@ -117,8 +117,9 @@ const PostsSection = ({ post, isEvent }) => {
       clearInterval(timer);
     };
   }, []);
+  let date = new Date(post.startTime)
+  console.log(date)
 
-  console.log(profile)
   return (
     <div>
       <div className={isEvent ? "event-container" : "post-container"}>
@@ -231,72 +232,57 @@ const PostsSection = ({ post, isEvent }) => {
                 </span>
               </div>
             )}
-            {/* {post.Rpoint !== 0 ? (
-              post.startTime && new Date(post.startTime) <= time ? (
-                <div className='content-right-header'>
-                  {post.Rpoint !== 0 && (
-                    <h3
-                      className='rpoint'
-                      style={{ cursor: "default", margin: "0.8rem 0rem" }}>
-                      <span
-                        style={{
-                          textShadow: "none",
-                        }}>
-                        {" "}
-                        {post.Rpoint} Rpoints
-                      </span>
-                    </h3>
-                  )}
-                  {Math.floor(time - new Date(post.startTime)) / 1000 <
-                    1 ? (
-                    checkinIndex === -1 ? (
-                      <button
-                        className='checkout'
-                        onClick={onCheckin}>
-                        Check In
-                      </button>
-                    ) : (
-                      <p>Check in successfully!</p>
-                    )
-                  ) : post.endTime && new Date(post.endTime) <= time ? (
-                    <>
-                      {Math.floor(time - new Date(post.endTime)) / 1000 < 60 ? (
-                        checkinIndex !== -1 && checkoutIndex === -1 ? (
-                          <button
-                            className='checkout'
-                            onClick={onCheckout}>
-                            Check Out
-                          </button>
-                        ) : (
-                          <IconContext.Provider
-                            value={{ color: "#000054", size: "1.5em" }}>
-                            <BsPatchCheckFill />
-                          </IconContext.Provider>
-                        )
-                      ) : checkoutIndex !== -1 ? (
-                        <IconContext.Provider
-                          value={{ color: "#000054", size: "1.5em" }}>
-                          <BsPatchCheckFill />
-                        </IconContext.Provider>
-                      ) : (
-                        <IconContext.Provider
-                          value={{ color: "#000054", size: "1.5em" }}>
-                          <TiLockClosedOutline />
-                        </IconContext.Provider>
-                      )}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              ) : (
-                <></>
-              )
-            ) : (
-              <></>
+            {post.Rpoint !== 0 && (
+              <h3
+                className='rpoint'
+                style={{ cursor: "default", margin: "0.8rem 0rem" }}>
+                <span
+                  style={{
+                    textShadow: "none",
+                  }}>
+                  {" "}
+                  {post.Rpoint} Rpoints
+                </span>
+              </h3>
             )}
-          </div> */}
-            {post.Rpoint !== 0 ?
+            {
+              post.Rpoint !== 0 ?
+                ((post.startTime && (new Date(post.startTime)) <= time) ?
+                  <div className="content-right-header">
+                    {
+                      ((Math.floor(time - (new Date(post.startTime))) / 1000) < 60) ?
+                        (checkinIndex === -1) ?
+                          <button className="checkout" onClick={onCheckin}>Check In</button>
+                          :
+                          <p>Check in successfully!</p>
+                        :
+                        (post.endTime && (new Date(post.endTime)) <= time) ?
+                          <>
+                            {
+                              ((Math.floor(time - (new Date(post.endTime))) / 1000) < 60) ?
+                                (checkinIndex !== -1 && checkoutIndex === -1) ?
+                                  <button className="checkout" onClick={onCheckout}>Check Out</button>
+                                  :
+                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                    <BsPatchCheckFill />
+                                  </IconContext.Provider> :
+                                checkoutIndex !== -1 ?
+                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                    <BsPatchCheckFill />
+                                  </IconContext.Provider> :
+                                  <IconContext.Provider value={{ color: "#000054", size: "1.5em" }}>
+                                    <TiLockClosedOutline />
+                                  </IconContext.Provider>
+                            }
+                          </> : <></>
+                    }
+                  </div> :
+                  <></>
+                ) :
+                <></>
+            }
+          </div>
+          {/* {post.Rpoint !== 0 ?
               ((post.startTime && (new Date(post.startTime)) <= time)
                 ? <div className="content-right-header">
                   {((Math.floor(time - new Date(post.startTime)) / 1000) < 1) ?
@@ -315,8 +301,8 @@ const PostsSection = ({ post, isEvent }) => {
                       <></>}
                 </div> :
                 <></>) :
-              <></>}
-          </div>
+              <></>} */}
+          {/* </div> */}
           <div className='post-content'>
             <img src={post.image} alt='' style={{ width: "30%" }} />
             <div className='text-content'>
